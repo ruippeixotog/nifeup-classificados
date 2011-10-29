@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  closed: 1
+  thumbnail: MyString
+  description: MyText
+  final_eval: 1
+  user: 
+  section: 
+
+two:
+  title: MyString
+  closed: 1
+  thumbnail: MyString
+  description: MyText
+  final_eval: 1
+  user: 
+  section: 

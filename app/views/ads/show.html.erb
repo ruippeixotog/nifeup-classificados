@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @ad.title %>
+</p>
+
+<p>
+  <b>Closed:</b>
+  <%= @ad.closed %>
+</p>
+
+<p>
+  <b>Thumbnail:</b>
+  <%= @ad.thumbnail %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @ad.description %>
+</p>
+
+<p>
+  <b>Final eval:</b>
+  <%= @ad.final_eval %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @ad.user %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%= @ad.section %>
+</p>
+
+
+<%= link_to 'Edit', edit_ad_path(@ad) %> |
+<%= link_to 'Back', ads_path %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b>Admin:</b>
+  <%= @user.admin %>
+</p>
+
+<p>
+  <b>Rate:</b>
+  <%= @user.rate %>
+</p>
+
+<p>
+  <b>Blocked until:</b>
+  <%= @user.blocked_until %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

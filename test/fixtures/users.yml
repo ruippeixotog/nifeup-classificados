@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  username: MyString
+  admin: false
+  rate: 1.5
+  blocked_until: 2011-10-29 17:46:55
+
+two:
+  username: MyString
+  admin: false
+  rate: 1.5
+  blocked_until: 2011-10-29 17:46:55

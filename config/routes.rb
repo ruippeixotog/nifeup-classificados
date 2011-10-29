@@ -1,4 +1,22 @@
 Cfeup::Application.routes.draw do
+  resources :evaluations
+
+  resources :ad_tags
+
+  resources :reports
+
+  resources :comments
+
+  resources :ads
+
+  resources :resources
+
+  resources :sections
+
+  resources :block_logs
+
+  resources :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
