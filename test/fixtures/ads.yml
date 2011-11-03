@@ -1,19 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
 one:
-  title: MyString
+  title: my ad
   closed: 1
-  thumbnail: MyString
-  description: MyText
+  thumbnail_file_name: nil
+  thumbnail_content_type: nil
+  thumbnail_file_size: nil
+  thumbnail_updated_at: nil
+  description: lolololololol
   final_eval: 1
-  user: 
-  section: 
+  user: one
+  section: one
 
 two:
-  title: MyString
+  title: cool ad
   closed: 1
-  thumbnail: MyString
-  description: MyText
+  thumbnail_file_name: nil
+  thumbnail_content_type: nil
+  thumbnail_file_size: nil
+  thumbnail_updated_at: nil
+  description: cool description
   final_eval: 1
-  user: 
-  section: 
+  user: one
+  section: two
