@@ -9,7 +9,7 @@ module AdsHelper
         
         if v.is_a? Hash
           v.each do |sk, sv|
-            parameters << "#{key}[#{sk}]=#{sv}"
+            parameters << "#{key}#{sk}=#{sv}"
           end
         else
           parameters << "#{key}=#{v}"
