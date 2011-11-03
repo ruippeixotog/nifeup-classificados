@@ -35,6 +35,10 @@
   <%= @ad.section %>
 </p>
 
+<%=link_to image_tag("facebook.png",:size => "50x50"), share_with_facebook_url({ :url   => request.url,
+                                                           :title => @ad.title,
+                                                           :images => @ad.thumbnail.url(:thumb),
+                                                           :summary => @ad.description}) %>
 
 <%= link_to 'Edit', edit_ad_path(@ad) %> |
 <%= link_to 'Back', ads_path %>
