@@ -80,4 +80,9 @@ class AdsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  def dashboard
+    @ads = Ad.all
+  end
+  
 end

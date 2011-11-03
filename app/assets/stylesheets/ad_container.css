@@ -1,0 +1,21 @@
+.dashboard_ad_container {
+    padding: 15px;
+}
+
+.ad_container {
+    border: 1px solid black;
+    margin: 15px;
+    float: left;
+}
+
+.ad_thumbnail {
+    width: 140px;
+    height: 180px;
+    background-color: gray;
+    margin: 0 auto;
+}
+
+.ad_title {
+    text-align: center;
+    padding: 3px;
+}
