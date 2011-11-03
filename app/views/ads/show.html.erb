@@ -1,44 +1,38 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+	<%= javascript_tag "$.jGrowl(\"" + notice + "\")" %>
+<% end -%>
 
-<p>
-  <b>Title:</b>
-  <%= @ad.title %>
-</p>
+<div id="ad_show_container">
+	<h1><%= @ad.title %></h1>
+	<div id="ad_presentation_container">
+		<div class="ad_show_thumbnail">
+			<%= image_tag @ad.thumbnail.url(:medium) %>
+		</div>
+		<div class="ad_highlights">
+			<p>
+				<span class="label">Posted by:</span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
+			</p>
+			<p>	
+				<span class="label">Posted in:</span> <%= @ad.created_at %>
+			</p>	
+			<p>
+				<span class="label">Evaluation</span>
+			</p>
+			<p>
+				<span class="label">Tags</span>
+			</p>
+		</div>
+	</div>
+	<div class="ad_show_description">
+	  <div class="label">Description:</div>
+	  <p><%= @ad.description %></p>
+	</div>
 
-<p>
-  <b>Closed:</b>
-  <%= @ad.closed %>
-</p>
+	<%=link_to image_tag("facebook.png",:size => "50x50"), share_with_facebook_url({ :url   => request.url,
+	                                                           :title => @ad.title,
+	                                                           :images => @ad.thumbnail.url(:thumb),
+	                                                           :summary => @ad.description}) %>
 
-<p>
-  <b>Thumbnail:</b>
-  <%= image_tag @ad.thumbnail.url(:thumb) %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @ad.description %>
-</p>
-
-<p>
-  <b>Final eval:</b>
-  <%= @ad.final_eval %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @ad.user %>
-</p>
-
-<p>
-  <b>Section:</b>
-  <%= @ad.section %>
-</p>
-
-<%=link_to image_tag("facebook.png",:size => "50x50"), share_with_facebook_url({ :url   => request.url,
-                                                           :title => @ad.title,
-                                                           :images => @ad.thumbnail.url(:thumb),
-                                                           :summary => @ad.description}) %>
-
-<%= link_to 'Edit', edit_ad_path(@ad) %> |
-<%= link_to 'Back', ads_path %>
+	<%= link_to 'Edit', edit_ad_path(@ad) %> |
+	<%= link_to 'Back', ads_path %>
+</div>
