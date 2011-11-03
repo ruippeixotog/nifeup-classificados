@@ -83,6 +83,36 @@ class AdsController < ApplicationController
   
   def dashboard
     @ads = Ad.all
+    # TODO colocar user da sessão
+    @user = User.epinto
+    puts "#\n#\n#\n#\n#\n"
+    puts @user.inspect
+  end
+  
+  def mark_fav
+    @ad = Ad.find(params[:id])
+    # TODO logged user
+    user_id = User.epinto
+    if @ad.mark_favorite(user_id)
+      flash[:notice] = 'Ad was successfully marked as favorite.'
+    else
+      flash[:notice] = 'It was not possibly to mark the ad as favorite.'
+    end
+    
+    render :nothing => true
+  end
+  
+  def unmark_fav
+    @ad = Ad.find(params[:id])
+    # TODO logged user
+    user_id = User.epinto
+    if @ad.unmark_favorite(user_id)
+      flash[:notice] = 'Ad was successfully unmarked as favorite.'
+    else
+      flash[:notice] = 'It was not possibly to unmark the ad as favorite.'
+    end
+    
+    render :nothing => true
   end
   
 end

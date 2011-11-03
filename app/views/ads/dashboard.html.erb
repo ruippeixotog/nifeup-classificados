@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
-	$(".ad_container").click(function() {
+	$(".ad_clickable").click(function() {
 		var id = $(this).data("id");
 		window.location.href="<%= ads_path %>/"  + id;
 	});
@@ -8,5 +8,5 @@ $(document).ready(function() {
 </script>
 
 <div class="dashboard_ad_container">
-	<%= render :partial => 'ad', :collection => @ads %>
+	<%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
 </div>

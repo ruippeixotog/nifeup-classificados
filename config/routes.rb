@@ -7,8 +7,13 @@ Cfeup::Application.routes.draw do
 
   resources :comments
 
-  resources :ads
-
+  resources :ads do
+    member do
+      get 'mark_fav'
+      get 'unmark_fav'
+    end
+  end
+  
   resources :resources
 
   resources :sections

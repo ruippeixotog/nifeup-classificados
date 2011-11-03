@@ -1,4 +1,15 @@
+
+
 <div id="ad_container_<%= ad.id %>" class="ad_container" data-id="<%= ad.id %>" >
-	<div class="ad_thumbnail"><%= image_tag ad.thumbnail.url(:thumb) %></div>
-	<div class="ad_title"><%= ad.title %></div>
+    <span class="favorite">
+      <% if ad.favorite?(user_id) %>
+        <%= link_to 'Unfav', unmark_fav_ad_path(ad.id), { :remote => true } %>
+      <% else %>
+        <%= link_to 'Fav', mark_fav_ad_path(ad.id), { :remote => true } %>
+      <% end %>
+    </span>
+    <div class="ad_clickable">
+	    <div class="ad_thumbnail"><%= image_tag ad.thumbnail.url(:thumb) %></div>
+	    <div class="ad_title"><%= ad.title %></div>
+    </div>
 </div>

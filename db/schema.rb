@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103014631) do
+ActiveRecord::Schema.define(:version => 20111103103205) do
 
   create_table "ad_tags", :force => true do |t|
     t.string   "tag"
@@ -77,6 +77,16 @@ ActiveRecord::Schema.define(:version => 20111103014631) do
 
   add_index "evaluations", ["ad_id"], :name => "index_evaluations_on_ad_id"
   add_index "evaluations", ["user_id"], :name => "index_evaluations_on_user_id"
+
+  create_table "favorites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "ad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "favorites", ["ad_id"], :name => "index_favorites_on_ad_id"
+  add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
   create_table "reports", :force => true do |t|
     t.text     "reason"
