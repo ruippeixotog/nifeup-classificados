@@ -3,9 +3,9 @@
 <div id="ad_container_<%= ad.id %>" class="ad_container" >
     <span class="favorite">
       <% if ad.favorite?(user_id) %>
-        <%= link_to 'Unfav', unmark_fav_ad_path(ad.id), { :remote => true } %>
+        <%= link_to image_tag('fav_marked.png', "data-initial" => 'fav_marked.png', "data-next" => 'fav_marked.png'), unmark_fav_ad_path(ad.id), { :remote => true, :id => "favorite_#{ad.id}" } %>
       <% else %>
-        <%= link_to 'Fav', mark_fav_ad_path(ad.id), { :remote => true } %>
+        <%= link_to image_tag('fav_unmarked.png', "data-initial" => 'fav_unmarked.png', "data-next" => 'fav_marked.png'), mark_fav_ad_path(ad.id), { :remote => true, :id => "favorite_#{ad.id}" } %>
       <% end %>
     </span>
     <div class="ad_clickable" data-id="<%= ad.id %>">

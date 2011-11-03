@@ -1,11 +1,4 @@
-<%= javascript_tag do -%>
-	$(document).ready(function() {
-	$(".ad_clickable").click(function() {
-		var id = $(this).data("id");
-		window.location.href="<%= ads_path %>/" + id;
-	});
-});
-<% end -%>
+<%= javascript_include_tag "dashboard" %>
 
 <div class="dashboard_ad_container">
 	<%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>

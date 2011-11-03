@@ -100,7 +100,8 @@ class AdsController < ApplicationController
     end
     
     respond_to do |format|  
-        format.js  
+        puts @ad.inspect
+        format.js
     end
   end
   
