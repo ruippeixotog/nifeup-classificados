@@ -2,11 +2,11 @@
 	<%= javascript_tag "$.jGrowl(\"" + notice + "\")" %>
 <% end -%>
 
-<div id="ad_show_container">
-	<h1><%= @ad.title %></h1>
-	<div id="ad_presentation_container">
-		<div class="ad_show_thumbnail">
+<div class="ad_show_container">
+	<div class="ad_presentation_container">
+		<div class="ad_title_container">
 			<%= image_tag @ad.thumbnail.url(:medium) %>
+			<div class="ad_show_title"><%= @ad.title %></div>
 		</div>
 		<div class="ad_highlights">
 			<p>
@@ -21,20 +21,24 @@
 			<p>
 				<span class="label">Tags</span>
 			</p>
+			<div class="ad_share">
+				<a name="fb_share" type="box_count" share_url= "http://10.0.0.101:3000/ads/3" > Share </a> 
+				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
+			</div>
+			<div class="ad_share">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
+				<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
+			</div>
 		</div>
 	</div>
 	<div class="ad_show_description">
 	  <div class="label">Description:</div>
 	  <p><%= @ad.description %></p>
 	</div>
+	<div class="ad_comments">
+	  <div class="label">Comments:</div>
+	  <p>No comments yet...</p>
+	</div>
 
-	<%= link_to 'Edit', edit_ad_path(@ad) %> |
-	<%= link_to 'Back', ads_path %>
-	
-	<a name="fb_share" type="box_count" share_url= "<%=request.url%>" > Share </a> 
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
-	
-	<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
-	<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
 	
 </div>
