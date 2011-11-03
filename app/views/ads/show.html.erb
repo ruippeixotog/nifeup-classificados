@@ -28,11 +28,9 @@
 	  <p><%= @ad.description %></p>
 	</div>
 
-	<%=link_to image_tag("facebook.png",:size => "50x50"), share_with_facebook_url({ :url   => request.url,
-	                                                           :title => @ad.title,
-	                                                           :images => @ad.thumbnail.url(:thumb),
-	                                                           :summary => @ad.description}) %>
-
+	<a name="fb_share" type="icon_link" share_url="www.google.com">Share</a> 
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
+	
 	<%= link_to 'Edit', edit_ad_path(@ad) %> |
 	<%= link_to 'Back', ads_path %>
 </div>
