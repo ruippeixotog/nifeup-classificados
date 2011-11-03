@@ -16,19 +16,44 @@ class AdTest < ActiveSupport::TestCase
 		assert !(ad1.favorite? user1.id)
 	end
 
-=begin
 	test "relevance" do
-		ad1 = ads(:one).find
-		ad1 = ads(:two).find
-		user1 = users(:one).find
+		ad1 = ads(:one)
+		ad2 = ads(:two)
 
-		assert !ad1.favorite? user1.id
+    ad1_rel = ad1.relevance
+    assert ad1_rel > 0
 
-		ad1.mark_favorite user1.id
-		assert ad1.favorite? user1.id
+    ad2_rel = ad2.relevance
+    assert ad2_rel > 0
 
-		ad1.unmark_favorite user1.id
-		assert !ad1.favorite? user1.id
-	end
-=end
+    # TODO to change when the relevance algorithm is defined
+    assert ad2_rel > ad1_rel
+  end
+
+  test "get_most_relevant" do
+    # TODO to change when the relevance algorithm is defined
+    arr = Ad.get_most_relevant 3
+    assert arr [ads(:one), ads(:two), ads(:three)]
+
+    arr = Ad.get_most_relevant 5
+    assert arr [ads(:one), ads(:two), ads(:three)]
+
+    arr = Ad.get_most_relevant 1
+    assert arr [ads(:one)]
+
+    arr = Ad.get_most_relevant 0
+    assert arr []
+
+    arr = Ad.get_most_relevant -1
+    assert arr nil
+
+    arr = Ad.get_most_relevant nil
+    assert arr nil
+  end
+
+  test "search" do
+    # list = Ad.search "porto"
+    # assert ads(:one).section == sections(:two)
+    assert true
+  end
 end
