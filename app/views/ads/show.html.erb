@@ -28,9 +28,10 @@
 	  <p><%= @ad.description %></p>
 	</div>
 
-	<a name="fb_share" type="icon_link" share_url="www.google.com">Share</a> 
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
-	
 	<%= link_to 'Edit', edit_ad_path(@ad) %> |
 	<%= link_to 'Back', ads_path %>
+	
+	<a name="fb_share" type="box_count" share_url= "www.google.com" > Share </a> 
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
+	
 </div>
