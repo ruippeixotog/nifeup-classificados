@@ -18,7 +18,7 @@
   <tr>
     <td><%= ad.title %></td>
     <td><%= ad.closed %></td>
-    <td><%= ad.thumbnail %></td>
+    <td><%= image_tag ad.thumbnail.url(:thumb) %></td>
     <td><%= ad.description %></td>
     <td><%= ad.final_eval %></td>
     <td><%= ad.user %></td>

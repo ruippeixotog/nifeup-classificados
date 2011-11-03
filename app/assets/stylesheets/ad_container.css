@@ -11,11 +11,12 @@
 .ad_thumbnail {
     width: 140px;
     height: 180px;
-    background-color: gray;
     margin: 0 auto;
+    border-bottom: 1px solid black;
 }
 
 .ad_title {
     text-align: center;
     padding: 3px;
+    background-color: #CCCCCC;
 }

@@ -31,3 +31,7 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
+
+# Install paperclip
+gem "paperclip", "~> 2.4"
+

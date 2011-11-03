@@ -1,3 +1,3 @@
 class Resource < ActiveRecord::Base
-  belongs_to :ad
+  belongs_to :ad  
 end

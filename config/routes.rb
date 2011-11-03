@@ -17,7 +17,7 @@ Cfeup::Application.routes.draw do
 
   resources :users
 
-  match "dashboard" => "ads#dashboard"
+  root :to => "ads#dashboard"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
