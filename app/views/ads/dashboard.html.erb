@@ -1,4 +1,11 @@
-<%= stylesheet_link_tag "ad_container" %>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".ad_container").click(function() {
+		var id = $(this).data("id");
+		window.location.href="<%= ads_path %>/"  + id;
+	});
+});
+</script>
 
 <div class="dashboard_ad_container">
 	<%= render :partial => 'ad', :collection => @ads %>
