@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$(".ad_clickable").click(function() {
 		var id = $(this).data("id");
-		window.location.href="<%= ads_path %>/"  + id;
+		window.location.href="ads/"  + id;
 	});
 
     $(".favorite > a > img")
