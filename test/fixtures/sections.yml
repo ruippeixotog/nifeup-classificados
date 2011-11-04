@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+compra:
+  name: Compra
 
-two:
-  name: MyString
+venda:
+  name: Venda
+  
+aluguer:
+  name: Aluguer
+  
+emprego:
+  name: Emprego

@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
-one:
-  username: MyString
-  admin: false
-  rate: 1.5
-  blocked_until: 2011-10-29 17:46:55
+uva:
+  username: ei07070
+  admin: true
+  rate: nil
+  blocked_until: nil
 
-two:
-  username: MyString
+ray:
+  username: ei07061
+  admin: false
+  rate: 4
+  blocked_until: nil
+  
+grelhas:
+  username: ei07057
   admin: false
   rate: 1.5
-  blocked_until: 2011-10-29 17:46:55
+  blocked_until: nil
