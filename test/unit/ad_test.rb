@@ -11,7 +11,7 @@ class AdTest < ActiveSupport::TestCase
 		assert !(@a1.favorite? user1.id)
 
 		@a1.mark_favorite user1.id
-		assert @a1.favorite? user1.id
+		assert (@a1.favorite? user1.id)
 
 		@a1.unmark_favorite user1.id
 		assert !(@a1.favorite? user1.id)
@@ -27,62 +27,70 @@ class AdTest < ActiveSupport::TestCase
     # TODO to change when the relevance algorithm is defined
     assert ad2_rel > ad1_rel
   end
+  
+  test "opened" do
+    arr = Ad.all_opened
+    assert_equal 3, arr.length
+    arr.each do |a|
+      assert a.open?
+    end 
+  end
 
   # TODO to change when the relevance algorithm is defined
-  test "get_most_relevant" do
-    arr = Ad.get_most_relevant 3
-    assert_equal arr [ads(:a3), ads(:a2), @a1]
+  test "most relevant" do
+    arr = Ad.most_relevant 3
+    assert_equal [ads(:a3), ads(:a2), @a1], arr
 
-    arr = Ad.get_most_relevant 5
-    assert_equal arr [ads(:a3), ads(:a2), @a1]
+    arr = Ad.most_relevant 5
+    assert_equal [ads(:a3), ads(:a2), @a1], arr
 
-    arr = Ad.get_most_relevant 1
-    assert_equal arr [ads(:a3)]
+    arr = Ad.most_relevant 1
+    assert_equal [ads(:a3)], arr
 
-    arr = Ad.get_most_relevant 0
-    assert_equal arr []
+    arr = Ad.most_relevant 0
+    assert_equal [], arr
 
-    arr = Ad.get_most_relevant -1
+    arr = Ad.most_relevant -1
     assert_nil arr
 
-    arr = Ad.get_most_relevant nil
+    arr = Ad.most_relevant nil
     assert_nil arr
   end
 
   test "search" do
   	# test search in tags
-  	list = Ad.search "Porto"
-    assert_equal list.length 1
-    assert list.include?(ads(:a3))
+  	arr = Ad.search "Porto"
+    assert_equal 1, arr.length
+    assert arr.include?(ads(:a3))
     
   	# test search in a substring of a tag
-  	list = Ad.search "world"
-    assert_equal list.length 1
-    assert list.include?(@a1)
+  	arr = Ad.search "world"
+    assert_equal 1, arr.length
+    assert arr.include?(@a1)
     
     # test search in title, case insensivity
     # and accentuation insensitivity
-    list = Ad.search "universitario"
-    assert_equal list.length 1
-    assert list.include?(ads(:a3))
+    arr = Ad.search "universitario"
+    assert_equal 1, arr.length
+    assert arr.include?(ads(:a3))
     
     # test multiple results
-    list = Ad.search "FeUp"
-    assert_equal list.length, 2
-    assert list.include?(ads(:a2))
-    assert list.include?(ads(:a3))
+    arr = Ad.search "FeUp"
+    assert_equal 2, arr.length
+    assert arr.include?(ads(:a2))
+    assert arr.include?(ads(:a3))
     
     # limit number of results
-    list = Ad.search "FeUp", 1
-    assert_equal list.length, 1
+    arr = Ad.search "FeUp", 1
+    assert_equal 1, arr.length
     # TODO to change when the relevance algorithm is defined
-    assert list.include?(ads(:a3)) # by relevance
+    assert arr.include?(ads(:a3)) # by relevance
     
     # empty results and invalid inputs
-    list = Ad.search "not in tags"
-    assert list.empty?
+    arr = Ad.search "not_in_tags"
+    assert arr.empty?
     
-    list = Ad.search nil
-    assert_nil list
+    arr = Ad.search nil
+    assert_nil arr
   end
 end

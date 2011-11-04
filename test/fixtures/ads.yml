@@ -3,7 +3,7 @@
 a1:
   id: 1
   title: O meu primeiro classificado
-  closed: 1
+  closed: false
   description: Olá mundo!
   final_eval: -1
   user: grelhas
@@ -13,7 +13,7 @@ a1:
 a2:
   id: 2
   title: Venda de jogos de PS2
-  closed: 1
+  closed: false
   description: Vendo 500 jogos de PS2 gravados. Sou de Barcelos.
   final_eval: 5
   user: uva
@@ -23,9 +23,19 @@ a2:
 a3:
   id: 3
   title: T2 perto do Polo Universitário
-  closed: 1
+  closed: false
   description: Alugo T2 perto do Polo Universitário e da FEUP.
   final_eval: 2
   user: ray
   section: aluguer
   created_at: 2011-10-30 17:47:48
+  
+a4:
+  id: 4
+  title: T1 no Polo Universitário
+  closed: true
+  description: Este anúncio está fechado.
+  final_eval: 4
+  user: grelhas
+  section: aluguer
+  created_at: 2011-10-31 17:47:48
