@@ -2,9 +2,16 @@ require 'test_helper'
 
 class AdsControllerTest < ActionController::TestCase
   setup do
-    @ad = ads(:one)
+    @ad = ads(:a1)
+  end
+  
+  test "should get index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:ads)
   end
 
+=begin
   test "should get index" do
     get :index
     assert_response :success
@@ -46,4 +53,5 @@ class AdsControllerTest < ActionController::TestCase
 
     assert_redirected_to ads_path
   end
+=end
 end

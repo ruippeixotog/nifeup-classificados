@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class BlockLogsControllerTest < ActionController::TestCase
+=begin
   setup do
     @block_log = block_logs(:one)
   end
@@ -46,4 +47,5 @@ class BlockLogsControllerTest < ActionController::TestCase
 
     assert_redirected_to block_logs_path
   end
+=end
 end

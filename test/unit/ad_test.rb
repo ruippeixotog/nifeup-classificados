@@ -1,29 +1,27 @@
 require 'test_helper'
 
 class AdTest < ActiveSupport::TestCase
-	# fixtures :users, :ads
+	setup do
+		@a1 = ads(:a1)
+	end
 
 	test "favorites" do
-		ad1 = ads(:a1)
-		user1 = users(:one)
+		user1 = users(:uva)
 
-		assert !(ad1.favorite? user1.id)
+		assert !(@a1.favorite? user1.id)
 
-		ad1.mark_favorite user1.id
-		assert ad1.favorite? user1.id
+		@a1.mark_favorite user1.id
+		assert @a1.favorite? user1.id
 
-		ad1.unmark_favorite user1.id
-		assert !(ad1.favorite? user1.id)
+		@a1.unmark_favorite user1.id
+		assert !(@a1.favorite? user1.id)
 	end
 
 	test "relevance" do
-		ad1 = ads(:a1)
-		ad2 = ads(:a2)
-
-    ad1_rel = ad1.relevance
+    ad1_rel = @a1.relevance
     assert ad1_rel > 0
 
-    ad2_rel = ad2.relevance
+    ad2_rel = ads(:a2).relevance
     assert ad2_rel > 0
 
     # TODO to change when the relevance algorithm is defined
@@ -33,10 +31,10 @@ class AdTest < ActiveSupport::TestCase
   # TODO to change when the relevance algorithm is defined
   test "get_most_relevant" do
     arr = Ad.get_most_relevant 3
-    assert_equal arr [ads(:a3), ads(:a2), ads(:a1)]
+    assert_equal arr [ads(:a3), ads(:a2), @a1]
 
     arr = Ad.get_most_relevant 5
-    assert_equal arr [ads(:a3), ads(:a2), ads(:a1)]
+    assert_equal arr [ads(:a3), ads(:a2), @a1]
 
     arr = Ad.get_most_relevant 1
     assert_equal arr [ads(:a3)]
@@ -60,7 +58,7 @@ class AdTest < ActiveSupport::TestCase
   	# test search in a substring of a tag
   	list = Ad.search "world"
     assert_equal list.length 1
-    assert list.include?(ads(:a1))
+    assert list.include?(@a1)
     
     # test search in title, case insensivity
     # and accentuation insensitivity
@@ -70,13 +68,13 @@ class AdTest < ActiveSupport::TestCase
     
     # test multiple results
     list = Ad.search "FeUp"
-    assert_equal list.length 2
+    assert_equal list.length, 2
     assert list.include?(ads(:a2))
     assert list.include?(ads(:a3))
     
     # limit number of results
-    list = Ad.search "FeUp" 1
-    assert_equal list.length 1
+    list = Ad.search "FeUp", 1
+    assert_equal list.length, 1
     # TODO to change when the relevance algorithm is defined
     assert list.include?(ads(:a3)) # by relevance
     
