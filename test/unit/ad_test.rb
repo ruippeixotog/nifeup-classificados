@@ -57,34 +57,32 @@ class AdTest < ActiveSupport::TestCase
     assert_nil arr
   end
 
+  # TODO to change when the relevance algorithm is defined
   test "search" do
   	# test search in tags
   	arr = Ad.search "Porto"
-    assert_equal 1, arr.length
-    assert arr.include?(ads(:a3))
+    assert_equal [ads(:a3)], arr
     
   	# test search in a substring of a tag
   	arr = Ad.search "world"
-    assert_equal 1, arr.length
-    assert arr.include?(@a1)
+    assert_equal [@a1], arr
     
     # test search in title, case insensivity
     # and accentuation insensitivity
     arr = Ad.search "universitario"
-    assert_equal 1, arr.length
-    assert arr.include?(ads(:a3))
+    assert_equal [ads(:a3)], arr
     
-    # test multiple results
+    # test multiple results, ordered by relevance
     arr = Ad.search "FeUp"
-    assert_equal 2, arr.length
-    assert arr.include?(ads(:a2))
-    assert arr.include?(ads(:a3))
+    assert_equal [ads(:a3), ads(:a2)], arr
+    
+    # test multiple keywords
+    arr = Ad.search "t2 ola"
+    assert_equal [ads(:a3), @a1], arr
     
     # limit number of results
-    arr = Ad.search "FeUp", 1
-    assert_equal 1, arr.length
-    # TODO to change when the relevance algorithm is defined
-    assert arr.include?(ads(:a3)) # by relevance
+    arr = Ad.search "t2 ola", 1
+    assert_equal [ads(:a3)], arr
     
     # empty results and invalid inputs
     arr = Ad.search "not_in_tags"
