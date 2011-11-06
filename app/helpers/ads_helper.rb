@@ -1,4 +1,12 @@
-module AdsHelper
+module AdsHelper  
+  
+  def checked?(id)
+    if params[":section_#{id}"]
+      true
+    else
+      false
+    end
+  end
   
   def share_with_facebook_url(opts)
       url = "http://www.facebook.com/sharer.php?"

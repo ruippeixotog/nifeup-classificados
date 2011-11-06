@@ -82,13 +82,16 @@ class AdsController < ApplicationController
   end
   
   def dashboard
-    @ads = Ad.all
+    @search = Ad.search(params[:search])
+    @ads = @search.all
+    @sections = Section.all
+    
     # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
 
     # TODO colocar user da sessão
     @user = User.epinto
   end
-  
+
   def mark_fav
     # TODO logged user
     @user = User.epinto

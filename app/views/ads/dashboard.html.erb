@@ -1,13 +1,19 @@
 <%= javascript_include_tag "dashboard" %>
-<%= javascript_tag do -%>
-	$(document).ready(function() {
-	$(".ad_clickable").click(function() {
-		var id = $(this).data("id");
-		window.location.href="<%= ads_path %>/" + id;
-	});
-});
-<% end -%>
 
+<div class="dashboard_search">
+  <%= form_for @search, :url => '/' do |f| %>
+    <%= f.text_field :title_or_ad_tags_tag_contains %>
+    <!--TODO filter records by section -->
+    <!--<ul type="none" margin="0px">
+      <% @sections.each do |section| %>
+      <li>
+	<%= check_box_tag "#{:section}_#{section.id}", section.id, checked?(section.id)%><%= section.name %>
+      </li>
+      <% end %>
+    </ul>-->
+    <%= f.submit "Pesquisar"%>
+  <% end %>
+</div><!--end dashboard search div -->
 <div class="dashboard_ad_container">
-	<%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
+  <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
 </div>

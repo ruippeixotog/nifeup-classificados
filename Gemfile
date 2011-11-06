@@ -17,6 +17,10 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'therubyracer'
+
+#gem 'meta_where'
+gem 'meta_search'
 
 # Use unicorn as the web server
 # gem 'unicorn'

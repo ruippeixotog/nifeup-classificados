@@ -3,6 +3,7 @@ class Ad < ActiveRecord::Base
   belongs_to :section
   has_many :resources
   has_many :favorites
+  has_many :ad_tags
   has_many :users, :through => :favorites
 
   has_attached_file :thumbnail, :styles => { :thumb => "140x180>", :medium => "250x250>" }
@@ -38,4 +39,5 @@ class Ad < ActiveRecord::Base
     return [] if count == 0
     all_opened.sort_by { |a| -a.relevance }.first(count)
   end
+
 end

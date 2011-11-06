@@ -19,7 +19,9 @@
 				<span class="label">Evaluation</span>
 			</p>
 			<p>
-				<span class="label">Tags</span>
+				<span class="label">Tags</span> <% @ad.ad_tags.each do |t|%>
+				<%= if t != @ad.ad_tags.last then t.tag+", " else t.tag end%>
+				<% end %>
 			</p>
 			<div class="ad_share">
 				<a name="fb_share" type="box_count" share_url= "<%=request.url%>" > Share </a> 
