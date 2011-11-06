@@ -1,4 +1,13 @@
 <%= javascript_include_tag "dashboard" %>
+<%= javascript_tag do -%>
+	$(document).ready(function() {
+	$(".ad_clickable").click(function() {
+		var id = $(this).data("id");
+		window.location.href="<%= ads_path %>/" + id;
+	});
+});
+<% end -%>
+
 
 <div class="dashboard_search">
   <%= form_for @search, :url => '/' do |f| %>

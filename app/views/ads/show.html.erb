@@ -2,6 +2,8 @@
 	<%= javascript_tag "$.jGrowl(\"" + notice + "\")" %>
 <% end -%>
 
+<% content_for :title, @ad.title %>
+
 <div class="ad_show_container">
 	<div class="ad_presentation_container">
 		<div class="ad_title_container">
