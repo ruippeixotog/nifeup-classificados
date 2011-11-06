@@ -11,6 +11,9 @@ Cfeup::Application.routes.draw do
     member do
       get 'mark_fav'
       get 'unmark_fav'
+    end    
+    collection do
+      get 'dashboard'
     end
   end
   

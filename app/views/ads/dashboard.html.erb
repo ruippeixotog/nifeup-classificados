@@ -8,9 +8,10 @@
 });
 <% end -%>
 
+<% content_for :title, 'dashboard' %>
 
 <div class="dashboard_search">
-  <%= form_for @search, :url => '/' do |f| %>
+  <%= form_for @search, :url => dashboard_ads_path do |f| %>
     <%= f.text_field :title_or_ad_tags_tag_contains %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
@@ -25,4 +26,5 @@
 </div><!--end dashboard search div -->
 <div class="dashboard_ad_container">
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
+  <br style="clear:both" />
 </div>

@@ -5,3 +5,9 @@
  *= require_self
  *= require_tree . 
 */
+
+#content {
+    margin: 2% 10%;
+    background: #F0EEEE;
+    height: 100%;
+}
