@@ -4,13 +4,13 @@
 
 <% content_for :title, @ad.title %>
 
-<div class="ad_show_container">
-	<div class="ad_presentation_container">
-		<div class="ad_title_container">
+<div class="fe_ad_show_container">
+	<div class="fe_ad_presentation_container">
+		<div class="fe_ad_title_container">
 			<%= image_tag @ad.thumbnail.url(:medium) %>
-			<div class="ad_show_title"><%= @ad.title %></div>
+			<div class="fe_ad_show_title"><%= @ad.title %></div>
 		</div>
-		<div class="ad_highlights">
+		<div class="fe_ad_highlights">
 			<p>
 				<span class="label">Posted by:</span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
 			</p>
@@ -25,21 +25,21 @@
 				<%= if t != @ad.ad_tags.last then t.tag+", " else t.tag end%>
 				<% end %>
 			</p>
-			<div class="ad_share">
+			<div class="fe_ad_share">
 				<a name="fb_share" type="box_count" share_url= "<%=request.url%>" > Share </a> 
 				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
 			</div>
-			<div class="ad_share">
+			<div class="fe_ad_share">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
 				<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
 			</div>
 		</div>
 	</div>
-	<div class="ad_show_description">
+	<div class="fe_ad_show_description">
 	  <div class="label">Description:</div>
 	  <p><%= @ad.description %></p>
 	</div>
-	<div class="ad_comments">
+	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <p>No comments yet...</p>
 	</div>

@@ -1,7 +1,7 @@
 <%= javascript_include_tag "dashboard" %>
 <%= javascript_tag do -%>
 	$(document).ready(function() {
-	$(".ad_clickable").click(function() {
+	$(".fe_ad_clickable").click(function() {
 		var id = $(this).data("id");
 		window.location.href="<%= ads_path %>/" + id;
 	});
@@ -11,7 +11,7 @@
 <% content_for :title, 'dashboard' %>
 
 <div class="dashboard_search">
-  <%= form_for @search, :url => dashboard_ads_path do |f| %>
+  <%= form_for @search, :url => dashboard_ads_path, :html => { :id => "fe_ad_search", :class => "fe_ad_search" } do |f| %>
     <%= f.text_field :title_or_ad_tags_tag_contains %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
@@ -24,7 +24,7 @@
     <%= f.submit "Go", :id => 'search_button' %>
   <% end %>
 </div><!--end dashboard search div -->
-<div class="dashboard_ad_container">
+<div class="dashboard_fe_ad_container">
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
   <br style="clear:both" />
 </div>
