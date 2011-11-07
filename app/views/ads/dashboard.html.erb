@@ -1,4 +1,6 @@
+<%= javascript_include_tag "jquery.liveSearch" %>
 <%= javascript_include_tag "dashboard" %>
+
 <%= javascript_tag do -%>
 	$(document).ready(function() {
 	$(".fe_ad_clickable").click(function() {
@@ -12,7 +14,7 @@
 
 <div class="dashboard_search">
   <%= form_for @search, :url => dashboard_ads_path, :html => { :id => "fe_ad_search", :class => "fe_ad_search" } do |f| %>
-    <%= f.text_field :title_or_ad_tags_tag_contains %>
+    <%= f.text_field :title_or_ad_tags_tag_contains, :id => "search_text_field" %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
       <% @sections.each do |section| %>
@@ -21,10 +23,14 @@
       </li>
       <% end %>
     </ul>-->
+    <%= javascript_tag do -%>
+      var ajaxSearchUrl = "<%= url_for :action => 'update_search' %>";
+    <% end -%>
+
     <%= f.submit "Go", :id => 'search_button' %>
   <% end %>
 </div><!--end dashboard search div -->
-<div class="dashboard_fe_ad_container">
+<div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
   <br style="clear:both" />
 </div>

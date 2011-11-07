@@ -14,6 +14,7 @@ Cfeup::Application.routes.draw do
     end    
     collection do
       get 'dashboard'
+      get 'update_search'
     end
   end
   

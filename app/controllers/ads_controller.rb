@@ -92,6 +92,20 @@ class AdsController < ApplicationController
     @user = User.epinto
   end
 
+  def update_search
+    @search = Ad.search(params[:search])
+    @ads = @search.all
+    @sections = Section.all
+
+    # TODO colocar user da sessão
+    @user = User.epinto
+
+    respond_to do |format|
+      puts @ad.inspect
+      format.js
+    end
+  end
+
   def mark_fav
     # TODO logged user
     @user = User.epinto
@@ -118,7 +132,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'It was not possibly to unmark the ad as favorite.'
     end
     
-    respond_to do |format|  
+    respond_to do |format|
       format.js
     end
   end
