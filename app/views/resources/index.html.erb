@@ -2,9 +2,9 @@
 
 <table>
   <tr>
-    <th>Mime type</th>
     <th>Link</th>
     <th>Ad</th>
+    <th>Description</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,9 +12,9 @@
 
 <% @resources.each do |resource| %>
   <tr>
-    <td><%= resource.mime_type %></td>
-    <td><%= resource.link %></td>
-    <td><%= resource.ad %></td>
+    <td><%= resource.link.url %></td>
+    <td><%= resource.ad.title %></td>
+    <td><%= resource.description %></td>
     <td><%= link_to 'Show', resource %></td>
     <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
     <td><%= link_to 'Destroy', resource, confirm: 'Are you sure?', method: :delete %></td>

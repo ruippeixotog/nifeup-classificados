@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103103205) do
+ActiveRecord::Schema.define(:version => 20111108164139) do
 
   create_table "ad_tags", :force => true do |t|
     t.string   "tag"
@@ -100,11 +100,14 @@ ActiveRecord::Schema.define(:version => 20111103103205) do
   add_index "reports", ["user_id"], :name => "index_reports_on_user_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "mime_type"
-    t.string   "link"
     t.integer  "ad_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "link_file_name"
+    t.string   "link_content_type"
+    t.integer  "link_file_size"
+    t.datetime "link_updated_at"
+    t.string   "description"
   end
 
   add_index "resources", ["ad_id"], :name => "index_resources_on_ad_id"

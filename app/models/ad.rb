@@ -7,7 +7,7 @@ class Ad < ActiveRecord::Base
   has_many :users, :through => :favorites
 
   has_attached_file :thumbnail, :styles => { :thumb => "140x180>", :medium => "250x250>" }
-  
+
   def open?
     self.closed == 0
   end
@@ -38,6 +38,13 @@ class Ad < ActiveRecord::Base
     return nil if count.nil? || count < 0
     return [] if count == 0
     all_opened.sort_by { |a| -a.relevance }.first(count)
+  end
+  
+  def gallery
+    #self.resources.where('resources.link_content_type LIKE ?', 'image/%')
+    gallery = []
+    (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
+    return gallery
   end
 
 end

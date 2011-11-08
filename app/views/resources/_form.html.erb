@@ -12,16 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :mime_type %><br />
-    <%= f.text_field :mime_type %>
+	<%= f.label :link %><br />
+	<%= f.file_field :link %>
   </div>
   <div class="field">
-    <%= f.label :link %><br />
-    <%= f.text_field :link %>
+    <%= f.label :ad_id %><br />
+    <%= f.number_field :ad_id %>
   </div>
   <div class="field">
-    <%= f.label :ad %><br />
-    <%= f.text_field :ad %>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
   </div>
   <div class="actions">
     <%= f.submit %>

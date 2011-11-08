@@ -1,18 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Mime type:</b>
-  <%= @resource.mime_type %>
-</p>
-
-<p>
   <b>Link:</b>
-  <%= @resource.link %>
+  <%= image_tag @resource.link.url %>
 </p>
 
 <p>
   <b>Ad:</b>
-  <%= @resource.ad %>
+  <%= @resource.ad.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @resource.description %>
 </p>
 
 

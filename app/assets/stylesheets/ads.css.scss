@@ -48,24 +48,25 @@
 }
 
 .fe_ad_show_title {
-    text-align: center;
+    margin-bottom: 10px;
 }
 
 .fe_ad_highlights {
     position: absolute;
     left: 300px;
     right: 0px;
-    top: 20px;
+    top: 45px;
     border: 1px solid black;
     border-radius: 10px;
     padding: 10px;
-    height: 220px;
+    height: 230px;
 }
 
 .fe_ad_show_description {
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 10px;
+    margin-top: 20px;
     border: 1px solid black;
     border-radius: 10px;
     padding: 10px;
@@ -99,11 +100,7 @@
 }
 
 .fe_ad_title_container {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 250px;
-    height: 270pxma;
+    
     font-size: 2.0em;
     line-height: 1.5em;
 }
@@ -168,4 +165,7 @@ form.fe_ad_search {
     margin-bottom: -1px;
 }
 
-
+.fe_ad_gallery {
+    margin-left: -35px;
+    margin-right: -38px;
+}
