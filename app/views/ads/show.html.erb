@@ -10,7 +10,8 @@
 	    $("a[rel^='prettyPhoto']").prettyPhoto({
 			theme: 'facebook',
 			social_tools: '',
-			show_title: false});
+			show_title: false,
+			allow_resize: false});
 		$(".scrollable").scrollable();
 	});
 <% end -%>
@@ -34,15 +35,15 @@
 				   <!-- root element for the items -->
 					<div class="items">
 						<div>
-					    <% @ad.gallery.each_with_index do |res, i| %>
-							<%= link_to res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description } do 
-								image_tag res.link.url(:gallery)
-						  	end %>
-							<% if not i == 0 and (i+1) % 4 == 0 %>
-								</div>
-								<div>
-							<% end %>
-						<% end -%>
+					    	<% @ad.gallery.each_with_index do |res, i| %>
+								<%= link_to res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description, :class => 'fe_ad_gallery_item' } do 
+									image_tag res.link.url(:gallery)
+							  	end %>
+								<% if not i == 0 and (i+1) % 4 == 0 %>
+									</div>
+									<div>
+								<% end %>
+							<% end -%>
 						</div>
 					</div>
 
