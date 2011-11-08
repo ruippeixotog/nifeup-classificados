@@ -101,7 +101,6 @@ class AdsController < ApplicationController
     @user = User.epinto
 
     respond_to do |format|
-      puts @ad.inspect
       format.js
     end
   end
@@ -111,13 +110,12 @@ class AdsController < ApplicationController
     @user = User.epinto
     @ad = Ad.find(params[:id])
     if @ad.mark_favorite(@user.id)
-      flash[:notice] = 'Ad was successfully marked as favorite.'
+      @notice = I18n.t 'ad.success_mark_fav'
     else
-      flash[:notice] = 'It was not possibly to mark the ad as favorite.'
+      @notice = I18n.t 'ad.failure_mark_fav'
     end
     
-    respond_to do |format|  
-        puts @ad.inspect
+    respond_to do |format|
         format.js
     end
   end
@@ -127,9 +125,9 @@ class AdsController < ApplicationController
     @user = User.epinto
     @ad = Ad.find(params[:id])
     if @ad.unmark_favorite(@user.id)
-      flash[:notice] = 'Ad was successfully unmarked as favorite.'
+      @notice = I18n.t 'ad.success_unmark_fav'
     else
-      flash[:notice] = 'It was not possibly to unmark the ad as favorite.'
+      @notice = I18n.t 'ad.failure_unmark_fav'
     end
     
     respond_to do |format|

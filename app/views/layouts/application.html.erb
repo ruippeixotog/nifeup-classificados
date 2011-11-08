@@ -2,13 +2,16 @@
 <html>
 <head>
 	
-<title>Classificados FEUP :: <%=h yield(:title) %></title>
+<title> <%=h yield(:title)%> :: Classificados FEUP</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "jquery.jgrowl" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<% if notice %>
+	<%= javascript_tag "$.jGrowl(\"" + notice + "\")" %>
+<% end -%>
 <div id="content">
   <%= yield %>
 </div>

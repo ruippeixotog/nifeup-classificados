@@ -3,3 +3,9 @@
 
 en:
   hello: "Hello world"
+  
+  ad:
+    success_mark_fav: "Ad was successfully marked as favorite."
+    failure_mark_fav: "It was not possibly to mark the ad as favorite."
+    success_unmark_fav: "Ad was successfully unmarked as favorite."
+    failure_unmark_fav: "It was not possibly to unmark the ad as favorite."

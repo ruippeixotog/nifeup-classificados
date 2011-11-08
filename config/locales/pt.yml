@@ -1,0 +1,11 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+pt:
+  hello: "Olá mundo"
+  
+  ad:
+    success_mark_fav: "Anúncio marcado como favorito."
+    failure_mark_fav: "Não foi possível marcar o anúncio como favorito."
+    success_unmark_fav: "Anúncio removido dos favoritos."
+    failure_unmark_fav: "Não foi possível remover o anúncio dos favoritos."
