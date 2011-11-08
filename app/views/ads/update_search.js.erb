@@ -1,2 +1,6 @@
-m = $('#dashboard_fe_ad_container');
-m.html('<%= escape_javascript render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %><br style="clear:both" />');
+obj = $('#dashboard_fe_ad_container');
+obj.html('<%= escape_javascript render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %><br style="clear:both" />');
+$(".fe_ad_clickable").click(function() {
+	var id = $(this).data("id");
+	window.location.href="<%= ads_path %>/" + id;
+});
