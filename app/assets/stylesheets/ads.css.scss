@@ -103,7 +103,7 @@
     left: 0px;
     top: 0px;
     width: 250px;
-    height: 270px;
+    height: 270pxma;
     font-size: 2.0em;
     line-height: 1.5em;
 }
@@ -150,21 +150,22 @@
 
 form.fe_ad_search {
     display: inline-block;
-    zoom: 1;
     border: solid 1px #D2D2D2;
-	border-bottom-width: 0px;
+    border-bottom: 1px solid #F1F1F1;
     padding: 3px 5px;
     -webkit-border-radius: 2em 2em 0em 0em;
     -moz-border-radius: 2em 2em 0em 0em;
     border-radius: 2em 2em 0em 0em;
-    -webkit-box-shadow: 0 1px 0px rgba(0,0,0,.1);
-    -moz-box-shadow: 0 1px 0px rgba(0,0,0,.1);
-    box-shadow: 0 1px 0px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 -1px 0px rgba(0,0,0,.1);
+    -moz-box-shadow: 0 -1px 0px rgba(0,0,0,.1);
+    box-shadow: 0 -1px 0px rgba(0,0,0,.1);
     background: #F1F1F1;
-    background: -webkit-gradient(linear, left top, left bottom, from(white), to(#EDEDED));
-    background: -moz-linear-gradient(top, white, #EDEDED);
+    background: -webkit-gradient(linear, left top, left bottom, from(white), to(#F1F1F1));
+    background: -moz-linear-gradient(top, white, #F1F1F1);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
     -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+    z-index: 2;
+    margin-bottom: -1px;
 }
 
 
