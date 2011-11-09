@@ -1,11 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
-one:
-  reason: MyText
-  user: 
-  comment: 
-
-two:
-  reason: MyText
-  user: 
-  comment: 
+#one:
+#  reason: MyText
+#  user: 
+#  comment: 

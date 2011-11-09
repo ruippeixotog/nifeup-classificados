@@ -1,29 +1,33 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
 t11:
-  ad: a1
+  ad_id: 1
   tag: hello world
   
 t21:
-  ad: a2
+  ad_id: 2
   tag: jogos
   
 t22:
-  ad: a2
+  ad_id: 2
   tag: ps2
   
 t23:
-  ad: a2
+  ad_id: 2
   tag: feup
 
 t31:
-  ad: a3
+  ad_id: 3
   tag: Porto
   
 t32:
-  ad: a3
+  ad_id: 3
   tag: t2
   
 t33:
-  ad: a3
+  ad_id: 3
   tag: brutal
+  
+t41:
+  ad_id: 4
+  tag: Porto

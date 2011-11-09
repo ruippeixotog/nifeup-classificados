@@ -88,8 +88,7 @@ class AdsController < ApplicationController
   end
   
   def dashboard
-    @search = Ad.search(params[:search])
-    @ads = @search.all
+    @ads = Ad.search_text(params[:search]["search_terms"])
     @sections = Section.all
     
     # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
@@ -99,8 +98,7 @@ class AdsController < ApplicationController
   end
 
   def update_search
-    @search = Ad.search(params[:search])
-    @ads = @search.all
+    @ads = Ad.search_text(params[:search]["search_terms"])
     @sections = Section.all
 
     # TODO colocar user da sessão
@@ -115,7 +113,7 @@ class AdsController < ApplicationController
     # TODO logged user
     @user = User.epinto
     @ad = Ad.find(params[:id])
-    if @ad.mark_favorite(@user.id)
+    if @ad.mark_favorite!(@user.id)
       @notice = I18n.t 'ad.success_mark_fav'
     else
       @notice = I18n.t 'ad.failure_mark_fav'
@@ -130,7 +128,7 @@ class AdsController < ApplicationController
     # TODO logged user
     @user = User.epinto
     @ad = Ad.find(params[:id])
-    if @ad.unmark_favorite(@user.id)
+    if @ad.unmark_favorite!(@user.id)
       @notice = I18n.t 'ad.success_unmark_fav'
     else
       @notice = I18n.t 'ad.failure_unmark_fav'

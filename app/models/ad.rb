@@ -9,6 +9,24 @@ class Ad < ActiveRecord::Base
   has_many :raters, :through => :evaluations, :source => :users
 
   has_attached_file :thumbnail, :styles => { :thumb => "140x180>", :medium => "250x250>" }
+  
+  def self.all_opened
+    Ad.where(:closed => false)
+  end
+  
+  def self.most_relevant(count)
+    return nil if count.nil? || count < 0
+    return [] if count == 0
+    order_by_relevance(all_opened).first(count)
+  end
+  
+  def self.search_text(text, limit=2**29)
+    return nil if text.nil? || limit.nil? || limit < 0
+    return [] if count == 0
+    return most_relevant(limit) if text.empty?
+    search = all_opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
+    order_by_relevance(search.uniq).first(limit)
+  end
 
   def open?
     self.closed == 0
@@ -18,12 +36,12 @@ class Ad < ActiveRecord::Base
     not self.users.where("user_id = ?", user_id).empty?
   end
   
-  def mark_favorite(user_id)
+  def mark_favorite!(user_id)
     fav = Favorite.new :user_id => user_id, :ad_id => self.id
     fav.save
   end
   
-  def unmark_favorite(user_id)
+  def unmark_favorite!(user_id)
     fav = Favorite.find_by_user_id_and_ad_id(user_id, self.id)
     fav.destroy
   end
@@ -44,17 +62,8 @@ class Ad < ActiveRecord::Base
   end
   
   def relevance
+    # TODO better algorithm!
     self.created_at.to_i
-  end
-  
-  def self.all_opened
-    Ad.where(:closed => false)
-  end
-  
-  def self.most_relevant(count)
-    return nil if count.nil? || count < 0
-    return [] if count == 0
-    all_opened.sort_by { |a| -a.relevance }.first(count)
   end
   
   def average_rating
@@ -76,5 +85,9 @@ class Ad < ActiveRecord::Base
     (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
     return gallery
   end
-
+  
+private
+  def self.order_by_relevance(arr)
+    arr.sort_by { |a| -a.relevance }
+  end
 end

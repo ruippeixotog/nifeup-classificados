@@ -13,7 +13,7 @@
 
 <div class="dashboard_search">
   <%= form_for @search, :url => dashboard_ads_path, :html => { :id => "fe_ad_search", :class => "fe_ad_search" } do |f| %>
-    <%= f.text_field :title_or_ad_tags_tag_contains, :id => "search_text_field" %>
+    <%= f.text_field :search_terms, :id => "search_text_field" %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
       <% @sections.each do |section| %>
