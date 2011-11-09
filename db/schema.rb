@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(:version => 20111108164139) do
   add_index "favorites", ["ad_id"], :name => "index_favorites_on_ad_id"
   add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
+  create_table "ratings", :force => true do |t|
+    t.string   "user_id"
+    t.string   "ad_id"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reports", :force => true do |t|
     t.text     "reason"
     t.integer  "user_id"

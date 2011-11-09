@@ -14,6 +14,12 @@ class AdsController < ApplicationController
   # GET /ads/1.json
   def show
     @ad = Ad.find(params[:id])
+    @user = User.epinto
+    if @rating = @user.evaluations.find_by_ad_id(params[:id])
+        @rating
+    else
+        @rating = Evaluation.new
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -132,6 +138,20 @@ class AdsController < ApplicationController
     
     respond_to do |format|
       format.js
+    end
+  end
+  
+  def rate
+    @ad = Ad.find(params[:id])
+    @user = User.epinto #USER SESSION
+    if @ad.rate(@user.id,params[:rating].to_i)
+      @notice = I18n.t 'ad.success_rate'
+    else
+      @notice = I18n.t 'ad.failure_rate'
+    end
+        
+    respond_to do |format|  
+        format.js
     end
   end
   

@@ -5,6 +5,8 @@
 <%= stylesheet_link_tag 'scrollable-horizontal' %>
 <%= stylesheet_link_tag 'scrollable-buttons' %>
 
+<%= javascript_include_tag 'jquery.raty.min' %>
+
 <%= javascript_tag do -%>
 	$(document).ready(function() {
 	    $("a[rel^='prettyPhoto']").prettyPhoto({
@@ -13,6 +15,14 @@
 			show_title: false,
 			allow_resize: false});
 		$(".scrollable").scrollable();
+		$('#rating').raty({
+		  start: <%= @ad.user_rating(@user.id) %>,
+		  path: "/assets/raty/",
+		  click: function(score, evt) {
+			$.post('/ads/<%= @ad.id %>/rate', { id: <%= @ad.id %>, rating: score  }, function(data) {
+			});
+		  }
+		});
 	});
 <% end -%>
 
@@ -76,6 +86,14 @@
 				<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
 				<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
 			</div>
+			
+			<div id="rating">
+			</div>
+			
+			<p>
+				<span class="label"> Average rating </span> <span id="average_rating"> <%= @ad.average_rating %> </span>
+			</p>
+			
 		</div>
 	</div>
 	<div class="fe_ad_show_description">
@@ -85,5 +103,8 @@
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <p>No comments yet...</p>
-	</div>
+	</div>	
 </div>
+
+
+

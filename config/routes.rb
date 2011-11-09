@@ -11,6 +11,8 @@ Cfeup::Application.routes.draw do
     member do
       get 'mark_fav'
       get 'unmark_fav'
+      post 'rate'
+      put 'rate'
     end    
     collection do
       get 'dashboard'
@@ -25,6 +27,8 @@ Cfeup::Application.routes.draw do
   resources :block_logs
 
   resources :users
+  
+  resources :ratings
 
   root :to => "ads#dashboard"
 

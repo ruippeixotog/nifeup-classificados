@@ -5,6 +5,8 @@ class Ad < ActiveRecord::Base
   has_many :favorites
   has_many :ad_tags
   has_many :users, :through => :favorites
+  has_many :evaluations
+  has_many :raters, :through => :evaluations, :source => :users
 
   has_attached_file :thumbnail, :styles => { :thumb => "140x180>", :medium => "250x250>" }
 
@@ -26,6 +28,21 @@ class Ad < ActiveRecord::Base
     fav.destroy
   end
   
+  def rate(user_id,value)
+    evaluation = Evaluation.find_or_create_by_user_id_and_ad_id :user_id => user_id, :ad_id => self.id
+    evaluation.value = value
+    evaluation.save 
+  end
+  
+  def user_rating(user_id)
+    evaluation = Evaluation.find_by_user_id_and_ad_id(user_id, self.id)
+    if evaluation != nil
+      evaluation.value
+    else
+      0
+    end
+  end
+  
   def relevance
     self.created_at.to_i
   end
@@ -38,6 +55,19 @@ class Ad < ActiveRecord::Base
     return nil if count.nil? || count < 0
     return [] if count == 0
     all_opened.sort_by { |a| -a.relevance }.first(count)
+  end
+  
+  def average_rating
+      @value = 0
+      self.evaluations.each do |evaluation|
+          @value = @value + evaluation.value
+      end
+      @total = self.evaluations.size
+      if @total > 0
+        @value.to_f / @total.to_f
+      else
+        "Not yet rated"
+      end
   end
   
   def gallery
