@@ -58,7 +58,7 @@
 				<span class="label">Posted by:</span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
 			</p>
 			<p>	
-				<span class="label">Posted in:</span> <%= @ad.created_at %>
+				<span class="label">Posted at:</span> <%= date_format @ad.created_at %>
 			</p>	
 			<p>
 				<span class="label">Evaluation</span>
