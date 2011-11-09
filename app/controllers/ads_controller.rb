@@ -88,8 +88,7 @@ class AdsController < ApplicationController
   end
   
   def dashboard
-    @search = Ad.search(params[:search])
-    @ads = @search.all
+    @ads = Ad.search_text(params["search_terms"])
     @sections = Section.all
     
     # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
@@ -99,8 +98,7 @@ class AdsController < ApplicationController
   end
 
   def update_search
-    @search = Ad.search(params[:search])
-    @ads = @search.all
+    @ads = Ad.search_text(params["search_terms"])
     @sections = Section.all
 
     # TODO colocar user da sessão

@@ -36,18 +36,53 @@ class AdTest < ActiveSupport::TestCase
 		assert_throws(ArgumentError) { @a1.rate! user1.id, nil }
 	end
 	
-	test "ad_rating" do
+	test "average_ad_rating" do
 	  @a1.rate! users(:uva), 3
-	  assert_in_delta 3.0, @a1.avg_rating, 0.001
+	  assert_in_delta 3.0, @a1.average_rate, 0.001
 	  
 	  @a1.rate! users(:ray).id, 4
-	  assert_in_delta 3.5, @a1.avg_rating, 0.001
+	  assert_in_delta 3.5, @a1.average_rate, 0.001
 	  
 	  @a1.rate! users(:grelhas).id, 1
-	  assert_in_delta (8.0 / 3.0), @a1.avg_rating, 0.001
+	  assert_in_delta (8.0 / 3.0), @a1.average_rate, 0.001
 	  
 	  @a1.rate! users(:ray).id, 5
-	  assert_in_delta 3.0, @a1.avg_rating, 0.001
+	  assert_in_delta 3.0, @a1.average_rate, 0.001
+	end
+	
+	test "final_evaluation" do
+	  user1 = users(:uva)
+	  
+	  # check initial state
+	  assert_nil @ad1.final_eval_user_id
+	  assert_nil @ad1.final_eval
+	  
+	  # test use of do_final_eval before setting the user id
+	  assert_throws(EvalUserNotDefinedError) { @ad1.do_final_eval! user1.id, 4 }
+	  assert_nil @ad1.final_eval
+	  
+	  # test correct use of set_final_eval_user
+	  @ad1.set_final_eval_user! user1.id
+	  assert_equal user1.id, @ad1.final_eval_user_id
+	  assert_nil @ad1.final_eval
+	  
+	  # test incorrect use of set_final_eval_user
+	  assert_throws(UserAlreadyDefinedError) { @ad1.set_final_eval_user! users(:ray).id }
+	  assert_equal user1.id, @ad1.final_eval_user_id 
+	  assert_throws(UserAlreadyDefinedError) { @ad1.set_final_eval_user! user1.id }
+	  
+	  # test unauthorized use of do_final_eval
+	  assert_throws(UnauthorizedUserException) { @ad1.do_final_eval! users(:ray).id, 4 }
+	  assert_nil @ad1.final_eval
+	  
+	  # test correct use of do_final_eval
+	  @ad1.do_final_eval! user1.id, 4
+	  assert_equal 4, @ad1.final_eval_user_id
+	  
+	  # test posterior use of do_final_eval
+	  assert_throws(EvalAlreadyDoneError) { @ad1.do_final_eval! users(:ray).id, 4 }
+	  assert_equal 4, @ad1.final_eval_user_id
+	  assert_throws(EvalAlreadyDoneError) { @ad1.do_final_eval! user1.id, 4 }
 	end
 
 	test "relevance" do

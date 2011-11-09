@@ -1,11 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
-one:
-  value: 1
-  comment: MyText
-  references: 
-
-two:
-  value: 1
-  comment: MyText
-  references: 
+#one:
+#  value: 1
+#  comment: MyText
+#  references: 
