@@ -12,8 +12,8 @@
 <% content_for :title, 'dashboard' %>
 
 <div class="dashboard_search">
-  <%= form_for @search, :url => dashboard_ads_path, :html => { :id => "fe_ad_search", :class => "fe_ad_search" } do |f| %>
-    <%= f.text_field :search_terms, :id => "search_text_field" %>
+  <%= form_tag dashboard_ads_path, :id => "fe_ad_search", :class => "fe_ad_search" do %>
+    <%= text_field_tag "search_terms", @search_terms, :id => "search_text_field" %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
       <% @sections.each do |section| %>
@@ -26,7 +26,7 @@
       var ajaxSearchUrl = "<%= url_for :action => 'update_search' %>";
     <% end -%>
 
-    <%= f.submit "Go", :id => 'search_button' %>
+    <%= submit_tag "Go", :id => 'search_button' %>
   <% end %>
 </div><!--end dashboard search div -->
 <div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">

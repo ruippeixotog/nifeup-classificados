@@ -21,9 +21,8 @@ class Ad < ActiveRecord::Base
   end
   
   def self.search_text(text, limit=2**29)
-    return nil if text.nil? || limit.nil? || limit < 0
-    return [] if count == 0
-    return most_relevant(limit) if text.empty?
+    return [] if limit.nil? || limit <= 0
+    return most_relevant(limit) if text.nil? || text.empty?
     search = all_opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
     order_by_relevance(search.uniq).first(limit)
   end
