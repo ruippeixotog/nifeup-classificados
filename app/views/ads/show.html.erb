@@ -32,7 +32,7 @@
 	<div class="fe_ad_presentation_container">
 		<div class="fe_ad_title_container">
 			<div class="fe_ad_show_title"><%= @ad.title %></div>
-			<%= link_to @ad.thumbnail.url, { :rel => 'prettyPhoto[pp_gal]', :title => 'Test' } do 
+			<%= link_to ".." + @ad.thumbnail.url, { :rel => 'prettyPhoto[pp_gal]', :title => 'Test' } do 
 				image_tag @ad.thumbnail.url(:medium)
 			end %>
 			<% if not @ad.gallery.empty? %>
@@ -47,7 +47,7 @@
 						<div class="items">
 							<div>
 						    	<% @ad.gallery.each_with_index do |res, i| %>
-									<%= link_to res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description, :class => 'fe_ad_gallery_item' } do 
+									<%= link_to ".." + res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description, :class => 'fe_ad_gallery_item' } do 
 										image_tag res.link.url(:gallery)
 								  	end %>
 									<% if not i == 0 and (i+1) % 4 == 0 %>
