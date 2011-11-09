@@ -19,7 +19,7 @@
 		  start: <%= @ad.user_rating(@user.id) %>,
 		  path: "../assets/raty/",
 		  click: function(score, evt) {
-			$.post('/ads/<%= @ad.id %>/rate', { id: <%= @ad.id %>, rating: score  }, function(data) {
+			$.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
 			});
 		  }
 		});
