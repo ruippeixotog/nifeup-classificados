@@ -1,6 +1,7 @@
 class Ad < ActiveRecord::Base
   belongs_to :user
   belongs_to :section
+  belongs_to :final_evaluation
   has_many :resources
   has_many :favorites
   has_many :ad_tags

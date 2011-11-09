@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109212504) do
+ActiveRecord::Schema.define(:version => 20111109223211) do
 
   create_table "ad_tags", :force => true do |t|
     t.string   "tag"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20111109212504) do
     t.string   "title"
     t.integer  "closed"
     t.text     "description"
-    t.integer  "final_eval"
     t.integer  "user_id"
     t.integer  "section_id"
     t.datetime "created_at"
@@ -36,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20111109212504) do
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
     t.float    "average_rate"
+    t.integer  "final_evaluation_id"
   end
 
   add_index "ads", ["section_id"], :name => "index_ads_on_section_id"
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(:version => 20111109212504) do
 
   add_index "favorites", ["ad_id"], :name => "index_favorites_on_ad_id"
   add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
+
+  create_table "final_evaluations", :force => true do |t|
+    t.integer  "value"
+    t.text     "comment"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reports", :force => true do |t|
     t.text     "reason"
