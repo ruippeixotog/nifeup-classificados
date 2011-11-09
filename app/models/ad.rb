@@ -45,10 +45,11 @@ class Ad < ActiveRecord::Base
     fav.destroy
   end
   
-  def rate(user_id,value)
+  def rate!(user_id,value)
     evaluation = Evaluation.find_or_create_by_user_id_and_ad_id :user_id => user_id, :ad_id => self.id
     evaluation.value = value
-    evaluation.save 
+    evaluation.save
+    self.calc_average_rating!(user_id,value)
   end
   
   def user_rating(user_id)
@@ -65,16 +66,15 @@ class Ad < ActiveRecord::Base
     self.created_at.to_i
   end
   
-  def average_rating
-      @value = 0
-      self.evaluations.each do |evaluation|
-          @value = @value + evaluation.value
-      end
+  def calc_average_rating!(user_id,value)
       @total = self.evaluations.size
-      if @total > 0
-        @value.to_f / @total.to_f
+      if self.average_rate == nil
+        self.average_rate = value
+        self.save
       else
-        "Not yet rated"
+        @old_average = self.average_rate * (@total - 1)
+        self.average_rate = (value + @old_average)/@total
+        self.save     
       end
   end
   

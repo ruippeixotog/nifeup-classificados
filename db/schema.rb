@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108164139) do
+ActiveRecord::Schema.define(:version => 20111109212504) do
 
   create_table "ad_tags", :force => true do |t|
     t.string   "tag"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20111108164139) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.float    "average_rate"
   end
 
   add_index "ads", ["section_id"], :name => "index_ads_on_section_id"
@@ -87,14 +88,6 @@ ActiveRecord::Schema.define(:version => 20111108164139) do
 
   add_index "favorites", ["ad_id"], :name => "index_favorites_on_ad_id"
   add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
-
-  create_table "ratings", :force => true do |t|
-    t.string   "user_id"
-    t.string   "ad_id"
-    t.integer  "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "reports", :force => true do |t|
     t.text     "reason"

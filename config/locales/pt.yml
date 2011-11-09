@@ -9,5 +9,5 @@ pt:
     failure_mark_fav: "Não foi possível marcar o anúncio como favorito."
     success_unmark_fav: "Anúncio removido dos favoritos."
     failure_unmark_fav: "Não foi possível remover o anúncio dos favoritos."
-    success_rate: "Votação com sucesso."
-    failure_rate:  "Não foi possível registar o seu voto."
+    success_rate: "Votação realizada com sucesso."
+    failure_rate: "Não foi possível registar o seu voto."
