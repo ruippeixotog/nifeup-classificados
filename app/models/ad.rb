@@ -9,7 +9,7 @@ class Ad < ActiveRecord::Base
   has_many :evaluations
   has_many :raters, :through => :evaluations, :source => :users
 
-  has_attached_file :thumbnail, :styles => { :medium => "200x200" }
+  has_attached_file :thumbnail, :styles => { :thumb => "140x180", :medium => "200x200" }
 
   def open?
     self.closed == 0
