@@ -17,7 +17,7 @@
 		$(".scrollable").scrollable();
 		$('#rating').raty({
 		  start: <%= @ad.user_rating(@user.id) %>,
-		  path: "/assets/raty/",
+		  path: "../assets/raty/",
 		  click: function(score, evt) {
 			$.post('/ads/<%= @ad.id %>/rate', { id: <%= @ad.id %>, rating: score  }, function(data) {
 			});
@@ -35,33 +35,35 @@
 			<%= link_to @ad.thumbnail.url, { :rel => 'prettyPhoto[pp_gal]', :title => 'Test' } do 
 				image_tag @ad.thumbnail.url(:medium)
 			end %>
-			<div class="fe_ad_gallery">
-				<!-- "previous page" action -->
-				<a class="prev browse left"></a>
+			<% if not @ad.gallery.empty? %>
+				<div class="fe_ad_gallery">
+					<!-- "previous page" action -->
+					<a class="prev browse left"></a>
 
-				<!-- root element for scrollable -->
-				<div class="scrollable">   
+					<!-- root element for scrollable -->
+					<div class="scrollable">   
 
-				   <!-- root element for the items -->
-					<div class="items">
-						<div>
-					    	<% @ad.gallery.each_with_index do |res, i| %>
-								<%= link_to res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description, :class => 'fe_ad_gallery_item' } do 
-									image_tag res.link.url(:gallery)
-							  	end %>
-								<% if not i == 0 and (i+1) % 4 == 0 %>
-									</div>
-									<div>
-								<% end %>
-							<% end -%>
+					   <!-- root element for the items -->
+						<div class="items">
+							<div>
+						    	<% @ad.gallery.each_with_index do |res, i| %>
+									<%= link_to res.link.url, { :rel => 'prettyPhoto[pp_gal]', :title => res.description, :class => 'fe_ad_gallery_item' } do 
+										image_tag res.link.url(:gallery)
+								  	end %>
+									<% if not i == 0 and (i+1) % 4 == 0 %>
+										</div>
+										<div>
+									<% end %>
+								<% end -%>
+							</div>
 						</div>
+
 					</div>
 
+					<!-- "next page" action -->
+					<a class="next browse right"></a>				
 				</div>
-
-				<!-- "next page" action -->
-				<a class="next browse right"></a>				
-			</div>
+			<% end %>
 		</div>
 		<div class="fe_ad_highlights">
 			<p>

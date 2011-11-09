@@ -100,7 +100,10 @@
 }
 
 .fe_ad_title_container {
-    
+    position: absolute;
+    bottom: 0px;
+    width: 250px;
+    text-align: center;
     font-size: 2.0em;
     line-height: 1.5em;
 }
