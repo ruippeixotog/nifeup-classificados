@@ -30,7 +30,6 @@ class Comment < ActiveRecord::Base
   
   # return true if the comment has been reported more than @@report_limit
   def badly_reported?    
-    return true unless self.reports.size < @@report_limit
-    false
+    self.reports.size >= @@report_limit
   end
 end
