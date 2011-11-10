@@ -8,6 +8,7 @@ class Ad < ActiveRecord::Base
   has_many :users, :through => :favorites
   has_many :evaluations
   has_many :raters, :through => :evaluations, :source => :users
+  has_many :comments
   
   has_attached_file :thumbnail, :styles => { :medium => "200x200" }
 

@@ -21,9 +21,7 @@ class AdsController < ApplicationController
     else
         @rating = Evaluation.new
     end
-    # filtrar comments por Ad
-    @comments = Comment.find_by_ad_id(@ad.id)
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ad }

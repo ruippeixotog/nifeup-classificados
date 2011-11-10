@@ -107,7 +107,7 @@
 
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
-	  <% @comments.each do |c| %>
+	  <% @ad.comments.each do |c| %>
 		<p><%= User.find(c.user_id).username=%>:   <%= c.content =%></p>
 
 	  <% end %>
