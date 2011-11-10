@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
 
-#one:
-#  reason: MyText
-#  user: 
-#  comment: 
+r31:
+  comment_id: 3
+  user_id: 1
+  reason: Comentario inutil, nao traz informacao nova
