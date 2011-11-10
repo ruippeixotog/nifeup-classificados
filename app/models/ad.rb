@@ -104,7 +104,7 @@ class Ad < ActiveRecord::Base
     # TODO set the user id of the user to do the final evaluation
   end
   
-  def do_final_eval!(user_id)
+  def do_final_eval!(user_id, value)
     # TODO return the final evaluation of the ad
   end
   

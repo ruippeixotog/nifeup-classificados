@@ -28,12 +28,12 @@ class AdTest < ActiveSupport::TestCase
 		@a1.rate! user1.id, 4
 		assert_equal 4, @a1.user_rating(user1.id)
 
-		assert_throws(ArgumentError) { @a1.rate! user1.id, 0 }
+		assert_raise(ArgumentError) { @a1.rate! user1.id, 0 }
 		assert_equal 4, @a1.user_rating(user1.id)
 		
-		assert_throws(ArgumentError) { @a1.rate! user1.id, -1 }
-		assert_throws(ArgumentError) { @a1.rate! user1.id, 6 }
-		assert_throws(ArgumentError) { @a1.rate! user1.id, nil }
+		assert_raise(ArgumentError) { @a1.rate! user1.id, -1 }
+		assert_raise(ArgumentError) { @a1.rate! user1.id, 6 }
+		assert_raise(ArgumentError) { @a1.rate! user1.id, nil }
 	end
 	
 	test "average_ad_rating" do
@@ -54,35 +54,35 @@ class AdTest < ActiveSupport::TestCase
 	  user1 = users(:uva)
 	  
 	  # check initial state
-	  assert_nil @ad1.final_eval_user_id
-	  assert_nil @ad1.final_eval
+	  assert_nil @a1.final_eval_user_id
+	  assert_nil @a1.final_eval
 	  
 	  # test use of do_final_eval before setting the user id
-	  assert_throws(EvalUserNotDefinedError) { @ad1.do_final_eval! user1.id, 4 }
-	  assert_nil @ad1.final_eval
+	  assert_raise(EvalUserNotDefinedError) { @a1.do_final_eval! user1.id, 4 }
+	  assert_nil @a1.final_eval
 	  
 	  # test correct use of set_final_eval_user
-	  @ad1.set_final_eval_user! user1.id
-	  assert_equal user1.id, @ad1.final_eval_user_id
-	  assert_nil @ad1.final_eval
+	  @a1.set_final_eval_user! user1.id
+	  assert_equal user1.id, @a1.final_eval_user_id
+	  assert_nil @a1.final_eval
 	  
 	  # test incorrect use of set_final_eval_user
-	  assert_throws(UserAlreadyDefinedError) { @ad1.set_final_eval_user! users(:ray).id }
-	  assert_equal user1.id, @ad1.final_eval_user_id 
-	  assert_throws(UserAlreadyDefinedError) { @ad1.set_final_eval_user! user1.id }
+	  assert_raise(UserAlreadyDefinedError) { @a1.set_final_eval_user! users(:ray).id }
+	  assert_equal user1.id, @a1.final_eval_user_id 
+	  assert_raise(UserAlreadyDefinedError) { @a1.set_final_eval_user! user1.id }
 	  
 	  # test unauthorized use of do_final_eval
-	  assert_throws(UnauthorizedUserException) { @ad1.do_final_eval! users(:ray).id, 4 }
-	  assert_nil @ad1.final_eval
+	  assert_raise(UnauthorizedUserException) { @a1.do_final_eval! users(:ray).id, 4 }
+	  assert_nil @a1.final_eval
 	  
 	  # test correct use of do_final_eval
-	  @ad1.do_final_eval! user1.id, 4
-	  assert_equal 4, @ad1.final_eval_user_id
+	  @a1.do_final_eval! user1.id, 4
+	  assert_equal 4, @a1.final_eval_user_id
 	  
 	  # test posterior use of do_final_eval
-	  assert_throws(EvalAlreadyDoneError) { @ad1.do_final_eval! users(:ray).id, 4 }
-	  assert_equal 4, @ad1.final_eval_user_id
-	  assert_throws(EvalAlreadyDoneError) { @ad1.do_final_eval! user1.id, 4 }
+	  assert_raise(EvalAlreadyDoneError, UnauthorizedUserException) { @a1.do_final_eval! users(:ray).id, 4 }
+	  assert_equal 4, @a1.final_eval_user_id
+	  assert_raise(EvalAlreadyDoneError) { @a1.do_final_eval! user1.id, 4 }
 	end
 
 	test "relevance" do
@@ -173,7 +173,7 @@ class AdTest < ActiveSupport::TestCase
 		@a1.close_permanently!
 		assert !@a1.open?
 	
-		assert_throws(CannotOpenAdError) { @a1.open! }
+		assert_raise(CannotOpenAdError) { @a1.open! }
 		assert !@a1.open?
   end
 end
