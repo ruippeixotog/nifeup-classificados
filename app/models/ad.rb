@@ -8,8 +8,8 @@ class Ad < ActiveRecord::Base
   has_many :users, :through => :favorites
   has_many :evaluations
   has_many :raters, :through => :evaluations, :source => :users
-
-  has_attached_file :thumbnail, :styles => { :thumb => "140x180", :medium => "200x200" }
+  
+  has_attached_file :thumbnail, :styles => { :medium => "200x200" }
 
   def self.all_opened
     Ad.where(:closed => false)
@@ -60,10 +60,28 @@ class Ad < ActiveRecord::Base
   
   def rate!(user_id,value)
     evaluation = Evaluation.find_or_create_by_user_id_and_ad_id :user_id => user_id, :ad_id => self.id
+    if evaluation.value != nil
+      @size = self.evaluations.size
+      @cur_value = @size * self.average_rate - evaluation.value + value
+      self.average_rate = @cur_value / @size
+    else
+      self.average_rate = self.calc_average_rating(user_id,value)
+    end 
+    self.save
     evaluation.value = value
     evaluation.save
-    self.calc_average_rating!(user_id,value)
+      
   end
+  
+  def calc_average_rating(user_id,value)
+       @total = self.evaluations.size
+       if self.average_rate == nil
+         value
+       else
+         @old_average = self.average_rate * (@total - 1)
+         (value + @old_average)/@total
+       end
+   end
   
   def user_rating(user_id)
     evaluation = Evaluation.find_by_user_id_and_ad_id(user_id, self.id)

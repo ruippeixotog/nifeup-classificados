@@ -93,7 +93,7 @@
 			</div>
 			
 			<p>
-				<span class="label"> Average rating </span> <span id="average_rating"> <%= @ad.average_rate %> </span>
+				<span class="label"> Average rating </span> <span id="average_rating"> <% if @ad.average_rate != nil %> <%=@ad.average_rate.round(1)%> <%end%> </span>
 			</p>
 			
 		</div>
