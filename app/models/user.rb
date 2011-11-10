@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   
   def self.epinto
     user = User.new :username => 'epinto'
-    user.id = 3
+    user.id = 1
     user
   end
 end
