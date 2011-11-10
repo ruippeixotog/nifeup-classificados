@@ -3,6 +3,12 @@ class Comment < ActiveRecord::Base
   belongs_to :ad
   has_many :reports
 
+  
+  
+  def self.find_by_ad_id(ad)
+    self.where('ad_id LIKE ?', ad)
+  end
+
   @@report_limit = 5
 
   def self.all_reported

@@ -102,10 +102,29 @@
 	  <div class="label">Description:</div>
 	  <p><%= @ad.description %></p>
 	</div>
+	
+	<%#--------------- Comentários --------------%>
+
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
-	  <p>No comments yet...</p>
+	  <% @comments.each do |c| %>
+		<p><%= User.find(c.user_id).username=%>:   <%= c.content =%></p>
+
+	  <% end %>
+	
 	</div>	
+	<form accept-charset="UTF-8" action="/comments" method="post">
+		  <div class="comment">
+		    <%= label(:content, "comentario") %><br />
+		    <%= text_area(:comment,:content) %>
+		  </div>
+		 <%= hidden_field_tag(:ad,@ad.id)  %>
+		 <%= hidden_field_tag(:user,@user.id)  %>
+			
+		  <div class="actions">
+		    <%= submit_tag("Novo Comentário") %>
+		  </div>
+	</form>
 </div>
 
 

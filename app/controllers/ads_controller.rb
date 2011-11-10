@@ -20,6 +20,8 @@ class AdsController < ApplicationController
     else
         @rating = Evaluation.new
     end
+    # filtrar comments por Ad
+    @comments = Comment.find_by_ad_id(@ad.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -95,6 +97,8 @@ class AdsController < ApplicationController
 
     # TODO colocar user da sessão
     @user = User.epinto
+    
+    
   end
 
   def update_search
