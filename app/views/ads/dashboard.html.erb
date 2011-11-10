@@ -12,7 +12,7 @@
 <% content_for :title, 'dashboard' %>
 
 <div class="dashboard_search">
-  <%= form_tag dashboard_ads_path, :id => "fe_ad_search", :class => "fe_ad_search" do %>
+  <%= form_tag dashboard_ads_path, {:method => :get, :id => "fe_ad_search", :class => "fe_ad_search"} do %>
     <%= text_field_tag "search_terms", @search_terms, :id => "search_text_field" %>
     <!--TODO filter records by section -->
     <!--<ul type="none" margin="0px">
