@@ -11,6 +11,15 @@ class Ad < ActiveRecord::Base
   
   has_attached_file :thumbnail, :styles => { :medium => "200x200" }
 
+  @@OPTIONS = {:opened => 0, :closed => 1, :locked => 2}
+
+  class CannotOpenAdError < RuntimeError; end
+  class EvalUserNotDefinedError < RuntimeError; end
+  class UserAlreadyDefinedError < RuntimeError; end
+  class UnauthorizedUserException < RuntimeError; end
+  class EvalAlreadyDoneError < RuntimeError; end
+  class ArgumentError < RuntimeError; end
+  
   def self.all_opened
     Ad.where(:closed => false)
   end
@@ -29,19 +38,27 @@ class Ad < ActiveRecord::Base
   end
   
   def open?
-    self.closed == 0
+    self.closed == @@OPTIONS[:opened]
+  end
+  
+  def locked?
+    self.closed == @@OPTIONS[:locked]
   end
   
   def close!
-    # TODO close the ad (by ad owner)
+    self.closed = @@OPTIONS[:closed]
+    self.save
   end
   
   def open!
-    # TODO open the ad (by ad owner)
+    raise CannotOpenAdError unless not self.locked?    
+    self.closed = @@OPTIONS[:opened]
+    self.save
   end
   
   def close_permanently!
-    # TODO close the ad (by admin)
+    self.closed = @@OPTIONS[:locked]
+    self.save
   end
   
   def favorite?(user_id)
@@ -58,7 +75,9 @@ class Ad < ActiveRecord::Base
     fav.destroy
   end
   
-  def rate!(user_id,value)
+  def rate!(user_id, value)
+    raise ArgumentError unless (value != nil && value > 0 && value < 6)
+  
     evaluation = Evaluation.find_or_create_by_user_id_and_ad_id :user_id => user_id, :ad_id => self.id
     if evaluation.value != nil
       @size = self.evaluations.size
@@ -74,38 +93,44 @@ class Ad < ActiveRecord::Base
   end
   
   def calc_average_rating(user_id,value)
-       @total = self.evaluations.size
-       if self.average_rate == nil
-         value
-       else
-         @old_average = self.average_rate * (@total - 1)
-         (value + @old_average)/@total
-       end
-   end
+     @total = self.evaluations.size
+     if not self.average_rate
+       value
+     else
+       @old_average = self.average_rate * (@total - 1)
+       (value + @old_average)/@total
+     end
+  end
   
   def user_rating(user_id)
     evaluation = Evaluation.find_by_user_id_and_ad_id(user_id, self.id)
-    if evaluation != nil
-      evaluation.value
-    else
-      0
-    end
+    evaluation.value unless not evaluation
   end
   
   def final_eval_user_id
-    # TODO return the user id of the user to do the final evaluation
+    self.final_evaluation.user_id unless not self.final_evaluation
   end
   
   def final_eval
-    # TODO return the final evaluation of the ad
+    self.final_evaluation.value unless not self.final_evaluation
   end
   
   def set_final_eval_user!(user_id)
-    # TODO set the user id of the user to do the final evaluation
+    raise UserAlreadyDefinedError unless not self.final_evaluation
+  
+    final_eval = FinalEvaluation.new :user_id => user_id
+    final_eval.save
+    self.final_evaluation = final_eval
+    self.save
   end
   
   def do_final_eval!(user_id, value)
-    # TODO return the final evaluation of the ad
+    raise EvalUserNotDefinedError unless (self.final_evaluation && self.final_evaluation.user_id)
+    raise EvalAlreadyDoneError unless not self.final_evaluation.complete?
+    raise UnauthorizedUserException unless self.final_evaluation.user_id == user_id
+    
+    self.final_evaluation.value = value
+    self.final_evaluation.save
   end
   
   def relevance
@@ -113,15 +138,15 @@ class Ad < ActiveRecord::Base
   end
   
   def calc_average_rating!(user_id,value)
-      @total = self.evaluations.size
-      if self.average_rate == nil
-        self.average_rate = value
-        self.save
-      else
-        @old_average = self.average_rate * (@total - 1)
-        self.average_rate = (value + @old_average)/@total
-        self.save     
-      end
+    @total = self.evaluations.size
+    if self.average_rate == nil
+      self.average_rate = value
+      self.save
+    else
+      @old_average = self.average_rate * (@total - 1)
+      self.average_rate = (value + @old_average)/@total
+      self.save     
+    end
   end
   
   def gallery

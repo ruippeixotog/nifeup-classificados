@@ -141,7 +141,7 @@ class AdsController < ApplicationController
   
   def rate
     @ad = Ad.find(params[:id])
-    @user = User.epinto #USER SESSION
+    @user = User.epinto #TODO USER SESSION
     if @ad.rate!(@user.id,params[:rating].to_i)
       @notice = I18n.t 'ad.success_rate'
     else
