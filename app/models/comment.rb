@@ -3,31 +3,34 @@ class Comment < ActiveRecord::Base
   belongs_to :ad
   has_many :reports
 
-  
-  
-  def self.find_by_ad_id(ad)
-    self.where('ad_id LIKE ?', ad)
-  end
-
   @@report_limit = 5
 
+  class AlreadyReportedError < RuntimeError; end
+
+  # get all reported comments
   def self.all_reported
-    # TODO get all reported comments
+    Comment.select('DISTINCT(comments.id), comments.*').joins(:reports).order('id DESC')
   end
 
   def self.set_report_limit(limit)
     @@report_limit = limit
   end
 
+  # return true if the comment has been reported
   def reported?
-    # TODO return true if the comment has been reported
+    self.reports.size > 0 
   end
 
-  def report!(user_id, reason)
-    # TODO report a comment
+  # report a comment
+  def report!(user_id, reason = nil)
+    raise AlreadyReportedError unless not self.reports.find_by_user_id(user_id)
+    rp = self.reports.new :user_id => user_id, :reason => reason
+    rp.save
   end
-
+  
+  # return true if the comment has been reported more than @@report_limit
   def badly_reported?    
-    # TODO return true if the comment has been reported more than @@report_limit
+    return true unless self.reports.size < @@report_limit
+    false
   end
 end

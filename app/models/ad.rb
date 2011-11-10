@@ -18,7 +18,6 @@ class Ad < ActiveRecord::Base
   class UserAlreadyDefinedError < RuntimeError; end
   class UnauthorizedUserException < RuntimeError; end
   class EvalAlreadyDoneError < RuntimeError; end
-  class ArgumentError < RuntimeError; end
   
   def self.all_opened
     Ad.where(:closed => false)
