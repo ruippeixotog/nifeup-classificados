@@ -1,6 +1,40 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
+  def login
+  end
+  
+  def authenticate
+    ldap_info = Ldap.auth(params[:person][:username], params[:person][:password])
+    
+    respond_to do |format|
+      if ldap_info
+        user = User.find_or_create_by_username(session[:username])
+        user.save
+        session[:user_id] = user.id
+        session[:username] = params[:person][:username]
+        
+        format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_success') }
+        format.json { render json: @ad, status: :created, location: @ad }
+      else
+        format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_failure') }
+        format.json { render json: @ad.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # logout
+  # clears the session
+  def logout
+    session[:user_id] = nil
+    session[:username] = nil
+    
+    respond_to do |format|
+      format.html { redirect_to dashboard_ads_path, notice: I18n.t('logout_success') }
+      format.json { render json: @ad, status: :logged_out }
+    end
+  end
+  
   def index
     @users = User.all
 

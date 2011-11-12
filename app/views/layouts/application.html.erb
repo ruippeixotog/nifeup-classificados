@@ -9,10 +9,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
 <% if notice %>
 	<%= javascript_tag "$.jGrowl(\"" + notice + "\")" %>
 <% end -%>
+
 <div id="content">
+  <%= render 'users/login' %>
   <%= yield %>
 </div>
 </body>

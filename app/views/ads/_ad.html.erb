@@ -1,4 +1,5 @@
 <div id="fe_ad_container_<%= ad.id %>" class="fe_ad_container" >
+  <% if user_id %>
     <span class="favorite">
       <% if ad.favorite?(user_id) %>
         <%= link_to image_tag('fav_marked.png', "data-initial" => 'fav_marked.png', "data-next" => 'fav_marked.png'), unmark_fav_ad_path(ad.id), { :remote => true, :id => "favorite_#{ad.id}" } %>
@@ -6,8 +7,10 @@
         <%= link_to image_tag('fav_unmarked.png', "data-initial" => 'fav_unmarked.png', "data-next" => 'fav_marked.png'), mark_fav_ad_path(ad.id), { :remote => true, :id => "favorite_#{ad.id}" } %>
       <% end %>
     </span>
-    <div class="fe_ad_clickable" data-id="<%= ad.id %>">
-	    <div class="fe_ad_thumbnail"><%= image_tag ad.thumbnail.url(:thumb) %></div>
-	    <div class="fe_ad_title"><%= ad.title %></div>
-    </div>
+  <% end %>
+  
+  <div class="fe_ad_clickable" data-id="<%= ad.id %>">
+    <div class="fe_ad_thumbnail"><%= image_tag ad.thumbnail.url(:thumb) %></div>
+    <div class="fe_ad_title"><%= ad.title %></div>
+  </div>
 </div>

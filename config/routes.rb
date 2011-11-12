@@ -26,10 +26,17 @@ Cfeup::Application.routes.draw do
 
   resources :block_logs
 
-  resources :users
+  resources :users do
+    collection do
+      post 'authenticate'
+    end
+  end
   
   resources :ratings
 
+  match "login" => "users#login"
+  match "logout" => "users#logout"
+  
   root :to => "ads#dashboard"
 
   # The priority is based upon order of creation:

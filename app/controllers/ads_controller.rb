@@ -14,12 +14,14 @@ class AdsController < ApplicationController
   # GET /ads/1.json
   def show
     @ad = Ad.find(params[:id])
-    # TODO user logged 
-    @user = User.epinto
-    if @rating = @user.evaluations.find_by_ad_id(params[:id])
-        @rating
-    else
-        @rating = Evaluation.new
+    
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+      if @rating = @user.evaluations.find_by_ad_id(params[:id])
+          @rating
+      else
+          @rating = Evaluation.new
+      end
     end
     
     respond_to do |format|
@@ -94,18 +96,13 @@ class AdsController < ApplicationController
     
     # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
 
-    # TODO colocar user da sessão
-    @user = User.epinto
-    
-    
+    @user_id = session[:user_id]
   end
-
+  
   def update_search
     @ads = Ad.search_text(params["search_terms"])
     @sections = Section.all
-
-    # TODO colocar user da sessão
-    @user = User.epinto
+    @user = User.find(session[:user_id])
 
     respond_to do |format|
       format.js
@@ -113,10 +110,9 @@ class AdsController < ApplicationController
   end
 
   def mark_fav
-    # TODO logged user
-    @user = User.epinto
     @ad = Ad.find(params[:id])
-    if @ad.mark_favorite(@user.id)
+    user_id = session[:user_id]
+    if @ad.mark_favorite!(user_id)
       @notice = I18n.t 'ad.success_mark_fav'
     else
       @notice = I18n.t 'ad.failure_mark_fav'
@@ -128,10 +124,9 @@ class AdsController < ApplicationController
   end
   
   def unmark_fav
-    # TODO logged user
-    @user = User.epinto
     @ad = Ad.find(params[:id])
-    if @ad.unmark_favorite(@user.id)
+    user_id = session[:user_id]
+    if @ad.unmark_favorite!(user_id)
       @notice = I18n.t 'ad.success_unmark_fav'
     else
       @notice = I18n.t 'ad.failure_unmark_fav'
@@ -144,8 +139,8 @@ class AdsController < ApplicationController
   
   def rate
     @ad = Ad.find(params[:id])
-    @user = User.epinto #TODO USER SESSION
-    if @ad.rate!(@user.id,params[:rating].to_i)
+    user_id = session[:user_id]
+    if @ad.rate!(user_id, params[:rating].to_i)
       @notice = I18n.t 'ad.success_rate'
     else
       @notice = I18n.t 'ad.failure_rate'

@@ -39,4 +39,5 @@ end
 
 # Install paperclip
 gem "paperclip", "~> 2.4"
+gem "net-ldap"
 

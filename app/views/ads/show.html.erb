@@ -7,25 +7,27 @@
 
 <%= javascript_include_tag 'jquery.raty.min' %>
 
-<%= javascript_tag do -%>
-	$(document).ready(function() {
-	    $("a[rel^='prettyPhoto']").prettyPhoto({
-			theme: 'facebook',
-			social_tools: '',
-			show_title: false,
-			allow_resize: false});
-		$(".scrollable").scrollable();
-		$('#rating').raty({
-		  start: <%= @ad.user_rating(@user.id) %>,
-		  path: "../assets/raty/",
-		  click: function(score, evt) {
-			$.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
-			});
-		  }
-		});
-	});
-<% end -%>
 
+<% if @user %>
+    <%= javascript_tag do -%>
+	    $(document).ready(function() {
+	        $("a[rel^='prettyPhoto']").prettyPhoto({
+			    theme: 'facebook',
+			    social_tools: '',
+			    show_title: false,
+			    allow_resize: false});
+		    $(".scrollable").scrollable();
+		    $('#rating').raty({
+		      start: <%= @ad.user_rating(@user.id) %>,
+		      path: "../assets/raty/",
+		      click: function(score, evt) {
+			    $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
+			    });
+		      }
+		    });
+	    });
+    <% end %>
+<% end %>
 <% content_for :title, @ad.title %>
 
 <div class="fe_ad_show_container">
@@ -89,11 +91,11 @@
 				<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
 			</div>
 			
-			<div id="rating">
-			</div>
+			<div id="rating"></div>
 			
 			<p>
-				<span class="label"> Average rating </span> <span id="average_rating"> <% if @ad.average_rate != nil %> <%=@ad.average_rate.round(1)%> <%end%> </span>
+				<span class="label"> Average rating </span>
+				<span id="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %> </span>
 			</p>
 			
 		</div>
@@ -108,23 +110,21 @@
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <% @ad.comments.each do |c| %>
-		<p><%= User.find(c.user_id).username=%>:   <%= c.content =%></p>
-
+		<p><%= User.find(c.user_id).username %>:   <%= c.content  %></p>
 	  <% end %>
 	
 	</div>	
-	<%= form_tag(:controller => "comments", :action => "create", :method => "post") =%>
-		  <div class="comment">
-		    <%= label(:content, "comentario") %><br />
-		    <%= text_area(:comment,:content) %>
-		  </div>
-		 <%= hidden_field_tag(:ad,@ad.id)  %>
-		 <%= hidden_field_tag(:user,@user.id)  %>
+    <% if @user %>
+	    <%= form_tag(:controller => "comments", :action => "create", :method => "post") do %>
+            <%= label(:content, "comentario") %><br />
+            <%= text_area(:comment,:content) %>
+
+            <%= hidden_field_tag(:ad,@ad.id)  %>
+		    <%= hidden_field_tag(:user, @user.id) %>
 			
-		  <div class="actions">
-		    <%= submit_tag("Novo Comentário") %>
-		  </div>
-	</form>
+            <%= submit_tag("Novo Comentário") %>
+		<% end %>
+    <% end %>
 </div>
 
 

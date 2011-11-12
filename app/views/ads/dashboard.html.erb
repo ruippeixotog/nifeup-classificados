@@ -7,7 +7,7 @@
 		window.location.href="<%= ads_path %>/" + id;
 	});
 });
-<% end -%>
+<% end %>
 
 <% content_for :title, 'dashboard' %>
 
@@ -27,9 +27,9 @@
     <% end -%>
 
     <%= submit_tag "Go", :id => 'search_button' %>
-  <% end %>
+  <% end -%>
 </div><!--end dashboard search div -->
 <div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
-  <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user.id } %>
+  <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %>
   <br style="clear:both" />
 </div>

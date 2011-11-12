@@ -3,6 +3,13 @@
 
 pt:
   hello: "Olá mundo"
+  login: "Entrar"
+  logout: "Sair"
+  submit: "Validar"
+  login_success: "Autenticado com sucesso"
+  login_failure: "As credenciais não estão correctas"
+  logout_success: "Já não está autenticado"
+  greet_username: "Olá, %{user}!"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."
@@ -11,3 +18,4 @@ pt:
     failure_unmark_fav: "Não foi possível remover o anúncio dos favoritos."
     success_rate: "Votação realizada com sucesso."
     failure_rate: "Não foi possível registar o seu voto."
+    not_yet_rated: "Sem votação."

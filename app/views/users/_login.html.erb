@@ -1,0 +1,21 @@
+<div id="signbtn">
+<% if session[:username] %>
+  <%=t 'greet_username', :user => session[:username] %>
+  <%= link_to I18n.t('logout'), logout_path, :class => "btnsignout" %>
+<% else %>
+  <%= link_to I18n.t('login'), login_path, :class => "btnsignin" %>
+<% end -%>
+</div>
+
+<div id="frmsignin">
+<%= form_for :person, :url => authenticate_users_path do |f| %>
+    <p id="puser">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %><br/>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %><br/>
+    <%= f.submit I18n.t('submit'), :id => 'submitbtn' %>
+    </p>
+    <% end -%>
+    <p id="msg"></p>
+</div>        
