@@ -8,25 +8,26 @@
 <%= javascript_include_tag 'jquery.raty.min' %>
 
 
-<% if @user %>
-    <%= javascript_tag do -%>
-	    $(document).ready(function() {
-	        $("a[rel^='prettyPhoto']").prettyPhoto({
-			    theme: 'facebook',
-			    social_tools: '',
-			    show_title: false,
-			    allow_resize: false});
-		    $(".scrollable").scrollable();
-		    $('#rating').raty({
-		      start: <%= @ad.user_rating(@user.id) %>,
-		      path: "../assets/raty/",
-		      click: function(score, evt) {
-			    $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
-			    });
-		      }
+<%= javascript_tag do -%>
+    $(document).ready(function() {
+        $("a[rel^='prettyPhoto']").prettyPhoto({
+		    theme: 'facebook',
+		    social_tools: '',
+		    show_title: false,
+		    allow_resize: false});
+		    
+    <% if @user then %>
+	    $(".scrollable").scrollable();
+	    $('#rating').raty({
+	      start: <%= @ad.user_rating(@user.id) %>,
+	      path: "../assets/raty/",
+	      click: function(score, evt) {
+		    $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
 		    });
+	      }
 	    });
     <% end %>
+    });
 <% end %>
 <% content_for :title, @ad.title %>
 
