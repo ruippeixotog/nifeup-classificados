@@ -149,7 +149,9 @@ class Ad < ActiveRecord::Base
     return 0.0 if total_rates == 0
     
     ad_rate = self.average_rate
-    user_rate = self.user.rate  
+    ad_rate ||= 0
+    user_rate = self.user.rate
+    user_rate ||= 0
     
     ad_rate_factor = [ad_rate_count / 1000.0, 1.0].min * (ad_rate - 3.0) / 2.0
     user_rate_factor = [user_rate_count / 1000.0, 1.0].min * (user_rate - 3.0) / 2.0
