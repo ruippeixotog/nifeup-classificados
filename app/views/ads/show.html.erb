@@ -16,17 +16,17 @@
 		    show_title: false,
 		    allow_resize: false});
 		    
-    <% if @user then %>
 	    $(".scrollable").scrollable();
-	    $('#rating').raty({
-	      start: <%= @ad.user_rating(@user.id) %>,
-	      path: "../assets/raty/",
-	      click: function(score, evt) {
-		    $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
-		    });
-	      }
-	    });
-    <% end %>
+        <% if @user then %>
+	        $('#rating').raty({
+	          start: <%= @ad.user_rating(@user.id) %>,
+	          path: "../assets/raty/",
+	          click: function(score, evt) {
+		        $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
+		        });
+	          }
+	        });
+        <% end %>
     });
 <% end %>
 <% content_for :title, @ad.title %>
