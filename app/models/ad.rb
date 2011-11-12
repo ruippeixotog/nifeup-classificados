@@ -139,7 +139,7 @@ class Ad < ActiveRecord::Base
   end
   
   def relevance
-    self.created_at.to_i + relevance_factor * @@RELEVANCE_TIME_OFFSET
+    self.created_at.to_i + relevance_factor * @@RELEVANCE_TIME_OFFSET / 2.0
   end
   
   def relevance_factor
