@@ -56,6 +56,14 @@ class AdTest < ActiveSupport::TestCase
 	  # check initial state
 	  assert_nil @a1.final_eval_user_id
 	  assert_nil @a1.final_eval
+	  assert @a1.open?
+	  
+	  # test use of set_final_eval_user before closing the ad
+	  assert_raise(Ad::AdNotClosedError) { @a1.set_final_eval_user! user1.id }
+	  assert_nil @a1.final_eval_user_id
+	  
+	  # close the ad
+	  @a1.close!
 	  
 	  # test use of do_final_eval before setting the user id
 	  assert_raise(Ad::EvalUserNotDefinedError) { @a1.do_final_eval! user1.id, 4 }
@@ -68,7 +76,7 @@ class AdTest < ActiveSupport::TestCase
 	  
 	  # test incorrect use of set_final_eval_user
 	  assert_raise(Ad::UserAlreadyDefinedError) { @a1.set_final_eval_user! users(:ray).id }
-	  assert_equal user1.id, @a1.final_eval_user_id, "Compare User id" 
+	  assert_equal user1.id, @a1.final_eval_user_id
 	  assert_raise(Ad::UserAlreadyDefinedError) { @a1.set_final_eval_user! user1.id }
 	  
 	  # test unauthorized use of do_final_eval

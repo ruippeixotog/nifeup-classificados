@@ -13,8 +13,12 @@ class Ad < ActiveRecord::Base
   has_attached_file :thumbnail, :styles => { :medium => "200x200" }
 
   @@OPTIONS = {:opened => 0, :closed => 1, :locked => 2}
+  
+  @@RELEVANCE_TIME_OFFSET = 2.weeks.to_i
+  @@RELEVANCE_USER_SCALE = 1000
 
   class CannotOpenAdError < RuntimeError; end
+  class AdNotClosedError < RuntimeError; end
   class EvalUserNotDefinedError < RuntimeError; end
   class UserAlreadyDefinedError < RuntimeError; end
   class UnauthorizedUserException < RuntimeError; end
@@ -116,6 +120,7 @@ class Ad < ActiveRecord::Base
   end
   
   def set_final_eval_user!(user_id)
+    raise AdNotClosedError if self.open?
     raise UserAlreadyDefinedError unless not self.final_evaluation
   
     final_eval = FinalEvaluation.new :user_id => user_id
@@ -134,17 +139,31 @@ class Ad < ActiveRecord::Base
   end
   
   def relevance
-    self.created_at.to_i
+    self.created_at.to_i + relevance_factor * @@RELEVANCE_TIME_OFFSET
   end
   
-  def calc_average_rating!(user_id,value)
+  def relevance_factor
+    ad_rate_count = self.evaluations.count
+    user_rate_count = FinalEvaluation.where(:user_id => self.user_id).count
+    total_rates = ad_rate_count + user_rate_count
+    return 0.0 if total_rates == 0
+    
+    ad_rate = self.average_rate
+    user_rate = self.user.rate  
+    
+    ad_rate_factor = [ad_rate_count / 1000.0, 1.0].min * (ad_rate - 3.0) / 2.0
+    user_rate_factor = [user_rate_count / 1000.0, 1.0].min * (user_rate - 3.0) / 2.0
+    return (ad_rate_factor * ad_rate_count + user_rate_factor * user_rate_count) / total_rates
+  end
+  
+  def calc_average_rating!(user_id, value)
     @total = self.evaluations.size
     if self.average_rate == nil
       self.average_rate = value
       self.save
     else
       @old_average = self.average_rate * (@total - 1)
-      self.average_rate = (value + @old_average)/@total
+      self.average_rate = (value + @old_average) / @total
       self.save     
     end
   end
@@ -155,7 +174,7 @@ class Ad < ActiveRecord::Base
     (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
     return gallery
   end
-
+  
 private
   def self.order_by_relevance(arr)
     arr.sort_by { |a| -a.relevance }
