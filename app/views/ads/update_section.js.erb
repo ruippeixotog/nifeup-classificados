@@ -22,3 +22,18 @@ $(".dashboard_fe_ad_container").css('background-color', bg_colors_array[<%= @sec
 var ajaxSearchUrl = "<%= url_for :action => 'update_search', :section_id => @section_id %>";
 
 $("#section_id").val(<%= @section_id %>);
+
+/*****************************
+        AJAX Pagination
+*****************************/
+
+$(".apple_pagination").html("<%= escape_javascript will_paginate @ads %>");
+
+
+$(".pagination a").click(function() {
+    var re = /page=([\d]*)/g;
+    var page = re.exec($(this).attr("href"))[1];
+    $.get("<%= url_for :action => 'update_search', :section_id => @section_id %>&page=" + page);
+    return false;
+});
+

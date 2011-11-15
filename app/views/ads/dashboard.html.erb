@@ -1,11 +1,21 @@
 <%= javascript_include_tag "dashboard" %>
 
 <%= javascript_tag do -%>
-	$(document).ready(function() {
+$(document).ready(function() {
 	$(".fe_ad_clickable").click(function() {
 		var id = $(this).data("id");
 		window.location.href="<%= ads_path %>/" + id;
 	});
+    /*****************************
+            AJAX Pagination
+    *****************************/
+
+    $(".pagination a").click(function() {
+        var re = /page=([\d]*)/g;
+        var page = re.exec($(this).attr("href"))[1];
+        $.get("<%= url_for :action => 'update_search', :section_id => @section_id %>&page=" + page);
+        return false;
+    });
 });
 <% end %>
 
@@ -25,7 +35,7 @@
 	<div class="dashboard_sections">
 		<% @sections.each do |section| %>
 			<div id="section_tab_<%= section.id %>" class="dashboard_section_tab" 
-				 data-action="<%= url_for :action => 'update_section', :id => section.id %>">
+				 data-action="<%= url_for :action => 'update_section', :id => section.id, :search_terms => @search_terms %>">
 				<%= section.name %>
 			</div>
 		<% end -%>
@@ -40,3 +50,7 @@
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %>
   <br style="clear:both" />
 </div>
+<div class="apple_pagination">
+  <%= will_paginate @ads %>
+</div>
+

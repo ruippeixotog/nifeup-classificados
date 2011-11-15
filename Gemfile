@@ -41,3 +41,6 @@ end
 gem "paperclip", "~> 2.4"
 gem "net-ldap"
 
+gem 'will_paginate'
+
+

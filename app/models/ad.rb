@@ -29,6 +29,8 @@ class Ad < ActiveRecord::Base
   class UserAlreadyDefinedError < RuntimeError; end
   class UnauthorizedUserException < RuntimeError; end
   class EvalAlreadyDoneError < RuntimeError; end
+
+  self.per_page = 10 
   
   def self.most_relevant(count)
     return nil if count.nil? || count < 0
@@ -36,20 +38,20 @@ class Ad < ActiveRecord::Base
     order_by_relevance(all_opened).first(count)
   end
   
-  def self.search_text(text, limit=2**29)
-    return [] if limit.nil? || limit <= 0
-    return most_relevant(limit) if text.nil? || text.empty?
+  def self.search_text(text, page)
     query = order_by_relevance(all_opened.distinct)
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
-    return query.first(limit)
+    return query.paginate(:page => page) if text.nil? || text.empty?
+    
+    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    return query.paginate(:page => page)
   end
   
-  def self.search_text_by_section(section_id, text, limit=2**29)
-    return [] if limit.nil? || limit <= 0
-    return Section.find(section_id).ads.all_opened.first(limit) if text.nil? || text.empty?
+  def self.search_text_by_section(section_id, text, page)
     query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
-    return query.first(limit)
+    return query.paginate(:page => page) if text.nil? || text.empty?
+    
+    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    return query.paginate(:page => page)
   end
 
   def self.order_by_relevance(rel)

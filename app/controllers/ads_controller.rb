@@ -104,8 +104,8 @@ class AdsController < ApplicationController
   def dashboard
     @section_id = params[:section_id].to_i
     @section_id = 1 unless @section_id > 0
-    
-    @ads = Ad.search_text_by_section(@section_id, params[:search_terms])
+    @search_terms = params[:search_terms]
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @sections = Section.all
     
     # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
@@ -116,7 +116,8 @@ class AdsController < ApplicationController
   def update_search
     @section_id = params[:section_id].to_i
     @section_id = 1 unless @section_id > 0
-    @ads = Ad.search_text_by_section(@section_id, params[:search_terms])
+    @search_terms = params[:search_terms]
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @sections = Section.all
     @user_id = session[:user_id]
 
@@ -170,7 +171,8 @@ class AdsController < ApplicationController
   def update_section
     @section_id = params[:id]
     section = Section.find(@section_id)
-    @ads = Ad.order_by_relevance(section.ads.all_opened)
+    @search_terms = params[:search_terms]
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @user_id = session[:user_id]
     
     respond_to do |format|

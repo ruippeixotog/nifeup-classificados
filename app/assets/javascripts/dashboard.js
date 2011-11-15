@@ -43,6 +43,7 @@ $(document).ready(function() {
   var bg_colors_array = ["#C0E9F7", "#F0E1E1", "#E2F0DE", "#FDFBD1"];
 
   $(".dashboard_fe_ad_container").css('background-color', bg_colors_array[section_id-1]);  
+    
 });
 
 
