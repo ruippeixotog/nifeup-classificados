@@ -114,7 +114,7 @@ class AdTest < ActiveSupport::TestCase
   test "relevance factor" do
     Ad.RELEVANCE_USER_SCALE = 3
 
-    assert_equal 0, @a1.relevance_factor, "assert 0"
+    assert_equal 0, @a1.relevance_factor, "initial assert failed"
     
     @a1.rate! users(:uva), 4
     assert_in_delta 0.5 * (1.0/3), @a1.relevance_factor, 0.001, "assert 1 failed"
