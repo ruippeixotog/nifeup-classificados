@@ -71,7 +71,7 @@
 		<div class="fe_ad_highlights">
 			<p>
 				<% if @user != nil && @ad.user_id == @user.id %>
-				    
+				    <%= link_to I18n.t('edit'), edit_ad_path(@ad) %>
 				<% end %>
 			</p>
 			<p>
@@ -79,9 +79,6 @@
 			</p>
 			<p>	
 				<span class="label">Posted at:</span> <%= date_format @ad.created_at %>
-			</p>	
-			<p>
-				<span class="label">Evaluation</span>
 			</p>
 			<p>
 				<span class="label">Tags</span> <% @ad.ad_tags.each do |t|%>
@@ -121,13 +118,11 @@
 	
 	</div>	
     <% if @user %>
-	    <%= form_tag(:controller => "comments", :action => "create", :method => "post") do %>
-            <%= label(:content, "comentario") %><br />
-            <%= text_area(:comment,:content) %>
-
-            <%= hidden_field_tag(:ad, @ad.id)  %>
-		    <%= hidden_field_tag(:user, @user.id) %>
-			
+	    <%= form_for(Comment.new) do %>
+            <%= label :content, I18n.t('comment') %><br />
+            <%= text_area :comment, :content %>
+            <%= hidden_field :comment, :ad_id, {:value => @ad.id}  %>
+            			
             <%= submit_tag(I18n.t('new_comment')) %>
 		<% end %>
     <% end %>

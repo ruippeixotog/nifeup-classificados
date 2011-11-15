@@ -12,6 +12,10 @@ pt:
   greet_username: "Olá, %{user}!"
   no_ads_found: "Nenhum anúncio encontrado neste filtro!"
   new_comment: "Novo comentário"
+  edit: "Editar"
+  access_denied: "O acesso foi negado por não possuir permissões suficientes!"
+
+  comment: "Comentário"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."

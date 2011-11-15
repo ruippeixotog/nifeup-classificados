@@ -37,6 +37,7 @@ Cfeup::Application.routes.draw do
 
   match "login" => "users#login"
   match "logout" => "users#logout"
+  match "ads#index" => "ads#dashboard"
   
   root :to => "ads#dashboard"
 

@@ -17,8 +17,6 @@ class AdsController < ApplicationController
     
     if session[:user_id]
       @user = User.find(session[:user_id])
-      puts "\n\n\n######" 
-      puts @user.inspect
       if @rating = @user.evaluations.find_by_ad_id(params[:id])
           @rating
       else
@@ -45,14 +43,25 @@ class AdsController < ApplicationController
 
   # GET /ads/1/edit
   def edit
+    @user_id = session[:user_id]
     @ad = Ad.find(params[:id])
+    
+    respond_to do |format|
+      if @user_id == nil || @user_id != @ad.user_id
+        format.html { redirect_to ad_path(@ad), notice: I18n.t('access_denied') }
+      else
+        format.html { render action: "edit" }
+      end
+    end
   end
 
   # POST /ads
   # POST /ads.json
   def create
     @ad = Ad.new(params[:ad])
-
+    @ad.user_id = session[:user_id]
+    redirect_to(ads_path, notice: I18n.t('must_be_logged')) unless @ad.user_id
+    
     respond_to do |format|
       if @ad.save
         format.html { redirect_to @ad, notice: 'Ad was successfully created.' }

@@ -42,8 +42,10 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(params[:comment])
-    @comment.ad = Ad.find(params[:ad])
-    @comment.user = User.find(params[:user])
+    @comment.user_id = session[:user_id]
+  
+    puts "\n\n\n\n####"
+    puts @comment.inspect
   
     respond_to do |format|
       if @comment.save
