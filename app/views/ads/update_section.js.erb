@@ -1,0 +1,22 @@
+obj = $('#dashboard_fe_ad_container');
+
+<% if @ads.empty? %>
+	obj.html('<p><%=t "no_ads_found" %></p>')
+<% else %>  
+    obj.html('<%= escape_javascript render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %><br style="clear:both" />');
+<% end %>
+
+$(".fe_ad_clickable").click(function() {
+	var id = $(this).data("id");
+	window.location.href="<%= ads_path %>/" + id;
+});
+
+$('.dashboard_section_tab').removeClass('selected');
+var selected_tab = $('#section_tab_<%= @section_id %>');
+$(selected_tab).addClass('selected');
+
+var bg_colors_array = ["#C0E9F7", "#F0E1E1", "#E2F0DE", "#FDFBD1"];
+
+$(".dashboard_fe_ad_container").css('background-color', bg_colors_array[<%= @section_id %>-1]);
+
+var ajaxSearchUrl = "<%= url_for :action => 'update_search', :section_id => @section_id %>";

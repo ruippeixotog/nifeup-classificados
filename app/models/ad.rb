@@ -11,6 +11,8 @@ class Ad < ActiveRecord::Base
   has_many :comments
   
   has_attached_file :thumbnail, :styles => { :medium => "200x200" }
+  
+  scope :opened, where(:closed => false)
 
   @@OPTIONS = {:opened => 0, :closed => 1, :locked => 2}
   
@@ -38,6 +40,13 @@ class Ad < ActiveRecord::Base
     return [] if limit.nil? || limit <= 0
     return most_relevant(limit) if text.nil? || text.empty?
     search = all_opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
+    order_by_relevance(search.uniq).first(limit)
+  end
+  
+  def self.search_text_by_section(section_id, text, limit=2**29)
+    return [] if limit.nil? || limit <= 0
+    return Section.find(section_id).ads.opened.first(limit) if text.nil? || text.empty?
+    search = Section.find(section_id).ads.opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
     order_by_relevance(search.uniq).first(limit)
   end
   
@@ -177,7 +186,6 @@ class Ad < ActiveRecord::Base
     return gallery
   end
   
-private
   def self.order_by_relevance(arr)
     arr.sort_by { |a| -a.relevance }
   end

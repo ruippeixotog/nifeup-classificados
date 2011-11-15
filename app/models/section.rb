@@ -1,3 +1,3 @@
 class Section < ActiveRecord::Base
-  has_many :ad
+  has_many :ads
 end

@@ -29,6 +29,21 @@ $(document).ready(function() {
       }
     }, 500);
   });
+  
+  $(".dashboard_section_tab").click(function(e) {
+     var action = $(this).data("action");
+     $.get(action);
+     return false;
+  });
+  
+  $("#section_tab_1").addClass("selected");
+  
+  $("#fe_ad_search").submit(function() {
+      var formData = $(this).serialize(); // grab the data in the form  
+      $.get(ajaxSearchUrl, formData); 
+      return false;
+  });
+  
 });
 
 

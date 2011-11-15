@@ -12,24 +12,30 @@
 <% content_for :title, 'dashboard' %>
 
 <div class="dashboard_search">
+<div class="dashboard_search_container">
+	
   <%= form_tag dashboard_ads_path, {:method => :get, :id => "fe_ad_search", :class => "fe_ad_search"} do %>
     <%= text_field_tag "search_terms", @search_terms, :id => "search_text_field" %>
-    <!--TODO filter records by section -->
-    <!--<ul type="none" margin="0px">
-      <% @sections.each do |section| %>
-      <li>
-	<%= check_box_tag "#{:section}_#{section.id}", section.id, checked?(section.id)%><%= section.name %>
-      </li>
-      <% end %>
-    </ul>-->
     <%= javascript_tag do -%>
-      var ajaxSearchUrl = "<%= url_for :action => 'update_search' %>";
+      var ajaxSearchUrl = "<%= url_for :action => 'update_search', :section_id => @section_id %>";
     <% end -%>
 
     <%= submit_tag "Go", :id => 'search_button' %>
+	<div class="dashboard_sections">
+		<% @sections.each do |section| %>
+			<div id="section_tab_<%= section.id %>" class="dashboard_section_tab" 
+				 data-action="<%= url_for :action => 'update_section', :id => section.id %>">
+				<%= section.name %>
+			</div>
+		<% end -%>
+	</div>
   <% end -%>
 </div><!--end dashboard search div -->
+</div>
 <div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
+  <% if @ads.empty? %>
+	<p><%=t 'no_ads_found' %></p>
+  <% end %>
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %>
   <br style="clear:both" />
 </div>

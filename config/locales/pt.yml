@@ -10,6 +10,7 @@ pt:
   login_failure: "As credenciais não estão correctas"
   logout_success: "Já não está autenticado"
   greet_username: "Olá, %{user}!"
+  no_ads_found: "Nenhum anúncio encontrado neste filtro!"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."
