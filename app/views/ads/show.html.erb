@@ -17,9 +17,9 @@
 		    allow_resize: false});
 		    
 	    $(".scrollable").scrollable();
-        <% if @user then %>
+        <% if @user %>
 	        $('#rating').raty({
-	          start: <%= @ad.user_rating(@user.id) %>,
+	          start: <%= @ad.user_rating(@user.id) ? @ad.user_rating(@user.id) : 0 %>,
 	          path: "../assets/raty/",
 	          click: function(score, evt) {
 		        $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
@@ -70,7 +70,7 @@
 		</div>
 		<div class="fe_ad_highlights">
 			<p>
-				<% if @ad.user_id == @user.id %>
+				<% if @user != nil && @ad.user_id == @user.id %>
 				    
 				<% end %>
 			</p>
