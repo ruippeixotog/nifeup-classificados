@@ -20,3 +20,5 @@ var bg_colors_array = ["#C0E9F7", "#F0E1E1", "#E2F0DE", "#FDFBD1"];
 $(".dashboard_fe_ad_container").css('background-color', bg_colors_array[<%= @section_id %>-1]);
 
 var ajaxSearchUrl = "<%= url_for :action => 'update_search', :section_id => @section_id %>";
+
+$("#section_id").val(<%= @section_id %>);

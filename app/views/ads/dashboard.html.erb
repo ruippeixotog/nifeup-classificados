@@ -19,6 +19,7 @@
     <%= javascript_tag do -%>
       var ajaxSearchUrl = "<%= url_for :action => 'update_search', :section_id => @section_id %>";
     <% end -%>
+	<%= hidden_field_tag 'section_id', @section_id %>
 
     <%= submit_tag "Go", :id => 'search_button' %>
 	<div class="dashboard_sections">
