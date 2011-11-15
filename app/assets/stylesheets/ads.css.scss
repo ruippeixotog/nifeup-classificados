@@ -212,6 +212,7 @@
 }
 
 #section_tab_1.selected {
+    font-weight: bold;
     background: -webkit-gradient(linear, left top, left bottom, from(#6ABBDA), to(#C0E9F7));
     background: -moz-linear-gradient(top, #6ABBDA, #C0E9F7);
 }
@@ -225,6 +226,7 @@
 }
 
 #section_tab_2.selected {
+    font-weight: bold;
     background: -webkit-gradient(linear, left top, left bottom, from(#F2A5A5), to(#F0E1E1));
     background: -moz-linear-gradient(top, #F2A5A5, #F0E1E1);
 }
@@ -238,6 +240,7 @@
 }
 
 #section_tab_3.selected {
+    font-weight: bold;
     background: -webkit-gradient(linear, left top, left bottom, from(#CEDCC8), to(#E2F0DE));
     background: -moz-linear-gradient(top, #CEDCC8, #E2F0DE);
 }
@@ -251,6 +254,7 @@
 }
 
 #section_tab_4.selected {
+    font-weight: bold;
     background: -webkit-gradient(linear, left top, left bottom, from(#F1D971), to(#FDFBD1));
     background: -moz-linear-gradient(top, #F1D971, #FDFBD1);
 }

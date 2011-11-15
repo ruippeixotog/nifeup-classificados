@@ -2,12 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body{
-	padding:20px;
-	font:12px Verdana, Geneva, sans-serif;
-	color:#333;
-}
-
 a.btnsignin, a.btnsignout {
 	background:#999;
 	padding:5px 8px;
@@ -30,7 +24,6 @@ a.btnsigninon {
 	display:none;
 	background-color:#ccc;
 	position:absolute;
-	top: 67px;
 	width:215px;
 	padding:12px;
 	*margin-top: 5px;

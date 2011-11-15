@@ -9,8 +9,9 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       if ldap_info
-        user = User.find_or_create_by_username(session[:username])
+        user = User.find_or_create_by_username(params[:person][:username])
         user.save
+        
         session[:user_id] = user.id
         session[:username] = params[:person][:username]
         

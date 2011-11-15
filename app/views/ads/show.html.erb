@@ -70,6 +70,11 @@
 		</div>
 		<div class="fe_ad_highlights">
 			<p>
+				<% if @ad.user_id == @user.id %>
+				    
+				<% end %>
+			</p>
+			<p>
 				<span class="label">Posted by:</span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
 			</p>
 			<p>	
@@ -111,7 +116,7 @@
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <% @ad.comments.each do |c| %>
-		<p><%= User.find(c.user_id).username %>:   <%= c.content  %></p>
+		<p><%= c.user.username %>:   <%= c.content  %></p>
 	  <% end %>
 	
 	</div>	
@@ -120,10 +125,10 @@
             <%= label(:content, "comentario") %><br />
             <%= text_area(:comment,:content) %>
 
-            <%= hidden_field_tag(:ad,@ad.id)  %>
+            <%= hidden_field_tag(:ad, @ad.id)  %>
 		    <%= hidden_field_tag(:user, @user.id) %>
 			
-            <%= submit_tag("Novo Comentário") %>
+            <%= submit_tag(I18n.t('new_comment')) %>
 		<% end %>
     <% end %>
 </div>

@@ -11,6 +11,7 @@ pt:
   logout_success: "Já não está autenticado"
   greet_username: "Olá, %{user}!"
   no_ads_found: "Nenhum anúncio encontrado neste filtro!"
+  new_comment: "Novo comentário"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."

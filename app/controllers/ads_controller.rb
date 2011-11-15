@@ -17,6 +17,8 @@ class AdsController < ApplicationController
     
     if session[:user_id]
       @user = User.find(session[:user_id])
+      puts "\n\n\n######" 
+      puts @user.inspect
       if @rating = @user.evaluations.find_by_ad_id(params[:id])
           @rating
       else
