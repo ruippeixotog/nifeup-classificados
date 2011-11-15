@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20111115121524) do
     t.datetime "thumbnail_updated_at"
     t.float    "average_rate"
     t.integer  "final_evaluation_id"
-    t.float    "relevance_factor"
+    t.float    "relevance_factor",       :default => 0.0
   end
 
   add_index "ads", ["section_id"], :name => "index_ads_on_section_id"

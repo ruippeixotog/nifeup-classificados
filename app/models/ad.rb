@@ -12,11 +12,12 @@ class Ad < ActiveRecord::Base
   
   has_attached_file :thumbnail, :styles => { :medium => "200x200" }
   
-  scope :opened, where(:closed => false)
+  scope :all_opened, where(:closed => false)
+  scope :distinct, select("DISTINCT ads.id, ads.*")
 
   @@OPTIONS = {:opened => 0, :closed => 1, :locked => 2}
   
-  @@RELEVANCE_TIME_OFFSET = 2.weeks.to_i
+  @@RELEVANCE_TIME_OFFSET = 1.weeks.to_i
   @@RELEVANCE_USER_SCALE = 1000
 
   cattr_accessor :RELEVANCE_TIME_OFFSET
@@ -29,10 +30,6 @@ class Ad < ActiveRecord::Base
   class UnauthorizedUserException < RuntimeError; end
   class EvalAlreadyDoneError < RuntimeError; end
   
-  def self.all_opened
-    Ad.where(:closed => false)
-  end
-  
   def self.most_relevant(count)
     return nil if count.nil? || count < 0
     return [] if count == 0
@@ -42,15 +39,17 @@ class Ad < ActiveRecord::Base
   def self.search_text(text, limit=2**29)
     return [] if limit.nil? || limit <= 0
     return most_relevant(limit) if text.nil? || text.empty?
-    search = all_opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
-    order_by_relevance(search.uniq).first(limit)
+    query = order_by_relevance(all_opened.distinct)
+    query = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
+    return query.first(limit)
   end
   
   def self.search_text_by_section(section_id, text, limit=2**29)
     return [] if limit.nil? || limit <= 0
-    return Section.find(section_id).ads.opened.first(limit) if text.nil? || text.empty?
-    search = Section.find(section_id).ads.opened.search(:title_or_ad_tags_tag_contains_any => text.split).all
-    order_by_relevance(search.uniq).first(limit)
+    return Section.find(section_id).ads.all_opened.first(limit) if text.nil? || text.empty?
+    query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
+    search = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
+    return query.first(limit)
   end
   
   def open?
@@ -101,11 +100,12 @@ class Ad < ActiveRecord::Base
       self.average_rate = @cur_value / @size
     else
       self.average_rate = self.calc_average_rating(user_id,value)
-    end 
-    self.save
+    end
     evaluation.value = value
     evaluation.save
-      
+
+    self.relevance_factor = self.calc_relevance
+    self.save
   end
   
   def calc_average_rating(user_id,value)
@@ -114,7 +114,7 @@ class Ad < ActiveRecord::Base
        value
      else
        @old_average = self.average_rate * (@total - 1)
-       (value + @old_average)/@total
+       (value + @old_average) / @total
      end
   end
   
@@ -148,26 +148,13 @@ class Ad < ActiveRecord::Base
     
     self.final_evaluation.value = value
     self.final_evaluation.save
+
+    self.relevance_factor = self.calc_relevance
+    self.save
   end
   
   def relevance
-    self.created_at.to_i + relevance_factor * @@RELEVANCE_TIME_OFFSET / 2.0
-  end
-  
-  def relevance_factor
-    ad_rate_count = self.evaluations.count
-    user_rate_count = FinalEvaluation.where(:user_id => self.user_id).count
-    total_rates = ad_rate_count + user_rate_count
-    return 0.0 if total_rates == 0
-    
-    ad_rate = self.average_rate
-    ad_rate ||= 0
-    user_rate = self.user.rate
-    user_rate ||= 0
-    
-    ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
-    user_rate_factor = [user_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (user_rate - 3.0) / 2.0
-    return (ad_rate_factor * ad_rate_count + user_rate_factor * user_rate_count) / total_rates
+    self.created_at.to_i + self.relevance_factor * @@RELEVANCE_TIME_OFFSET
   end
   
   def calc_average_rating!(user_id, value)
@@ -188,8 +175,25 @@ class Ad < ActiveRecord::Base
     (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
     return gallery
   end
-  
-  def self.order_by_relevance(arr)
-    arr.sort_by { |a| -a.relevance }
+
+  def calc_relevance
+    ad_rate_count = self.evaluations.count
+    user_rate_count = FinalEvaluation.where(:user_id => self.user_id).count
+    total_rates = ad_rate_count + user_rate_count
+    return 0.0 if total_rates == 0
+
+    ad_rate = self.average_rate
+    ad_rate ||= 0
+    user_rate = self.user.rate
+    user_rate ||= 0
+
+    ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
+    user_rate_factor = [user_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (user_rate - 3.0) / 2.0
+    return (ad_rate_factor * ad_rate_count + user_rate_factor * user_rate_count) / total_rates
+  end
+
+private
+  def self.order_by_relevance(rel)
+    rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC");
   end
 end
