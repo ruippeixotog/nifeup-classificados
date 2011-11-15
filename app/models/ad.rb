@@ -48,8 +48,12 @@ class Ad < ActiveRecord::Base
     return [] if limit.nil? || limit <= 0
     return Section.find(section_id).ads.all_opened.first(limit) if text.nil? || text.empty?
     query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
-    search = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
+    query = query.search(:title_or_ad_tags_tag_contains_any => text.split).all
     return query.first(limit)
+  end
+
+  def self.order_by_relevance(rel)
+    rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC");
   end
   
   def open?
@@ -193,7 +197,4 @@ class Ad < ActiveRecord::Base
   end
 
 private
-  def self.order_by_relevance(rel)
-    rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC");
-  end
 end

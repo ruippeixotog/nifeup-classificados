@@ -161,7 +161,7 @@ class AdsController < ApplicationController
   def update_section
     @section_id = params[:id]
     section = Section.find(@section_id)
-    @ads = Ad.order_by_relevance(section.ads.opened)
+    @ads = Ad.order_by_relevance(section.ads.all_opened)
     @user_id = session[:user_id]
     
     respond_to do |format|
