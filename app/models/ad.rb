@@ -19,6 +19,9 @@ class Ad < ActiveRecord::Base
   @@RELEVANCE_TIME_OFFSET = 2.weeks.to_i
   @@RELEVANCE_USER_SCALE = 1000
 
+  cattr_accessor :RELEVANCE_TIME_OFFSET
+  cattr_accessor :RELEVANCE_USER_SCALE
+
   class CannotOpenAdError < RuntimeError; end
   class AdNotClosedError < RuntimeError; end
   class EvalUserNotDefinedError < RuntimeError; end
@@ -162,8 +165,8 @@ class Ad < ActiveRecord::Base
     user_rate = self.user.rate
     user_rate ||= 0
     
-    ad_rate_factor = [ad_rate_count / 1000.0, 1.0].min * (ad_rate - 3.0) / 2.0
-    user_rate_factor = [user_rate_count / 1000.0, 1.0].min * (user_rate - 3.0) / 2.0
+    ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
+    user_rate_factor = [user_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (user_rate - 3.0) / 2.0
     return (ad_rate_factor * ad_rate_count + user_rate_factor * user_rate_count) / total_rates
   end
   

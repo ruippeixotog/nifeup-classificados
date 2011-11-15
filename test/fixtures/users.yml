@@ -4,19 +4,22 @@ uva:
   id: 1
   username: ei07070
   admin: true
-  rate: nil
   blocked_until: nil
 
 ray:
   id: 2
   username: ei07061
   admin: false
-  rate: 4
   blocked_until: nil
   
 grelhas:
   id: 3
   username: ei07057
   admin: false
-  rate: 1.5
+  blocked_until: nil
+
+vashu:
+  id: 4
+  username: ei07126
+  admin: false
   blocked_until: nil

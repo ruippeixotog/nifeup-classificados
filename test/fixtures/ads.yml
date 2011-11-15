@@ -35,3 +35,12 @@ a4:
   user_id: 3 # grelhas
   section_id: 3 # aluguer
   created_at: 2011-10-31 17:47:48
+
+a5:
+  id: 5
+  title: Another ad in english
+  closed: false
+  description: OH YEAH
+  user_id: 3 # grelhas
+  section_id: 2 # venda
+  created_at: 2011-10-27 17:47:48

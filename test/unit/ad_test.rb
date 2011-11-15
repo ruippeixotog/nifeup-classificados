@@ -17,7 +17,7 @@ class AdTest < ActiveSupport::TestCase
 		assert !@a1.favorite?(user1.id)
 	end
 	
-	test "user_rating" do
+	test "ad rating" do
 		user1 = users(:uva)
 
 		assert_nil @a1.user_rating(user1.id)
@@ -36,7 +36,9 @@ class AdTest < ActiveSupport::TestCase
 		assert_raise(Ad::ArgumentError) { @a1.rate! user1.id, nil }
 	end
 	
-	test "average_ad_rating" do
+	test "average ad rating" do
+    assert_nil @a1.average_rate
+
 	  @a1.rate! users(:uva), 3
 	  assert_in_delta 3.0, @a1.average_rate, 0.001
 	  
@@ -50,7 +52,7 @@ class AdTest < ActiveSupport::TestCase
 	  assert_in_delta 3.0, @a1.average_rate, 0.001
 	end
 	
-	test "final_evaluation" do
+	test "final evaluation" do
 	  user1 = users(:uva)
 	  
 	  # check initial state
@@ -93,6 +95,47 @@ class AdTest < ActiveSupport::TestCase
 	  assert_raise(Ad::EvalAlreadyDoneError) { @a1.do_final_eval! user1.id, 4 }
 	end
 
+  test "user rating" do
+    assert_nil users(:grelhas).rate
+
+    @a1.close!
+    @a1.set_final_eval_user! users(:uva).id
+    @a1.do_final_eval! users(:uva).id, 4
+
+    assert_in_delta 4.0, users(:grelhas).rate, 0.001
+
+    ads(:a5).close!
+    ads(:a5).set_final_eval_user! users(:ray).id
+    ads(:a5).do_final_eval! users(:ray).id, 3
+
+    assert_in_delta 3.5, users(:grelhas).rate, 0.001
+  end
+
+  test "relevance factor" do
+    Ad.RELEVANCE_USER_SCALE = 3
+
+    assert_equal 0, @a1.relevance_factor, "assert 0"
+    
+    @a1.rate! users(:uva), 4
+    assert_in_delta 0.5 * (1.0/3), @a1.relevance_factor, 0.001, "assert 1 failed"
+
+    @a1.rate! users(:ray), 5
+    assert_in_delta 0.75 * (2.0/3), @a1.relevance_factor, 0.001, "assert 2 failed"
+
+    @a1.rate! users(:grelhas), 3
+    assert_in_delta 0.5, @a1.relevance_factor, 0.001, "assert 3 failed"
+
+    @a1.rate! users(:vashu), 1
+    avg_ad_rate = [0.5, 1, 0, -1].inject(0.0) { |result, el| result + el } / 4.0
+    assert_in_delta avg_ad_rate, @a1.relevance_factor, 0.001, "assert 4 failed"
+
+    @a1.close!
+    @a1.set_final_eval_user! users(:ray).id
+    @a1.do_final_eval! users(:ray).id, 4
+    rel = (1.0/5) * 0.5 + (4.0/5) * avg_ad_rate
+    assert_in_delta rel, @a1.relevance_factor, 0.001, "assert 5 failed"
+  end
+
 	test "relevance" do
     ad1_rel = @a1.relevance
     assert ad1_rel > 0
@@ -106,7 +149,7 @@ class AdTest < ActiveSupport::TestCase
   
   test "opened" do
     arr = Ad.all_opened
-    assert_equal 3, arr.length
+    assert_equal 4, arr.length
     arr.each do |a|
       assert a.open?
     end 
@@ -118,7 +161,7 @@ class AdTest < ActiveSupport::TestCase
     assert_equal [ads(:a3), ads(:a2), @a1], arr
 
     arr = Ad.most_relevant 5
-    assert_equal [ads(:a3), ads(:a2), @a1], arr
+    assert_equal [ads(:a3), ads(:a2), @a1, ads(:a5)], arr
 
     arr = Ad.most_relevant 1
     assert_equal [ads(:a3)], arr
