@@ -1,0 +1,9 @@
+<div class="fields file">
+<% if f.object.new_record? %>
+  <%= f.label :link %><br />
+  <%= f.file_field :link %><br />
+<% else %>
+  <%= image_tag f.object.link(:gallery) %><br />
+<% end %>
+<%= link_to_remove_fields I18n.t('remove_file'), f %>
+</div>

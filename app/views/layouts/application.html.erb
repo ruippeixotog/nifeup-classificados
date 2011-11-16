@@ -6,6 +6,7 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "jquery.jgrowl" %>
+  <%= yield(:head) %>
   <%= csrf_meta_tags %>
 </head>
 <body>

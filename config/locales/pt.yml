@@ -16,6 +16,8 @@ pt:
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
 
   comment: "Comentário"
+  add_file: "Adicionar ficheiro"
+  remove_file: "Remover"
   
   will_paginate:
       previous_label: "&#8592; Anterior"

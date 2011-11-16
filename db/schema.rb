@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111115121524) do
+ActiveRecord::Schema.define(:version => 20111115173219) do
 
   create_table "ad_tags", :force => true do |t|
     t.string   "tag"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20111115121524) do
 
   create_table "ads", :force => true do |t|
     t.string   "title"
-    t.integer  "closed"
+    t.integer  "closed",                 :default => 0
     t.text     "description"
     t.integer  "user_id"
     t.integer  "section_id"

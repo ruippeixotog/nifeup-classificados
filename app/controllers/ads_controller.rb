@@ -34,6 +34,7 @@ class AdsController < ApplicationController
   # GET /ads/new.json
   def new
     @ad = Ad.new
+    3.times { @ad.resources.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -64,8 +65,12 @@ class AdsController < ApplicationController
     
     respond_to do |format|
       if @ad.save
-        format.html { redirect_to @ad, notice: 'Ad was successfully created.' }
-        format.json { render json: @ad, status: :created, location: @ad }
+        if params[:ad][:thumbnail].blank?
+          format.html { redirect_to @ad, notice: 'Ad was successfully created.' }
+          format.json { render json: @ad, status: :created, location: @ad }
+        else
+          format.html { render action: "crop" }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @ad.errors, status: :unprocessable_entity }
@@ -80,8 +85,12 @@ class AdsController < ApplicationController
 
     respond_to do |format|
       if @ad.update_attributes(params[:ad])
-        format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
-        format.json { head :ok }
+        if params[:ad][:thumbnail].blank?
+          format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
+          format.json { head :ok }
+        else
+          render :action => "crop"
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @ad.errors, status: :unprocessable_entity }

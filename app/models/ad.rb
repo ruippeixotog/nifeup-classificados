@@ -2,15 +2,36 @@ class Ad < ActiveRecord::Base
   belongs_to :user
   belongs_to :section
   belongs_to :final_evaluation
-  has_many :resources
   has_many :favorites
   has_many :ad_tags
   has_many :users, :through => :favorites
   has_many :evaluations
   has_many :raters, :through => :evaluations, :source => :users
-  has_many :comments
+  has_many :comments, :dependent => :destroy
+  has_many :resources, :dependent => :destroy
+  # TODO reject empty
+  accepts_nested_attributes_for :resources, :reject_if => lambda { |r| not r[:link] }, :allow_destroy => true
+
+  validates_presence_of :title
   
-  has_attached_file :thumbnail, :styles => { :medium => "200x200" }
+  # tags saving process
+  attr_writer :tag_names
+  after_save :assign_tags
+  
+  # thumbnail choose and cropping process 
+  has_attached_file :thumbnail, :styles => { :thumb => "140x180", :medium => "200x200" }, :processors => [:cropper]
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_update :reprocess_avatar, :if => :cropping?
+  
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+  
+  def thumb_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(thumbnail.path(style))
+  end
+  
   
   scope :all_opened, where(:closed => false)
   scope :distinct, select("DISTINCT ads.id, ads.*")
@@ -198,5 +219,23 @@ class Ad < ActiveRecord::Base
     return (ad_rate_factor * ad_rate_count + user_rate_factor * user_rate_count) / total_rates
   end
 
-private
+  # tagging system
+  def tag_names
+    @tag_names || ad_tags.map(&:tag).join(' ')
+  end
+  
+  private
+
+  def assign_tags
+    if @tag_names
+      self.ad_tags = @tag_names.split(/\s+/).map do |name|
+        AdTag.find_or_create_by_ad_id_and_tag(self.id, name)
+      end
+    end
+  end
+
+  # cropping the avatar
+  def reprocess_avatar
+    thumbnail.reprocess!
+  end
 end
