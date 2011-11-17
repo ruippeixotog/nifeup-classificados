@@ -41,14 +41,14 @@ class ReportsController < ApplicationController
   # POST /reports.json
   def create
     @report = Report.new(params[:report])
+    @report.user_id = session[:user_id] #TODO: Better way to do this!
 
     respond_to do |format|
       if @report.save
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
-        format.json { render json: @report, status: :created, location: @report }
+        format.js
       else
-        format.html { render action: "new" }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -32,4 +32,9 @@ class Comment < ActiveRecord::Base
   def badly_reported?    
     self.reports.size >= @@report_limit
   end
+  
+  def user_reported?(user_id)
+    true unless not self.reports.find_by_user_id(user_id)
+  end
+  
 end

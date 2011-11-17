@@ -86,6 +86,14 @@ class CommentsController < ApplicationController
     end
   end
   
-  
-
+  def report    
+    @comment = Comment.find(params[:comment_id])
+    @user_id = session[:user_id]
+    
+    @comment.report!(@user_id, params[:reason])
+        
+    respond_to do |format|
+      format.js
+    end
+  end
 end

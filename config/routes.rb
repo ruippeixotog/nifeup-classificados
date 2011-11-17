@@ -5,8 +5,11 @@ Cfeup::Application.routes.draw do
 
   resources :reports
 
-  resources :comments
-
+  resources :comments do
+    member do 
+      post 'report'
+    end
+  end
   resources :ads do
     member do
       get 'mark_fav'

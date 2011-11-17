@@ -26,7 +26,23 @@
 		        });
 	          }
 	        });
+	        $('.fe_comment_report_action').click(function() {
+	            var id = $(this).data("id");
+	            $("#comment_id").val(id);
+	            $("#report_dialog").dialog("open");
+	            return false; 
+	        });
         <% end %>
+    $("#report_dialog").dialog({ 
+        autoOpen: false,
+        buttons: { "<%=t 'report' %>": function() { 
+            $("#new_report").submit();
+            $(this).dialog("close"); 
+            return false;
+            } },
+        width: 400,
+        title: "<%=t 'report' %>"
+        });
     });
 
 	function submitenter(myfield,e)
@@ -134,9 +150,18 @@
 	  <% @ad.comments.each do |c| %>
 		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= c.content  %>
 		<span class="label_date"> <%= date_format c.created_at %> </span>
+		<span class="fe_ad_comments_actions">
 		<% if @user && (@user.id == c.user.id || @user.admin) %>
-			<td><%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %></td>
-		<% end%>
+			<%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
+		<% end %>
+		<% if @user %>
+		    <% if c.user_reported?(@user.id) %>
+		        <span class="fe_ad_comments_action"> <%=t "already_reported" %> </span>
+		    <% else %>
+		        <%= link_to I18n.t('report'), { :controller => 'reports', :action => "new"}, { :id => "fe_comment_report_#{c.id}", :class => "fe_ad_comments_action fe_comment_report_action", "data-id" => c.id} %>
+		    <% end %>
+		<% end %>
+		</span>
 		</p>
 	  <% end %>
 		<% if @user %>
@@ -149,6 +174,14 @@
 	    <% end %>
 	</div>	
     
+</div>
+
+<div id="report_dialog"> 
+    <span class="label"><%=t 'comments.reason_label' %></span>
+    <%= form_tag({:controller => "comments", :action => "report"}, :remote => true, :method => "post", :id => "new_report") do |f| %>
+   	    <%= text_area_tag :reason, "", :size => "48x5" %>
+   	    <%= hidden_field_tag :comment_id %>
+   	<% end %>
 </div>
 
 

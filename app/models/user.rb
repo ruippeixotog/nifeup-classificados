@@ -11,4 +11,5 @@ class User < ActiveRecord::Base
     user.id = 1
     user
   end
+
 end
