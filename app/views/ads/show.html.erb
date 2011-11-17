@@ -108,26 +108,28 @@
 	  <p><%= @ad.description %></p>
 	</div>
 	
-	<%#--------------- Comentários --------------%>
+	<%#--------------- comments --------------%>
 
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <% @ad.comments.each do |c| %>
-		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path @ad.user %>"><%= c.user.username %></a> </span><%= c.content  %>
-		<span class="label_date"> 25 August 2011 (exemplo) </span></p>
-		
+		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= c.content  %>
+		<span class="label_date"> <%= date_format c.created_at %> </span>
+		<% if @user && (@user.id == c.user.id || @user.admin) %>
+			<td><%= link_to  I18n.t('delete'), c, confirm: I18n.t('confirm_delete'), method: :delete %></td>
+		<% end%>
+		</p>
 	  <% end %>
-	
+		<% if @user %>
+		    <%= form_for(Comment.new) do %>
+	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :placeholder => "Comentar" %>
+	            <%= hidden_field :comment, :ad_id, {:value => @ad.id} %>
+
+	            <%= submit_tag(I18n.t('new_comment'), :class => 'fe_ad_comment_submit')  %>
+			<% end %>
+	    <% end %>
 	</div>	
-    <% if @user %>
-	    <%= form_for(Comment.new) do %>
-            <%= label :content, I18n.t('comment') %><br />
-            <%= text_area :comment, :content %>
-            <%= hidden_field :comment, :ad_id, {:value => @ad.id}  %>
-            			
-            <%= submit_tag(I18n.t('new_comment')) %>
-		<% end %>
-    <% end %>
+    
 </div>
 
 

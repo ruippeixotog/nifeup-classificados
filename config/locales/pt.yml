@@ -12,6 +12,10 @@ pt:
   greet_username: "Olá, %{user}!"
   no_ads_found: "Nenhum anúncio encontrado neste filtro!"
   new_comment: "Novo comentário"
+  delete: "Apagar"
+  created_comment: "Comentário adicionado com sucesso!"
+  deleted_comment: "Comentário removido com sucesso!"
+  confirm_delete: "Tem a certeza?"
   edit: "Editar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
 
