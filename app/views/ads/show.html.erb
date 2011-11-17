@@ -75,29 +75,29 @@
 				<% end %>
 			</p>
 			<p>
-				<span class="label">Posted by:</span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
+				<span class="label">Author: </span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
 			</p>
 			<p>	
-				<span class="label">Posted at:</span> <%= date_format @ad.created_at %>
+				<span class="label">Date: </span> <%= date_format @ad.created_at %>
 			</p>
 			<p>
-				<span class="label">Tags</span> <% @ad.ad_tags.each do |t|%>
+				<span class="label">Keywords: </span> <% @ad.ad_tags.each do |t|%>
 				<%= if t != @ad.ad_tags.last then t.tag+", " else t.tag end%>
 				<% end %>
 			</p>
-			<div class="fe_ad_share">
-				<a name="fb_share" type="box_count" share_url= "<%=request.url%>" > Share </a> 
-				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"> </script>
+			<div class="fe_ad_share_fb">
+				<a name="fb_share" type="box_count" share_url= "<%=request.url%>"> Share </a> 
+				<script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"> </script>
 			</div>
-			<div class="fe_ad_share">
+			<div class="fe_ad_share_tweet">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
-				<script type="text/javascript"src="//platform.twitter.com/widgets.js"></script>
+				<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 			</div>
 			
 			<div id="rating"></div>
 			
 			<p>
-				<span class="label"> Average rating </span>
+				<span class="label"> Average rating: </span>
 				<span id="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %> </span>
 			</p>
 			
@@ -113,7 +113,9 @@
 	<div class="fe_ad_comments">
 	  <div class="label">Comments:</div>
 	  <% @ad.comments.each do |c| %>
-		<p><%= c.user.username %>:   <%= c.content  %></p>
+		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path @ad.user %>"><%= c.user.username %></a> </span><%= c.content  %>
+		<span class="label_date"> 25 August 2011 (exemplo) </span></p>
+		
 	  <% end %>
 	
 	</div>	
