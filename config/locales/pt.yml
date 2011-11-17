@@ -22,10 +22,10 @@ pt:
   report: "Reportar"
   already_reported: "Reportado!"
   report_success: "O comentário foi reportado com sucesso!"
-
   comment: "Comentário"
   add_file: "Adicionar ficheiro"
   remove_file: "Remover"
+  date_distance: "Há %{date} atrás."
   
   will_paginate:
       previous_label: "&#8592; Anterior"
@@ -43,3 +43,57 @@ pt:
 
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
+    
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d de %B"
+      long: "%d de %B de %Y"
+      only_day: "%d"
+    day_names: [domingo, segunda, terça, quarta, quinta, sexta, sábado]
+    abbr_day_names: [dom, seg, ter, qua, qui, sex, sáb]
+    month_names: [~, janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro]
+    abbr_month_names: [~, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez]
+    order: [:day, :month, :year]
+  time:
+    formats:
+      default: "%A, %d de %B de %Y, %H:%Mh"
+      time: "%H:%M hs"
+      short: "%d/%m, %H:%M hs"
+      long: "%A, %d de %B de %Y, %H:%Mh"
+      only_second: "%S"
+    am:
+    pm:
+  datetime:
+    distance_in_words:
+      half_a_minute: "meio minuto"
+      less_than_x_seconds:
+        one: "menos de 1 segundo"
+        other: "menos de %{count} segundos"
+      x_seconds:
+        one: "1 segundo"
+        other: "%{count} segundos"
+      less_than_x_minutes:
+        one: "menos de um minuto"
+        other: "menos de %{count} minutos"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minutos"
+      about_x_hours:
+        one: "aproximadamente 1 hora"
+        other: "aproximadamente %{count} horas"
+      x_days:
+        one: "1 dia"
+        other: "%{count} dias"
+      about_x_months:
+        one: "aproximadamente 1 mês"
+        other: "aproximadamente %{count} meses"
+      x_months:
+        one: "1 mês"
+        other: "%{count} meses"
+      about_x_years:
+        one: "aproximadamente 1 ano"
+        other: "aproximadamente %{count} anos"
+      over_x_years:
+        one: "mais de 1 ano"
+        other: "mais de %{count} anos"    
