@@ -15,6 +15,7 @@ pt:
   delete: "Apagar"
   created_comment: "Comentário adicionado com sucesso!"
   deleted_comment: "Comentário removido com sucesso!"
+  comment_placeholder: "Adicionar um comentário.."
   confirm_delete: "Tem a certeza?"
   edit: "Editar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"

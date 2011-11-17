@@ -28,6 +28,23 @@
 	        });
         <% end %>
     });
+
+	function submitenter(myfield,e)
+	{
+	var keycode;
+	if (window.event) keycode = window.event.keyCode;
+	else if (e) keycode = e.which;
+	else return true;
+
+	if (keycode == 13 && !event.shiftKey)
+	   {
+	   myfield.form.submit();
+	   return false;
+	   }
+	else
+	   return true;
+	}
+
 <% end %>
 <% content_for :title, @ad.title %>
 
@@ -116,16 +133,16 @@
 		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= c.content  %>
 		<span class="label_date"> <%= date_format c.created_at %> </span>
 		<% if @user && (@user.id == c.user.id || @user.admin) %>
-			<td><%= link_to  I18n.t('delete'), c, confirm: I18n.t('confirm_delete'), method: :delete %></td>
+			<td><%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %></td>
 		<% end%>
 		</p>
 	  <% end %>
 		<% if @user %>
 		    <%= form_for(Comment.new) do %>
-	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :placeholder => "Comentar" %>
+	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :placeholder => I18n.t('comment_placeholder'), :onKeyPress => 'return submitenter(this,event)' %>
 	            <%= hidden_field :comment, :ad_id, {:value => @ad.id} %>
 
-	            <%= submit_tag(I18n.t('new_comment'), :class => 'fe_ad_comment_submit')  %>
+	          <%#  <%= submit_tag(I18n.t('new_comment'), :class => 'fe_ad_comment_submit')  %>
 			<% end %>
 	    <% end %>
 	</div>	
