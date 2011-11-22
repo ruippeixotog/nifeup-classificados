@@ -32,7 +32,6 @@ class Ad < ActiveRecord::Base
     @geometry[style] ||= Paperclip::Geometry.from_file(thumbnail.path(style))
   end
   
-  
   scope :all_opened, where(:closed => false)
   scope :distinct, select("DISTINCT ads.id, ads.*")
 
@@ -222,6 +221,18 @@ class Ad < ActiveRecord::Base
   # tagging system
   def tag_names
     @tag_names || ad_tags.map(&:tag).join(' ')
+  end
+  
+  #business partner
+  def partner
+    User.find(final_eval_user_id)
+  end
+  
+  def partner=(user_name)
+    user = User.find_by_username(user_name)
+    if user
+      set_final_eval_user! user.id
+    end
   end
   
   private

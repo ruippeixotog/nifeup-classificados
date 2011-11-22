@@ -424,5 +424,15 @@
     background: -moz-linear-gradient(top, #F1D971, #FDFBD1);
 }
 
-.fe_ad_comments_actions {
+#close_ad {
+  display: block;
+}
+
+.close_ad {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#close_ad {
+  display: none;
 }

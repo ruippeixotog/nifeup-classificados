@@ -42,9 +42,23 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
+      format.js
     end
   end
 
+  def auto_complete
+    @users = User.find(:all, :conditions => ['username LIKE ?', "#{params[:term]}%"])
+    
+    @labels = []
+    @users.each do |u|
+      @labels << {:label => u.username}
+    end
+    
+    respond_to do |format|
+      format.json { render json: @labels.to_json }
+    end
+  end
+  
   # GET /users/1
   # GET /users/1.json
   def show

@@ -26,12 +26,35 @@
 		        });
 	          }
 	        });
-	        $('.fe_comment_report_action').click(function() {
-	            var id = $(this).data("id");
-	            $("#comment_id").val(id);
-	            $("#report_dialog").dialog("open");
-	            return false; 
-	        });
+
+	  //Close User's Ad
+	  <% if @user.id == @ad.user_id %>
+		$( '.close_ad' ).click(function() {
+				$( "#close_ad" ).dialog( "open" );
+		});
+		$('#close_ad').dialog({
+			autoOpen: false,
+			height: 160,
+			width: 200,
+			modal: true
+		});
+	  <% end %>
+	  //User's login Autocomplete
+	  $(function() {
+		$( "#partner" ).autocomplete({
+			source: '<%= auto_complete_users_path %>',
+			minLength: 2
+		});
+	});
+
+
+	  $('.fe_comment_report_action').click(function() {
+	    var id = $(this).data("id");
+	    $("#comment_id").val(id);
+	    $("#report_dialog").dialog("open");
+	    return false; 
+	  });
+
         <% end %>
     $("#report_dialog").dialog({ 
         autoOpen: false,
@@ -103,9 +126,23 @@
 		</div>
 		<div class="fe_ad_highlights">
 			<p>
+			    <% if @user %>
 				<% if @user != nil && @ad.user_id == @user.id %>
 				    <%= link_to I18n.t('edit'), edit_ad_path(@ad) %>
 				<% end %>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<!--Close the Ad-->
+				<% if @user.id == @ad.user_id and @ad.open? %> <!--TODO add check for open state--> 
+				  <span class="close_ad" ><%=I18n.t('ad.close')%></p>
+				  <div id="close_ad" title=<%= I18n.t('ad.close') %> >
+				    <%= form_tag(close_ad_path(@ad)) do %>
+				    <%= label :partner_lbl, I18n.t('ad.partner') %>
+				    <p><%= text_field_tag :partner %></p>
+				    <p><%= submit_tag I18n.t('ad.close') %></p>
+				    <% end %>
+				  </div>
+				<% end %>
+			    <% end %>
 			</p>
 			<p>
 				<span class="label">Author: </span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
@@ -133,6 +170,11 @@
 				<span class="label"> Average rating: </span>
 				<span id="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %> </span>
 			</p>
+			<div id="partner_info">
+			  <% if not @ad.open?  %> <!--TODO add check for open state--> 
+			    <%= label_tag I18n.t('ad.partner'), nil, :class => 'label' %> <%= link_to @ad.partner.username, user_path(@ad.partner) %>
+			  <% end %>
+			</div>
 			
 		</div>
 	</div>
@@ -174,6 +216,7 @@
 	    <% end %>
 	</div>	
     
+
 </div>
 
 <div id="report_dialog"> 
@@ -183,6 +226,3 @@
    	    <%= hidden_field_tag :comment_id %>
    	<% end %>
 </div>
-
-
-

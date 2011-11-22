@@ -11,5 +11,13 @@ class User < ActiveRecord::Base
     user.id = 1
     user
   end
+  
+  def self.search_for_uname uname
+    if key
+      find(:all, :conditions => ['login LIKE ?', "%#{uname}%"])
+    else
+      find(:all)
+    end
+  end
 
 end

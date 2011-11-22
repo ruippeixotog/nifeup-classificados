@@ -11,3 +11,7 @@ en:
     failure_unmark_fav: "It was not possibly to unmark the ad as favorite."
     success_rate: "Ad was successfully rated"
     failure_rate: "It was not possible to rate this ad"
+    close: "Close Ad"
+    closed_ok: "Ad was successfully closed."
+    partner: "Business Partner:"
+    cancel: "Close"

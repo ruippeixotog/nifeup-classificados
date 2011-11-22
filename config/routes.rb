@@ -15,6 +15,7 @@ Cfeup::Application.routes.draw do
       get 'mark_fav'
       get 'unmark_fav'
       post 'rate'
+      post 'close'
       put 'rate'
     end    
     collection do
@@ -33,6 +34,7 @@ Cfeup::Application.routes.draw do
   resources :users do
     collection do
       post 'authenticate'
+      get 'auto_complete'
     end
   end
   

@@ -1,4 +1,4 @@
-class AdsController < ApplicationController
+class AdsController < ApplicationController  
   # GET /ads
   # GET /ads.json
   def index
@@ -196,4 +196,18 @@ class AdsController < ApplicationController
     end
   end
     
+  #POST ads/1/close
+  def close
+    @ad = Ad.find(params[:id])
+    
+    @ad.close!
+    @ad.partner = params[:partner]
+    
+    respond_to do |format|
+      format.html { redirect_to @ad, notice: I18n.t('ad.closed_ok') }
+      format.json { head :ok }
+      format.js
+    end
+  end
+  
 end
