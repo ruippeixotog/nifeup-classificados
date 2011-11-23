@@ -66,8 +66,18 @@
         width: 400,
         title: "<%=t 'report' %>"
         });
+
+
+		
+		$('#fe_ad_comment_textarea').autoResize({
+			minHeight: 36,
+			maxHeight: 200,
+			extraSpace: 18
+		});
+	
     });
 
+	
 	function submitenter(myfield,e)
 	{
 	var keycode;
@@ -84,6 +94,8 @@
 	   return true;
 	}
 
+
+	
 <% end %>
 <% content_for :title, @ad.title %>
 
@@ -208,7 +220,7 @@
 	  <% end %>
 		<% if @user %>
 		    <%= form_for(Comment.new) do %>
-	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :placeholder => I18n.t('comment_placeholder'), :onKeyPress => 'return submitenter(this,event)' %>
+	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :id => 'fe_ad_comment_textarea',  :placeholder => I18n.t('comment_placeholder'), :onKeyPress => 'return submitenter(this,event)' %>
 	            <%= hidden_field :comment, :ad_id, {:value => @ad.id} %>
 
 	          <%#  <%= submit_tag(I18n.t('new_comment'), :class => 'fe_ad_comment_submit')  %>
