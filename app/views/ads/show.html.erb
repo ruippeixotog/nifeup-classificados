@@ -157,13 +157,13 @@
 			    <% end %>
 			</p>
 			<p>
-				<span class="label">Author: </span> <a href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
+				<span class="label"><%= I18n.t('ad.author') %>: </span> <a class="link" href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
 			</p>
 			<p>	
-				<span class="label">Date: </span> <abbr title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(@ad.created_at, Time.now) %></abbr>
-			</p>
+				<span class="label"><%= I18n.t('ad.date') %>: </span> <abbr title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(@ad.created_at, Time.now) %></abbr>
+			</p>				
 			<p id = "pdf_link">
-				<span class="label">Keywords: </span> <% @ad.ad_tags.each do |t|%>
+				<span class="label"><%= I18n.t('ad.keywords') %>: </span> <% @ad.ad_tags.each do |t|%>
 				<%= if t != @ad.ad_tags.last then t.tag+", " else t.tag end%>
 				<% end %>
 			</p>
@@ -179,7 +179,7 @@
 			<div id="rating"></div>
 			
 			<p>
-				<span class="label"> Average rating: </span>
+				<span class="label"> <%= I18n.t('ad.average') %>: </span>
 				<span id="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %> </span>
 			</p>
 			<div id="partner_info">
@@ -190,8 +190,11 @@
 			
 		</div>
 	</div>
+
+	<%#--------------- Descrição --------------%>
+
 	<div class="fe_ad_show_description">
-	  <div class="label">Description:</div>
+	  <div class="label"><%= I18n.t('ad.description') %>:</div>
 	  <p><%= @ad.description %></p>
 	</div>
 	
@@ -200,32 +203,36 @@
 	<%#--------------- Comentários --------------%>
 
 	<div class="fe_ad_comments">
-	  <div class="label">Comments:</div>
-	  <% @ad.comments.each do |c| %>
-		<p><span class="label"> <a style="text-decoration:none" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= c.content  %>
-		<abbr class="label_date" title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(c.created_at, Time.now) %></abbr> 
-		<span class="fe_ad_comments_actions">
-		<% if @user && (@user.id == c.user.id || @user.admin) %>
-			<%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
-		<% end %>
-		<% if @user %>
-		    <% if c.user_reported?(@user.id) %>
-		        <span class="fe_ad_comments_action"> <%=t "already_reported" %> </span>
-		    <% else %>
-		        <%= link_to I18n.t('report'), { :controller => 'reports', :action => "new"}, { :id => "fe_comment_report_#{c.id}", :class => "fe_ad_comments_action fe_comment_report_action", "data-id" => c.id} %>
-		    <% end %>
-		<% end %>
-		</span>
-		</p>
-	  <% end %>
-		<% if @user %>
+	<% if @ad.comments %>		
+	  	<div class="label"><%= I18n.t('ad.comments') %>:</ div>
+	  	<% @ad.comments.each do |c| %>
+			<p><span class="label"> <a class="link" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= c.content  %>
+			<abbr class="label_date" title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(c.created_at, Time.now) %></abbr> 
+			
+			<span class="fe_ad_comments_actions">
+			<% if @user && (@user.id == c.user.id || @user.admin) %>
+				<%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
+			<% end %>
+			<% if @user %>
+		    		<% if c.user_reported?(@user.id) %>
+		        		<span class="fe_ad_comments_action"> <%=t "already_reported" %> </span>
+		    		<% else %>
+		        		<%= link_to I18n.t('report'), { :controller => 'reports', :action => "new"}, { :id => "fe_comment_report_#{c.id}", :class => "fe_ad_comments_action fe_comment_report_action", "data-id" => c.id} %>
+		    		<% end %>
+			<% end %>
+			</span>
+			</p>
+	  	<% end %>
+	<% end %>
+	
+	<% if @user %>
 		    <%= form_for(Comment.new) do %>
 	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :id => 'fe_ad_comment_textarea',  :placeholder => I18n.t('comment_placeholder'), :onKeyPress => 'return submitenter(this,event)' %>
 	            <%= hidden_field :comment, :ad_id, {:value => @ad.id} %>
 
 	          <%#  <%= submit_tag(I18n.t('new_comment'), :class => 'fe_ad_comment_submit')  %>
 			<% end %>
-	    <% end %>
+	<% end %>
 	</div>	
     
 

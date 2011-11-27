@@ -29,6 +29,7 @@ pt:
   add_file: "Adicionar ficheiro"
   remove_file: "Remover"
   date_distance: "Há %{date} atrás."
+
   
   will_paginate:
       previous_label: "&#8592; Anterior"
@@ -46,7 +47,12 @@ pt:
     close: "Fechar Anúncio"
     closed_ok: "Anúncio fechado com sucesso."
     partner: "Parceiro de Negócio:"
-
+    author: "Autor"
+    date: "Data"
+    keywords: "Palavras-chave"
+    average: "Média"
+    description: "Descrição"
+    comments: "Comentários"
 
   comments:
     reason_label: "Qual a razão para reportar o comentário?"

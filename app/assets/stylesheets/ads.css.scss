@@ -7,6 +7,21 @@
     border: solid 1px #D2D2D2;
 }
 
+a:visited{
+    text-decoration: none; 
+    color: #0033CC;
+}
+
+a:link{
+    text-decoration: none; 
+    color: #3366CC;
+}
+
+a:hover{
+    text-decoration: underline; 
+    color: #3366CC;
+}
+
 .fe_ad_container {
     -moz-border-radius: 15px;
     border-radius: 5px;
