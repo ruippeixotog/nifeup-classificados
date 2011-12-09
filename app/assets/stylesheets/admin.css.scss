@@ -1,0 +1,32 @@
+.comment {
+  -moz-border-radius: 5px;
+  border-radius: 8px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.comment_content {
+  padding-left: 15px;
+}
+
+.report {
+  padding: 3px;
+  margin-top: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+}
+
+.report_reason {
+  padding-left: 15px;
+}
+
+.comment_actions {
+  float: right;
+}
+
+.report_actions {
+  float: right;
+}

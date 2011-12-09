@@ -53,7 +53,18 @@ pt:
     average: "Média"
     description: "Descrição"
     comments: "Comentários"
-
+  admin:
+    title: "Administração"
+    remove_comment: "Eliminar"
+    ignore_report: "Ignorar"
+    reported_comments: "Comentários reportados"
+    commented_by: "Comentado por"
+    commented_in: "em"
+    commented_at: "no dia"
+    comment_content: "Conteúdo:"
+    reported_by: "Reportado por"
+    reported_at: "no dia"
+    reported_reason: "Motivo:"
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
     
@@ -71,7 +82,7 @@ pt:
     formats:
       default: "%A, %d de %B de %Y, %H:%Mh"
       time: "%H:%M hs"
-      short: "%d/%m, %H:%M hs"
+      short: "%d de %B, %H:%M "
       long: "%A, %d de %B de %Y, %H:%Mh"
       only_second: "%S"
     am:
