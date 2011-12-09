@@ -1,7 +1,7 @@
-Section.create(name: 'Vendo')
-Section.create(name: 'Alugo')
-Section.create(name: 'Troco')
-Section.create(name: 'Procuro')
+Section.create(id: 1, name: 'Vendo')
+Section.create(id: 2, name: 'Alugo')
+Section.create(id: 3, name: 'Troco')
+Section.create(id: 4, name: 'Procuro')
 
 
 # This file should contain all the record creation needed to seed the database with its default values.
