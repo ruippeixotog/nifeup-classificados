@@ -35,10 +35,14 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'minitest'
+  
+  gem 'cucumber-rails'
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
 end
 
 # Install paperclip
-gem "paperclip", "~> 2.4"
-gem "net-ldap"
+gem 'paperclip', "~> 2.4"
+gem 'net-ldap'
 gem 'will_paginate'
-gem "pdfkit"
+gem 'pdfkit'
