@@ -1,10 +1,13 @@
 <h1><%=t "admin.reported_comments" %></h1>
 
 <div id="comments">
+  <% if @comments.empty? %>
+  <%=t "admin.no_comments" %>
+  <% end %>
   <% @comments.each do |comment| %>
   <div class="comment">
     <div class="comment_actions">
-      <%= link_to I18n.t("admin.remove_comment"), "#" %>
+      <%= link_to I18n.t("admin.remove_comment"), comment, confirm: I18n.t('confirm_delete'), method: :delete %>
     </div>
     <div class="comment_author">
       <%=t "admin.commented_by" %> <b><%= comment.user.username %></b>
@@ -17,7 +20,7 @@
     <% comment.reports.each do |report| %>
     <div class="report">
       <div class="report_actions">
-        <%= link_to I18n.t("admin.ignore_report"), "#" %>
+        <%= link_to I18n.t("admin.ignore_report"), report, confirm: I18n.t('confirm_delete'), method: :delete %>
       </div>
       <div class="report_author">
         <%=t "admin.reported_by" %> <b><%= report.user.username %></b>

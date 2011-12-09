@@ -54,10 +54,12 @@ pt:
     description: "Descrição"
     comments: "Comentários"
   admin:
+    link: "Admin"
     title: "Administração"
     remove_comment: "Eliminar"
     ignore_report: "Ignorar"
     reported_comments: "Comentários reportados"
+    no_comments: "Não há comentários reportados no sistema."
     commented_by: "Comentado por"
     commented_in: "em"
     commented_at: "no dia"

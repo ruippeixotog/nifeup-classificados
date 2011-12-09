@@ -1,6 +1,9 @@
 <div id="signbtn">
 <% if session[:username] %>
   <%=t 'greet_username', :user => session[:username] %>
+  <% if admin? %>
+    <%= link_to I18n.t('admin.link'), admin_path, :class => "btnsignout" %>
+  <% end %>
   <%= link_to I18n.t('logout'), logout_path, :class => "btnsignout" %>
 <% else %>
   <%= link_to I18n.t('login'), login_path, :class => "btnsignin" %>
