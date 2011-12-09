@@ -39,6 +39,9 @@ group :test do
   gem 'cucumber-rails'
   # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'rack-test'
+  # gem 'hpricot'
 end
 
 # Install paperclip
