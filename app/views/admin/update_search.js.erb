@@ -1,0 +1,27 @@
+obj = $('#users');
+<% if @users.empty? %>
+	obj.html('<p><%=t "admin.no_users" %></p>');
+<% else %>  
+    str = '';
+    <% @users.each do |user| %>
+        str = str + '<div class="user"> <b><%= user.username %></b>' ;
+        str = str + '<div class="user_actions">';
+        str = str + '<%= escape_javascript link_to I18n.t("admin.promote_user"), "#" %> ';
+        str = str + '<%= escape_javascript link_to I18n.t("admin.block_user"), "#" %>';
+        str = str + '</div></div>\n';
+    <% end %>
+    obj.html(str);
+<% end %>
+
+/*****************************
+        AJAX Pagination
+*****************************/
+$(".apple_pagination").html("<%= escape_javascript will_paginate @users %>");
+
+$(".pagination a").click(function() {
+    var re = /page=([\d]*)/g;
+    var page = re.exec($(this).attr("href"))[1];
+    $.get("<%= url_for :action => 'update_search' %>&page=" + page);
+    return false;
+});
+

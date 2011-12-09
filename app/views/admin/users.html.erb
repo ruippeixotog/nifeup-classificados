@@ -1,0 +1,58 @@
+<%= javascript_tag do -%>
+$(document).ready(function() {
+    /*****************************
+            AJAX Pagination
+    *****************************/
+
+    $(".pagination a").click(function() {
+        var re = /page=([\d]*)/g;
+        var page = re.exec($(this).attr("href"))[1];
+        $.get("<%= url_for :action => 'update_search' %>&page=" + page);
+        return false;
+    });
+    
+    $("#search_text_field").keyup(function() {
+      lastKeyTime = new Date().getTime();
+      var keyTime = lastKeyTime;
+      window.setTimeout(function() {
+        if(keyTime == lastKeyTime) {
+          $("#user_search_container").addClass("loading"); // show the spinner
+          var form = $("#user_search"); // grab the form wrapping the search bar.
+          var formData = form.serialize(); // grab the data in the form  
+          $.get(ajaxSearchUrl, formData, function(html) {
+            $("#user_search_container").removeClass("loading"); // hide the spinner
+          });
+        }
+      }, 500);
+    });
+});
+<% end %>
+<h1><%=t "admin.list_users" %></h1>
+<b><%=t "username" %>:</b>
+<div class="user_search_container">
+  <%= form_tag admin_users_path, {:method => :get, :id => "user_search", :class => "user_search"} do %>
+    <%= text_field_tag "search_terms", @search_terms, :id => "search_text_field" %>
+    <%= javascript_tag do -%>
+      var ajaxSearchUrl = "<%= url_for :action => 'update_search' %>";
+    <% end -%>
+  <% end -%>
+</div>
+<div id="users">
+  <% if @users.empty? %>
+	  <p><%=t 'admin.no_users' %></p>
+  <% end %>
+  <% @users.each do |user| %>
+    <div class="user">
+      <b><%= user.username %></b>
+      <div class="user_actions">
+        <%= link_to I18n.t("admin.promote_user"), "#" %>
+        <%= link_to I18n.t("admin.block_user"), "#" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="apple_pagination">
+  <%= will_paginate @users %>
+</div>
+
+

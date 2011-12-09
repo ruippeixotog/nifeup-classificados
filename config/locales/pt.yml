@@ -35,6 +35,8 @@ pt:
       previous_label: "&#8592; Anterior"
       next_label: "Próximo &#8594;"
       page_gap: "&hellip;"
+      
+  username: "Nome de utilizador"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."
@@ -67,6 +69,10 @@ pt:
     reported_by: "Reportado por"
     reported_at: "no dia"
     reported_reason: "Motivo:"
+    no_users: "Não encontrou utilizadores."
+    list_users: "Listar utilizadores"
+    promote_user: "Promover"
+    block_user: "Bloquear"
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
     

@@ -15,6 +15,23 @@ class AdminController < ApplicationController
     end
   end
   
+  def users
+    @search_terms = params[:search_terms]
+    @users = User.search_text(@search_terms, params[:page])
+    respond_to do |format|
+      format.html # users.html.erb
+    end
+  end
+
+  def update_search
+    @search_terms = params[:search_terms]
+    @users = User.search_text(@search_terms, params[:page])
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   def authorize_admin
     unless admin?
       redirect_to dashboard_ads_path, notice: I18n.t('access_denied')

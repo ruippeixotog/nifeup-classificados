@@ -30,3 +30,31 @@
 .report_actions {
   float: right;
 }
+
+input#search_text_field {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
+    -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,.24);
+    padding: 3px 4px 3px 5px;
+    border: solid 1px #BEBDAA;
+    height: 30px;
+    width: 200px;
+}
+
+#users {
+  margin-top: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.user {
+  border-bottom: 1px solid #cccccc;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.user_actions {
+  float: right;
+}
