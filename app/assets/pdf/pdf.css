@@ -14,7 +14,7 @@ body {
    page-break-before: always;
 }
 
-#pdf_link {
+#pdf_link,#report_dialog {
    display: none;
 }
 
@@ -25,4 +25,5 @@ body {
 .label{
 	text-transform: uppercase;
 }
+
 
