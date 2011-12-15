@@ -13,12 +13,13 @@ end
 When /^I select the section "([^"]+)"$/i do |section|
   section_id = Section.find_by_name(section).id
   find(Dashboard.section_tab_id(section_id)).click
+  assert_equal section_id, find('#section_id').value.to_i
 end
 
 Then /^I should see a list of ads$/i do
   assert page.has_selector?(Dashboard.main_id), "The main ad container wasn't found."
   within(Dashboard.main_id) do
-    assert has_selector?(Dashboard.ad_class), "There were no ads in the main container."
+    assert has_selector?(Dashboard.ad_class), "There were no ads in the main container. Ads in database: " + Ad.all.to_s
   end
 end
 
