@@ -1,7 +1,3 @@
-Before do
-  load Rails.root.join('db','seeds.rb').to_s
-end
-
 Given /^the system has already some ads in section "([^"]+)"$/i do |section|
   3.times do |i|
     ad = Ad.new :title => i.to_s
@@ -20,22 +16,22 @@ When /^I select the section "([^"]+)"$/i do |section|
 end
 
 Then /^I should see a list of ads$/i do
-  page.has_selector?(Dashboard.main_id)
+  assert page.has_selector?(Dashboard.main_id), "The main ad container wasn't found."
   within(Dashboard.main_id) do
-    assert has_selector?(Dashboard.ad_class)
+    assert has_selector?(Dashboard.ad_class), "There were no ads in the main container."
   end
 end
 
-Then /^(the ads|they) should all be from the section "([^"]+)"$/i do |subject, section|
+Then /^(the ads|they) should all be from the section "([^"]+)"$/i do |dummy, section|
   within(Dashboard.main_id) do
     all(Dashboard.ad_class).each do |elem|
       ad = Ad.find(Dashboard.ad_id(elem))
-      assert_equal section, ad.section.name
+      assert_equal section, ad.section.name, 'The ad #{ad.id} isn\'t from section "#{section}"'
     end
   end
 end
 
-Then /^(the ads|they) should be ordered by relevance$/i do |subject|
+Then /^(the ads|they) should be ordered by relevance$/i do |dummy|
   within(Dashboard.main_id) do
     last_ad = nil
     all(Dashboard.ad_class).each do |elem|

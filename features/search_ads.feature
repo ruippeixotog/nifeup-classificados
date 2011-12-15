@@ -4,7 +4,7 @@ Feature: Search ads (US2)
   I want to be able to search the ads in a given section by a text expression or keyword
 
   Scenario: Search ads page
-    When I submit a search for ads
+    When I submit a search
     Then the request should succeed
     
   Scenario: Search by a keyword
