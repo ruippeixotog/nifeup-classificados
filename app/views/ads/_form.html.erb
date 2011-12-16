@@ -1,3 +1,28 @@
+<%= javascript_tag do -%>
+var SITE = SITE || {};
+
+SITE.fileInputs = function() {
+  var $this = $(this),
+      $val = $this.val(),
+      valArray = $val.split('\\'),
+      newVal = valArray[valArray.length-1],
+      $button = $this.siblings('.button'),
+      $fakeFile = $this.siblings('.file-holder');
+  if(newVal !== '') {
+    $button.text('<%=t 'photo_chosen' %>');
+    if($fakeFile.length === 0) {
+      $button.after('<span class="file-holder">' + newVal + '</span>');
+    } else {
+      $fakeFile.text(newVal);
+    }
+  }
+};
+
+$(document).ready(function() {
+  $('.file-wrapper input[type=file]').bind('change focus click', SITE.fileInputs);
+});
+<% end %>
+
 <%= form_for @ad, :html => { :multipart => true } do |f| %>
   <% if @ad.errors.any? %>
     <div id="error_explanation">
@@ -10,35 +35,48 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-	<%= f.label :thumbnail %><br />
-	<%= f.file_field :thumbnail %>
-  </div>
   
-  <%= f.fields_for :resources do |builder| %>
-    <%= render "resource_fields", :f => builder %>
-  <% end %>
-  <p><%= link_to_add_fields(I18n.t('add_file'), f, :resources) %></p>
-  <br style="clear:both" />
-    
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :section %><br />
-    <%= select(:ad, :section_id, Section.all.collect {|c| [ c.name, c.id ] }, {:selected => @ad.section_id}) %>
-  </div>
-  <p>
-    <%= f.label :tag_names %><br />
-    <%= f.text_field :tag_names %>
-  </p>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="fe_ad_show_container">
+    <div class="fe_ad_presentation_container">
+		  <div class="fe_ad_title_container">
+			  <div class="field fe_ad_show_title">
+            <%= f.text_field :title %>
+			  </div>
+
+        <div class="field">
+        <% if not f.object.new_record? %>
+          <%= image_tag @ad.thumbnail.url(:medium) %><br />
+        <% end %>
+
+        <span class="file-wrapper">
+          <%= f.file_field :thumbnail %>
+          <span class="button"><%=t 'choose_file' %></span>
+        </span>
+        </div>
+      </div>
+      <div class="fe_ad_highlights">
+        <div class="field">
+          <%= f.label :section %><br />
+          <%= select(:ad, :section_id, Section.all.collect {|c| [ c.name, c.id ] }, {:selected => @ad.section_id}) %>
+        </div>
+        <p>
+          <%= f.label :tag_names %><br />
+          <%= f.text_field :tag_names %>
+        </p>
+        <%= f.fields_for :resources do |builder| %>
+        <%= render "resource_fields", :f => builder %>
+        <% end %>
+        <p><%= link_to_add_fields(I18n.t('add_file'), f, :resources) %></p>
+      </div>
+    </div>
+      
+
+    <div class="field fe_ad_show_description">
+      <%= f.label :description %><br />
+      <%= f.text_area :description %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   </div>
 <% end %>

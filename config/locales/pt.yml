@@ -29,6 +29,9 @@ pt:
   add_file: "Adicionar ficheiro"
   remove_file: "Remover"
   date_distance: "Há %{date} atrás."
+  
+  choose_file: "Choose a file"
+  photo_chosen: "File chosen"
 
   
   will_paginate:

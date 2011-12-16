@@ -41,7 +41,7 @@ class AdsController < ApplicationController
   # GET /ads/new.json
   def new
     @ad = Ad.new
-    3.times { @ad.resources.build }
+    1.times { @ad.resources.build }
 
     respond_to do |format|
       format.html # new.html.erb

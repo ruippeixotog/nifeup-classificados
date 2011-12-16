@@ -196,10 +196,7 @@ class Ad < ActiveRecord::Base
   end
   
   def gallery
-    #self.resources.where('resources.link_content_type LIKE ?', 'image/%')
-    gallery = []
-    (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
-    return gallery
+    self.resources.where('resources.link_content_type LIKE ?', 'image/%')
   end
 
   def calc_relevance

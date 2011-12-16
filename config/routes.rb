@@ -42,14 +42,13 @@ Cfeup::Application.routes.draw do
 
   match "login" => "users#login"
   match "logout" => "users#logout"
-  
-  root :to => "ads#dashboard"
-  
   match "admin" => "admin#index"
   
   match "admin/comments" => "admin#reported_comments"
   match "admin/users" => "admin#users"
   match "admin/update_search" => "admin#update_search"
+  
+  root :to => "ads#dashboard"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
