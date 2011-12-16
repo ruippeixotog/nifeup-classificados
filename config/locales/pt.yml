@@ -75,7 +75,12 @@ pt:
     no_users: "Não encontrou utilizadores."
     list_users: "Listar utilizadores"
     promote_user: "Promover"
+    demote_user: "Despromover"
     block_user: "Bloquear"
+    success_promote_user: "O utilizador %{user} é agora administrador!"
+    unsuccess_promote_user: "Não foi possível promover o utilizador %{user}!"
+    success_demote_user: "O utilizador %{user} deixou de ser administrador!"
+    unsuccess_demote_user: "Não foi possível despromover o utilizador %{user}!"
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
     

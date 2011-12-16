@@ -39,7 +39,7 @@ Cfeup::Application.routes.draw do
   end
   
   resources :ratings
-
+    
   match "login" => "users#login"
   match "logout" => "users#logout"
   match "admin" => "admin#index"
@@ -47,6 +47,8 @@ Cfeup::Application.routes.draw do
   match "admin/comments" => "admin#reported_comments"
   match "admin/users" => "admin#users"
   match "admin/update_search" => "admin#update_search"
+  match "admin/promote" => "admin#promote_user"
+  match "admin/demote" => "admin#demote_user"
   
   root :to => "ads#dashboard"
   

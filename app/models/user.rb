@@ -29,4 +29,13 @@ class User < ActiveRecord::Base
     return query.paginate(:page => page)
   end
 
+  def make_admin!
+    self.admin = true
+    self.save
+  end
+  
+  def make_regular!
+    self.admin = false
+    self.save
+  end
 end

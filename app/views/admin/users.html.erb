@@ -45,7 +45,13 @@ $(document).ready(function() {
     <div class="user">
       <b><%= user.username %></b>
       <div class="user_actions">
-        <%= link_to I18n.t("admin.promote_user"), "#" %>
+        <span class="promotion">
+          <% if not user.admin? %>
+            <%= link_to I18n.t("admin.promote_user"), admin_promote_path(:user_id => user.id), { :remote => true, :id => "promotion_#{user.id}" } %>
+          <% else %>
+            <%= link_to I18n.t("admin.demote_user"), admin_demote_path(:user_id => user.id), { :remote => true, :id => "promotion_#{user.id}" } %>
+          <% end %>
+        </span>
         <%= link_to I18n.t("admin.block_user"), "#" %>
       </div>
     </div>

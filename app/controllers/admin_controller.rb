@@ -44,4 +44,30 @@ class AdminController < ApplicationController
     user = User.find(session[:user_id])
     return user.admin
   end
+  
+  def promote_user
+    @user = User.find(params[:user_id])
+    if @user.make_admin!
+      @notice = I18n.t 'admin.success_promote_user', :user => @user.username
+    else
+      @notice = I18n.t 'admin.unsuccess_promote_user', :user => @user.username
+    end
+    
+    respond_to do |format|
+        format.js
+    end
+  end
+  
+  def demote_user
+    @user = User.find(params[:user_id])
+    if @user.make_regular!
+      @notice = I18n.t 'admin.success_demote_user', :user => @user.username
+    else
+      @notice = I18n.t 'admin.unsuccess_demote_user', :user => @user.username
+    end
+    
+    respond_to do |format|
+        format.js
+    end
+  end
 end
