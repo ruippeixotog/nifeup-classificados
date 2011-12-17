@@ -1,3 +1,8 @@
+# 'capybara-webkit depends on debian package 'libqtwebkit-dev'.
+
+# to install all dependencies on a Ubuntu system, run command:
+# sudo apt-get install libqtwebkit-dev
+
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'

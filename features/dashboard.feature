@@ -9,8 +9,8 @@ Feature: Show dashboard (US1)
 
   @javascript
   Scenario: Showing list of ads
-    Given the system has already some ads in section "Troco"
-      And the system has already some ads in section "Alugo"
+    Given the system has some ads in section "Troco"
+      And the system has some ads in section "Alugo"
     When I open the dashboard
       And I select the section "Alugo"
     Then I should see a list of ads

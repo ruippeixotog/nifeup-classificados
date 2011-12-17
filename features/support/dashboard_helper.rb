@@ -17,7 +17,14 @@ class Dashboard
     return "#section_tab_#{id}" if id
     /section_tab_(\d+)/
   end
-  
-  def self.selected_section_id
+end
+
+def all_visible_ads
+  within(Dashboard.main_id) do
+    return all(Dashboard.ad_class)
   end
+end
+
+def selected_section_id
+  find('#section_id').value.to_i
 end

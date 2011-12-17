@@ -199,6 +199,7 @@ class Ad < ActiveRecord::Base
     self.resources.where('resources.link_content_type LIKE ?', 'image/%')
   end
 
+  # calculates and returns a relevance factor in the range [-1.0, 1.0]
   def calc_relevance
     ad_rate_count = self.evaluations.count
     user_rate_count = FinalEvaluation.where(:user_id => self.user_id).count
