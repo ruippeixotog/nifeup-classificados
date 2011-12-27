@@ -26,13 +26,7 @@ class AdsController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.pdf {
-          html = render_to_string(:layout => false , :action => "show.html.erb")
-          kit = PDFKit.new(html)
-          kit.stylesheets << "#{Rails.root}/app/assets/pdf/pdf.css"
-          send_data(kit.to_pdf, :filename => @ad.title + ".pdf", :type => 'application/pdf')
-          return 
-      }
+      format.pdf
       format.json { render json: @ad }
     end
   end

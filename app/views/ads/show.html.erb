@@ -198,7 +198,9 @@
 	  <p><%= @ad.description %></p>
 	</div>
 	
-	<p id="pdf_link"><%= link_to "Download Invoice (PDF)", ad_path(@ad, :format => "pdf") %></p>
+	<%#--------------- PDF Download -------------%>
+	
+	<p><%= link_to "PDF", ad_path(@ad, :format => 'pdf') %></p>
 	
 	<%#--------------- Comentários --------------%>
 
