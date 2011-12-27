@@ -1,11 +1,12 @@
 require "open-uri"
 prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
-  pdf.text_box "Classificado #{@ad.title}", :size => 30, :style => :bold
+  pdf.text_box "Classificado #{@ad.title}", :size => 3, :style => :bold
   pdf.move_down(35)
 
   open('image.png', 'wb') do |file|
-  	file << open("#{Rails.root}#{@ad.thumbnail.url(:medium)}").read
+  	file << open("#{request.env["HTTP_HOST"]}/classificados#{@ad.thumbnail.url(:medium)}").read
   end
+
 
   pdf.image 'image.png'
   
