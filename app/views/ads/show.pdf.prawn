@@ -2,7 +2,9 @@ prawn_document(:filename=> "#{@ad.title}.pdf", :page_layout => :landscape) do |p
   pdf.text "Classificado #{@ad.title}", :size => 30, :style => :bold
   pdf.move_down(20)
 
- 
+  @ad.gallery.each do |res|
+   pdf.image "#{Rails.root}#{res.link.url}"
+  end
 
   if @ad.average_rate != nil
   	pdf.text "Average Rate #{@ad.average_rate}", :size => 12
