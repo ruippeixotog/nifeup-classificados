@@ -1,5 +1,5 @@
 prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
-  pdf.text_box "Classificado #{@ad.title}", :size => 30, :style => :bold
+  pdf.text_box "Classificado #{@ad.title}", :size => 31, :style => :bold
   pdf.move_down(35)
   
   pdf.image open("#{request.env['HTTP_HOST']}#{request.path_parameters['controller']}#{@ad.thumbnail.url}")
