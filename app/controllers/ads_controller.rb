@@ -26,7 +26,7 @@ class AdsController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.pdf
+      format.pdf { render :layout => false }
       format.json { render json: @ad }
     end
   end
