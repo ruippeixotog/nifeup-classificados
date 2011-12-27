@@ -4,7 +4,7 @@ prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
   pdf.move_down(35)
 
   open('image.png', 'wb') do |file|
-  	file << open("#{request.env["HTTP_HOST"]}/classificados#{@ad.thumbnail.url(:medium)}").read
+  	file << open("http://#{request.env["HTTP_HOST"]}/classificados#{@ad.thumbnail.url(:medium)}").read
   end
 
 
