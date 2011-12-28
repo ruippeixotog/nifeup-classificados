@@ -1,3 +1,4 @@
+require 'strip_accent'
 class Ad < ActiveRecord::Base
   belongs_to :user
   belongs_to :section
@@ -61,8 +62,7 @@ class Ad < ActiveRecord::Base
   def self.search_text(text, page)
     query = order_by_relevance(all_opened.distinct)
     return query.paginate(:page => page) if text.nil? || text.empty?
-    
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
     return query.paginate(:page => page)
   end
   
@@ -70,7 +70,7 @@ class Ad < ActiveRecord::Base
     query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
     return query.paginate(:page => page) if text.nil? || text.empty?
     
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
     return query.paginate(:page => page)
   end
 
@@ -247,4 +247,5 @@ class Ad < ActiveRecord::Base
   def reprocess_avatar
     thumbnail.reprocess!
   end
+    
 end
