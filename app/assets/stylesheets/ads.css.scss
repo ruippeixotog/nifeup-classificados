@@ -1,15 +1,16 @@
 // Place all the styles related to the Ads controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 .dashboard_fe_ad_container {
     padding: 15px;
     border: solid 1px #D2D2D2;
+
 }
 
 a:visited{
     text-decoration: none; 
     color: #0033CC;
+
 }
 
 a:link{
@@ -33,6 +34,7 @@ a:hover{
     padding: 10px;
     float: left;
     background-color: white;
+
 }
 
 .fe_ad_clickable {
@@ -60,6 +62,7 @@ a:hover{
 
 .fe_ad_show_container {
     background-color: white;
+
 }
 
 .fe_ad_show_title {
@@ -80,6 +83,10 @@ a:hover{
     top: 45px;
     padding: 10px;
     height: 230px;
+
+	background:  url(images/background-3.png) repeat;
+
+
 }
 
 .fe_ad_show_description {
@@ -95,6 +102,8 @@ a:hover{
     margin-bottom: 10px;
     margin-top: 20px;
     padding: 10px;
+	background:  url(images/background-3.png) repeat;
+
 }
 
 textarea#ad_description {
@@ -113,6 +122,8 @@ textarea#ad_description {
     margin-right: 0px;
     margin-bottom: 10px;
     padding: 10px;
+	background:  url(images/background-3.png) repeat;
+
 }
 
 .fe_ad_comment_textarea {
@@ -168,6 +179,7 @@ input#ad_title {
   font-weight: bold;
   padding: 4px 18px;
   text-transform: uppercase;
+
 }
 
 .file-wrapper input {
@@ -197,7 +209,7 @@ span.file-holder {
 
 /* #### END ### */
 
-.delete_comment_button 
+.delete_comment_button, .fe_ad_comments_action.fe_comment_report_action, a.btnsignin, a.btnsignout, 
 {
         display: inline-block;
         white-space: nowrap;
@@ -224,7 +236,7 @@ span.file-holder {
         box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
 }
 
-.delete_comment_button:hover 
+.delete_comment_button:hover,.fe_ad_comments_action.fe_comment_report_action:hover ,a.btnsignin:hover , a.btnsignout:hover
 {
         background-color: #ddd;
         background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
@@ -236,7 +248,7 @@ span.file-holder {
         filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');
 }
 
-.delete_comment_button:active 
+.delete_comment_button:active, .fe_ad_comments_action.fe_comment_report_action:active ,a.btnsignin:active , a.btnsignout:active
 {
         -moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
         -webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
@@ -245,13 +257,13 @@ span.file-holder {
         top: 1px;
 }
 
-.delete_comment_button:focus 
+.delete_comment_button:focus, .fe_ad_comments_action.fe_comment_report_action:focus , a.btnsignin:focus , a.btnsignout:focus
 {
         outline: 0;
         background: #fafafa;
 }    
 
-.delete_comment_button:before 
+.delete_comment_button:before, .fe_ad_comments_action.fe_comment_report_action:before , a.btnsignin:before , a.btnsignout:before 
 
 {
         background: #ccc;
@@ -340,6 +352,7 @@ span.file-holder {
 	background-color: #444444;
 	border: solid 1px #494949;
 	cursor: pointer;
+	
 }
 
 .fe_ad_search > input#search_text_field {
@@ -352,6 +365,8 @@ span.file-holder {
     border: solid 1px #BEBDAA;
     height: 30px;
     width: 400px;
+	outline:none;
+
 }
 
 .dashboard_search_container {
@@ -372,11 +387,13 @@ span.file-holder {
     -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
     z-index: 2;
     margin-bottom: -1px;
+
 }
 
 .fe_ad_gallery {
     margin-left: -35px;
     margin-right: -38px;
+
 }
 
 .fe_ad_gallery_item {

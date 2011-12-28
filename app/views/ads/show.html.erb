@@ -213,7 +213,7 @@
 			
 			<span class="fe_ad_comments_actions">
 			<% if @user && (@user.id == c.user.id || @user.admin) %>
-				<%= link_to  'x', c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
+				<%= link_to  I18n.t('delete'), c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
 			<% end %>
 			<% if @user %>
 		    		<% if c.user_reported?(@user.id) %>
