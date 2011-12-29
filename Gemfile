@@ -12,7 +12,6 @@ gem 'rails', '3.1.0'
 
 gem 'sqlite3'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -42,7 +41,7 @@ group :test do
   gem 'minitest'
   
   gem 'cucumber-rails'
-  # database_cleaner is not required, but highly recommended
+  # database_cleaner is not required, but highly recommended 
   gem 'database_cleaner'
   gem 'capybara'
   gem 'capybara-webkit'
@@ -57,3 +56,6 @@ gem 'will_paginate'
 
 # Install PDF generator
 gem 'prawn_rails'
+
+#Install breadcrumbs
+gem 'breadcrumbs_on_rails'

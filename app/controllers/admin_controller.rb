@@ -2,6 +2,10 @@ class AdminController < ApplicationController
   
   before_filter :authorize_admin
   
+  add_breadcrumb I18n.t('home'), :root_path
+  add_breadcrumb I18n.t('admin.link'), :admin_path
+  
+  
   def index
     respond_to do |format|
       format.html # index.html.erb
@@ -9,6 +13,8 @@ class AdminController < ApplicationController
   end
   
   def reported_comments
+    add_breadcrumb I18n.t('admin.reported_comments'), url_for({ :action => 'reported_comments' })
+    
     @comments = Comment.all_reported
     respond_to do |format|
       format.html # reported_comments.html.erb
@@ -16,6 +22,8 @@ class AdminController < ApplicationController
   end
   
   def users
+    add_breadcrumb I18n.t('admin.list_users'), url_for({ :action => 'users' })
+    
     @search_terms = params[:search_terms]
     @users = User.search_text(@search_terms, params[:page])
     respond_to do |format|

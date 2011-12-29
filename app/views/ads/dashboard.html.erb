@@ -35,7 +35,7 @@ $(document).ready(function() {
 	<div class="dashboard_sections">
 		<% @sections.each do |section| %>
 			<div id="section_tab_<%= section.id %>" class="dashboard_section_tab" 
-				 data-action="<%= url_for :action => 'update_section', :id => section.id, :search_terms => @search_terms %>">
+				 data-action="<%= url_for :action => 'update_section', :section_id => section.id, :search_terms => @search_terms %>">
 				<%= section.name %>
 			</div>
 		<% end -%>
@@ -44,6 +44,9 @@ $(document).ready(function() {
 </div><!--end dashboard search div -->
 </div>
 <div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
+  <div class="breadcrumbs">
+    <%= render_breadcrumbs %>
+  </div>
   <% if @ads.empty? %>
 	<p><%=t 'no_ads_found' %></p>
   <% end %>

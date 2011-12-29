@@ -1,10 +1,12 @@
 obj = $('#dashboard_fe_ad_container');
-
+html = '<div class="breadcrumbs"> <%= render_breadcrumbs %> </div>';
 <% if @ads.empty? %>
-	obj.html('<p><%=t "no_ads_found" %></p>');
+	html += '<p><%=t "no_ads_found" %></p>';
 <% else %>  
-    obj.html('<%= escape_javascript render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %><br style="clear:both" />');
+  html += '<%= escape_javascript render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %><br style="clear:both" />';
 <% end %>
+
+obj.html(html);
 
 $(".fe_ad_clickable").click(function() {
 	var id = $(this).data("id");

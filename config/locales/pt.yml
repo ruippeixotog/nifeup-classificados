@@ -20,6 +20,7 @@ pt:
   edit: "Editar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
   cancel: "Cancelar"
+  home: "Início"
 
   report: "Reportar"
   already_reported: "Reportado!"
@@ -58,6 +59,7 @@ pt:
     average: "Média"
     description: "Descrição"
     comments: "Comentários"
+    search_for: "Pesquisa:"
   admin:
     link: "Admin"
     title: "Administração"

@@ -1,6 +1,8 @@
 class AdsController < ApplicationController  
   # GET /ads
   # GET /ads.json
+  add_breadcrumb I18n.t('home'), :root_path
+  
   def index
     @ads = Ad.all
 
@@ -14,6 +16,8 @@ class AdsController < ApplicationController
   # GET /ads/1.json
   def show
     @ad = Ad.find(params[:id])
+    
+    add_breadcrumb @ad.title, ad_path(@ad)
     
     if session[:user_id]
       @user = User.find(session[:user_id])
@@ -118,9 +122,13 @@ class AdsController < ApplicationController
     @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @sections = Section.all
     
-    # (0..5).each { @ads.concat(Ad.all) } # quintiplica os anuncios
-
     @user_id = session[:user_id]
+    
+    section = Section.find(@section_id)
+      add_breadcrumb section.name, url_for({:action => 'dashboard', :section_id => @section_id})
+    if @search_terms and not @search_terms.empty?
+      add_breadcrumb I18n.t('ad.search_for') + " " + @search_terms, url_for({:action => 'dashboard', :search_terms => @search_terms, :section_id => @section_id})
+    end
   end
   
   def update_search
@@ -130,6 +138,11 @@ class AdsController < ApplicationController
     @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @sections = Section.all
     @user_id = session[:user_id]
+    section = Section.find(@section_id)
+      add_breadcrumb section.name, url_for({:action => 'dashboard', :section_id => @section_id})
+
+    add_breadcrumb I18n.t('ad.search_for') + " " + @search_terms, url_for({:action => 'dashboard', :search_terms => @search_terms, :section_id => @section_id})
+    
 
     respond_to do |format|
       format.js
@@ -179,11 +192,17 @@ class AdsController < ApplicationController
   end
   
   def update_section
-    @section_id = params[:id]
+    @section_id = params[:section_id]
     section = Section.find(@section_id)
     @search_terms = params[:search_terms]
     @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
     @user_id = session[:user_id]
+    
+    section = Section.find(@section_id)
+      add_breadcrumb section.name, url_for({:action => 'dashboard', :section_id => @section_id})
+    if @search_terms and not @search_terms.empty?
+      add_breadcrumb I18n.t('ad.search_for') + " " + @search_terms, url_for({:action => 'dashboard', :search_terms => @search_terms, :section_id => @section_id})
+    end
     
     respond_to do |format|
       format.js
