@@ -178,19 +178,19 @@ class AdTest < ActiveSupport::TestCase
 
   # TODO change order of results when the relevance algorithm is defined
   test "search" do
-  	arr = Ad.search_text "Porto"
+  	arr = Ad.search_text "Porto", 1
     assert_equal [ads(:a3)], arr, "Search in tags from opened ads only failed"
     
-  	arr = Ad.search_text "world"
+  	arr = Ad.search_text "world", 1
     assert_equal [@a1], arr, "Search in a substring of a tag failed"
     
-    arr = Ad.search_text "universitario"
+    arr = Ad.search_text "universitario", 1
     assert_equal [ads(:a3)], arr, "Case and accent insensivive search in title failed"
     
-    arr = Ad.search_text "FeUp"
+    arr = Ad.search_text "FeUp", 1
     assert_equal [ads(:a3), ads(:a2)], arr, "Search with multiple results, ordered by relevance, failed"
     
-    arr = Ad.search_text "t2 primeiro"
+    arr = Ad.search_text "t2 primeiro", 1
     assert_equal [ads(:a3), @a1], arr, "Search with multiple keywords failed"
     
     arr = Ad.search_text "t2 primeiro", 1
