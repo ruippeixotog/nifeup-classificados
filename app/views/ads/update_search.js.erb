@@ -9,8 +9,7 @@ html = '<div class="breadcrumbs"> <%= render_breadcrumbs %> </div>';
 obj.html(html);
 
 $(".fe_ad_clickable").click(function() {
-	var id = $(this).data("id");
-	window.location.href="<%= ads_path %>/" + id;
+	this.submit();
 });
 
 /*****************************

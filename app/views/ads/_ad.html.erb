@@ -9,8 +9,9 @@
     </span>
   <% end %>
   
-  <div class="fe_ad_clickable" data-id="<%= ad.id %>">
+  <%= form_tag ad_path(ad), :class => "fe_ad_clickable" do %>
     <div class="fe_ad_thumbnail"><%= image_tag ad.thumbnail.url(:thumb) %></div>
     <div class="fe_ad_title"><%= ad.title %></div>
-  </div>
+    <%= hidden_field_tag :search_terms, @search_terms %>
+  <% end %>
 </div>

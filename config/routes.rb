@@ -10,6 +10,7 @@ Cfeup::Application.routes.draw do
       post 'report'
     end
   end
+  
   resources :ads do
     member do
       get 'mark_fav'
@@ -24,6 +25,8 @@ Cfeup::Application.routes.draw do
       get 'update_section'
     end
   end
+  
+  match "ads/:id" => "ads#show", :via => :post
   
   resources :resources
 

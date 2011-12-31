@@ -3,8 +3,7 @@
 <%= javascript_tag do -%>
 $(document).ready(function() {
 	$(".fe_ad_clickable").click(function() {
-		var id = $(this).data("id");
-		window.location.href="<%= ads_path %>/" + id;
+		this.submit();
 	});
     /*****************************
             AJAX Pagination
