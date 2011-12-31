@@ -18,6 +18,7 @@ pt:
   comment_placeholder: "Adicionar um comentário.."
   confirm_delete: "Tem a certeza?"
   edit: "Editar"
+  save: "Gravar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
   cancel: "Cancelar"
   home: "Início"

@@ -218,7 +218,7 @@ class Ad < ActiveRecord::Base
 
   # tagging system
   def tag_names
-    @tag_names || ad_tags.map(&:tag).join(' ')
+    @tag_names || ad_tags.map(&:tag).join(', ')
   end
   
   #business partner
@@ -237,7 +237,7 @@ class Ad < ActiveRecord::Base
 
   def assign_tags
     if @tag_names
-      self.ad_tags = @tag_names.split(/\s+/).map do |name|
+      self.ad_tags = @tag_names.split(/,+\s+|,+/).map do |name|
         AdTag.find_or_create_by_ad_id_and_tag(self.id, name)
       end
     end

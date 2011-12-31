@@ -94,7 +94,7 @@ class AdsController < ApplicationController
           format.html { redirect_to @ad, notice: 'Ad was successfully updated.' }
           format.json { head :ok }
         else
-          render :action => "crop"
+          format.html { render action: "crop" }
         end
       else
         format.html { render action: "edit" }
