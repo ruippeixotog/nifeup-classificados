@@ -1,16 +1,12 @@
 <% if session[:username] %>
 <div id="userarea">
 <%=t 'greet_username', :user => session[:username] %>
+[<%= link_to I18n.t('logout'), logout_path %>] 
 <% if admin? %>
-  <%= link_to I18n.t('admin.link'), admin_path, :class => "btnsignout" %>
+  <%= link_to I18n.t('admin.link'), admin_path, :class => "user_administration" %>
 <% end %>
-<%= link_to I18n.t('logout'), logout_path, :class => "btnsignout" %>
-<p>
   <%= link_to I18n.t('users.ads'), ads_users_path, :class => "user_ads" %>
-</p>  
-<p>
   <%= link_to I18n.t('users.favorites'), favorites_users_path, :class => "user_favorites" %>
-</p>
 </div>
 <% else %>
 <div id="loginbutton">
