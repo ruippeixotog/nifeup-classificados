@@ -18,6 +18,9 @@
 <% end -%>
 
 <div id="content">
+  <div class="logo">
+    <%= image_tag "logo.png", :size => "400x60" %>
+  </div>
   <%= render 'users/login' %>
   <%= yield %>
 </div>

@@ -86,7 +86,9 @@ pt:
     unsuccess_demote_user: "Não foi possível despromover o utilizador %{user}!"
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
-    
+  users:
+    ads: "Seus anúncios"
+    favorites: "Favoritos"  
   date:
     formats:
       default: "%d/%m/%Y"

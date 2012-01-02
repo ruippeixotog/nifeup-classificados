@@ -129,4 +129,21 @@ class UsersController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  def ads
+    @user = User.find(params[:id])
+    @ads = @user.ads
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def favorites
+    @user = User.find(params[:id])
+    @favorites = @user.favorites
+    respond_to do |format|
+      format.html
+    end
+  end
+  
 end

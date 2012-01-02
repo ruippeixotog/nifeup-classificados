@@ -38,6 +38,8 @@ Cfeup::Application.routes.draw do
     collection do
       post 'authenticate'
       get 'auto_complete'
+      get 'ads'
+      get 'favorites'
     end
   end
   
