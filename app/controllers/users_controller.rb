@@ -131,18 +131,26 @@ class UsersController < ApplicationController
   end
   
   def ads
-    @user = User.find(params[:id])
-    @ads = @user.ads
+    @user = User.find_by_id(session[:user_id])
     respond_to do |format|
-      format.html
+      if @user
+        @ads = @user.ads.page(params[:page])
+        format.html
+      else
+        format.html { redirect_to root_path, notice: I18n.t(:access_denied) }
+      end
     end
   end
   
   def favorites
-    @user = User.find(params[:id])
-    @favorites = @user.favorites
+    @user = User.find_by_id(session[:user_id])
     respond_to do |format|
-      format.html
+      if @user
+        @ads = @user.favorite_ads.page(params[:page])
+        format.html
+      else
+        format.html { redirect_to root_path, notice: I18n.t(:access_denied) }
+      end
     end
   end
   

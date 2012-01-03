@@ -48,9 +48,15 @@ class AdsController < ApplicationController
     @ad = Ad.new
     1.times { @ad.resources.build }
 
+    @user = User.find_by_id(session[:user_id])
+    
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @ad }
+      if @user
+        format.html # new.html.erb
+        format.json { render json: @ad }
+      else
+        format.html { redirect_to root_path, notice: I18n.t(:access_denied) }
+      end
     end
   end
 

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :block_log
   has_many :ads
   has_many :favorites
-  has_many :ads, :through => :favorites
+  has_many :favorite_ads, :through => :favorites, :source => :ad
   has_many :evaluations
   has_many :rated_ads, :through => :evaluations, :source => :ads
   
