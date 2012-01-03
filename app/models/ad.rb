@@ -180,6 +180,8 @@ class Ad < ActiveRecord::Base
 
     self.relevance_factor = self.calc_relevance
     self.save
+    
+    self.user.calc_average_rating!(value)
   end
   
   def relevance
@@ -187,13 +189,13 @@ class Ad < ActiveRecord::Base
   end
   
   def calc_average_rating!(user_id, value)
-    @total = self.evaluations.size
+    total = self.evaluations.size
     if self.average_rate == nil
       self.average_rate = value
       self.save
     else
-      @old_average = self.average_rate * (@total - 1)
-      self.average_rate = (value + @old_average) / @total
+      old_average = self.average_rate * (total - 1)
+      self.average_rate = (value + old_average) / total
       self.save     
     end
   end

@@ -45,24 +45,15 @@ class User < ActiveRecord::Base
     self.save
   end
   
-  def self.block!(user_id, duration_days)
-    until_date = duration_days.to_i.days.from_now
-    user = User.find(user_id)
-    if user
-        user.blocked_until = until_date
-        user.save
+  def calc_average_rating!(value)
+    # puts self.username
+    if self.rate.nil?
+      self.rate = value
     else
-        false
+      rate_count = self.ads.joins('JOIN final_evaluations ON ads.final_evaluation_id = final_evaluations.id').size
+      old_rate = self.rate * (rate_count - 1)
+      self.rate = (value + old_rate) / rate_count
     end
-  end
-  
-  def self.unblock!(user_id)
-    user = User.find(user_id)
-    if user
-        user.blocked_until = nil
-        user.save
-    else
-        false
-    end
+    self.save
   end
 end

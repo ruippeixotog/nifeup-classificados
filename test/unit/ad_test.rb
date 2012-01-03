@@ -157,58 +157,58 @@ class AdTest < ActiveSupport::TestCase
 
   # TODO to change when the relevance algorithm is defined
   test "most relevant" do
-    arr = Ad.most_relevant 3
+    arr = Ad.most_relevant 3, nil
     assert_equal [ads(:a3), ads(:a2), @a1], arr
 
-    arr = Ad.most_relevant 5
+    arr = Ad.most_relevant 5, nil
     assert_equal [ads(:a3), ads(:a2), @a1, ads(:a5)], arr
 
-    arr = Ad.most_relevant 1
+    arr = Ad.most_relevant 1, nil
     assert_equal [ads(:a3)], arr
 
-    arr = Ad.most_relevant 0
+    arr = Ad.most_relevant 0, nil
     assert_equal [], arr
 
-    arr = Ad.most_relevant -1
+    arr = Ad.most_relevant -1, nil
     assert_nil arr
 
-    arr = Ad.most_relevant nil
+    arr = Ad.most_relevant nil, nil
     assert_nil arr
   end
 
   # TODO change order of results when the relevance algorithm is defined
   test "search" do
-  	arr = Ad.search_text "Porto", 1
+  	arr = Ad.search_text "Porto", 1, nil
     assert_equal [ads(:a3)], arr, "Search in tags from opened ads only failed"
     
-  	arr = Ad.search_text "world", 1
+  	arr = Ad.search_text "world", 1, nil
     assert_equal [@a1], arr, "Search in a substring of a tag failed"
     
-    arr = Ad.search_text "universitario", 1
+    arr = Ad.search_text "universitario", 1, nil
     assert_equal [ads(:a3)], arr, "Case and accent insensivive search in title failed"
     
-    arr = Ad.search_text "FeUp", 1
+    arr = Ad.search_text "FeUp", 1, nil
     assert_equal [ads(:a3), ads(:a2)], arr, "Search with multiple results, ordered by relevance, failed"
     
-    arr = Ad.search_text "t2 primeiro", 1
+    arr = Ad.search_text "t2 primeiro", 1, nil
     assert_equal [ads(:a3), @a1], arr, "Search with multiple keywords failed"
     
-    arr = Ad.search_text "t2 primeiro", 1
+    arr = Ad.search_text "t2 primeiro", 1, nil
     assert_equal [ads(:a3)], arr, "Search with limit number of results failed"
     
-    arr = Ad.search_text "not_in_tags"
+    arr = Ad.search_text "not_in_tags", 1, nil
     assert arr.empty?, "Search with empty results failed"
     
-    arr = Ad.search_text "a", 0
+    arr = Ad.search_text "a", 100, nil
     assert arr.empty?, "Search with empty results failed"
     
-    arr = Ad.search_text nil
+    arr = Ad.search_text nil, 1, nil
     assert_nil arr, "Search with invalid inputs failed"
     
-    arr = Ad.search_text "a", -1
+    arr = Ad.search_text "a", -1, nil
     assert_nil arr, "Search with invalid inputs failed"
     
-    arr = Ad.search_text "a", nil
+    arr = Ad.search_text "a", nil, nil
     assert_nil arr, "Search with invalid inputs failed"
   end
   
