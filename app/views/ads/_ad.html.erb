@@ -7,6 +7,9 @@
         <%= link_to image_tag('fav_unmarked.png', "data-initial" => 'fav_unmarked.png', "data-next" => 'fav_marked.png'), mark_fav_ad_path(ad.id), { :remote => true, :id => "favorite_#{ad.id}" } %>
       <% end %>
     </span>
+    <% if ad.user.id == user_id %>
+      <%= link_to image_tag('create_ad_icon.png'), edit_ad_path(ad.id), :title => I18n.t("user.edit_ad") %>
+    <% end %>
   <% end %>
   
   <%= form_tag ad_path(ad), :class => "fe_ad_clickable" do %>

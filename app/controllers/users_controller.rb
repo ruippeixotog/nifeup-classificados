@@ -139,7 +139,7 @@ class UsersController < ApplicationController
   end
   
   def ads
-    add_breadcrumb I18n.t('users.ads'), :ads_users_path
+    add_breadcrumb I18n.t('user.ads'), :ads_users_path
     
     @user = User.find_by_id(session[:user_id])
     respond_to do |format|
@@ -153,7 +153,7 @@ class UsersController < ApplicationController
   end
   
   def favorites
-    add_breadcrumb I18n.t('users.favorites'), :favorites_users_path
+    add_breadcrumb I18n.t('user.favorites'), :favorites_users_path
     
     @user = User.find_by_id(session[:user_id])
     respond_to do |format|

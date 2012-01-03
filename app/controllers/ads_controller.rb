@@ -63,9 +63,14 @@ class AdsController < ApplicationController
   end
 
   # GET /ads/1/edit
-  def edit
+  def edit    
     @user_id = session[:user_id]
     @ad = Ad.find(params[:id])
+    
+    add_breadcrumb @ad.section.name, url_for({:action => 'dashboard', :section_id => @ad.section_id})
+    add_breadcrumb @ad.title, ad_path(@ad)
+    add_breadcrumb I18n.t('user.edit_ad'), :edit_ad_path
+    
     
     respond_to do |format|
       if @user_id == nil || @user_id != @ad.user_id

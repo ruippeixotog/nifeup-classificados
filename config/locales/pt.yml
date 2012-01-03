@@ -101,6 +101,9 @@ pt:
     ads: "Seus anúncios"
     favorites: "Favoritos"
     create_ad: "Criar anúncio"
+    edit_ad: "Editar anúncio"
+    mark_favorite: "Marcar favorito"
+    unmark_favorite: "Desmarcar favorito"
   
   helpers:
     submit:
@@ -113,7 +116,7 @@ pt:
         section: "Secção"
         tag_names: "Palavras-chave"
         link: "Ficheiro"
-        description: "Descrição"        
+        description: "Descrição"      
   
   date:
     formats:
