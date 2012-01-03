@@ -96,19 +96,21 @@ class AdTest < ActiveSupport::TestCase
 	end
 
   test "user rating" do
-    assert_nil users(:grelhas).rate
+    grelhas_id = users(:grelhas).id
+    assert_nil User.find(grelhas_id).rate
 
     @a1.close!
     @a1.set_final_eval_user! users(:uva).id
     @a1.do_final_eval! users(:uva).id, 4
 
-    assert_in_delta 4.0, users(:grelhas).rate, 0.001
+    assert_not_nil User.find(grelhas_id).rate
+    assert_in_delta 4.0, User.find(grelhas_id).rate, 0.001
 
     ads(:a5).close!
     ads(:a5).set_final_eval_user! users(:ray).id
     ads(:a5).do_final_eval! users(:ray).id, 3
 
-    assert_in_delta 3.5, users(:grelhas).rate, 0.001
+    assert_in_delta 3.5, User.find(grelhas_id).rate, 0.001
   end
 
   test "relevance factor" do
@@ -126,13 +128,13 @@ class AdTest < ActiveSupport::TestCase
     assert_in_delta 0.5, @a1.relevance_factor, 0.001, "assert 3 failed"
 
     @a1.rate! users(:vashu), 1
-    avg_ad_rate = [0.5, 1, 0, -1].inject(0.0) { |result, el| result + el } / 4.0
+    avg_ad_rate = [0.5, 1, 0, -1].inject(0.0) { |result, el| result + el } / 4.0 # 0.125
     assert_in_delta avg_ad_rate, @a1.relevance_factor, 0.001, "assert 4 failed"
 
     @a1.close!
     @a1.set_final_eval_user! users(:ray).id
     @a1.do_final_eval! users(:ray).id, 4
-    rel = (1.0/5) * 0.5 + (4.0/5) * avg_ad_rate
+    rel = (1.0/5) * 0.5 * (1.0/3) + (4.0/5) * avg_ad_rate # 0.133
     assert_in_delta rel, @a1.relevance_factor, 0.001, "assert 5 failed"
   end
 

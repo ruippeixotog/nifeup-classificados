@@ -46,14 +46,17 @@ class User < ActiveRecord::Base
   end
   
   def calc_average_rating!(value)
-    # puts self.username
     if self.rate.nil?
       self.rate = value
     else
-      rate_count = self.ads.joins('JOIN final_evaluations ON ads.final_evaluation_id = final_evaluations.id').size
-      old_rate = self.rate * (rate_count - 1)
-      self.rate = (value + old_rate) / rate_count
+      num_rates = self.rate_count
+      old_rate = self.rate * (num_rates - 1)
+      self.rate = (value + old_rate) / num_rates
     end
     self.save
+  end
+  
+  def rate_count
+    self.ads.joins('JOIN final_evaluations ON ads.final_evaluation_id = final_evaluations.id').size
   end
 end
