@@ -247,4 +247,16 @@ class AdsController < ApplicationController
     end
   end
   
+  #POST ads/1/close_permanently
+  def close_permanently
+    @ad = Ad.find(params[:id])
+    @ad.close_permanently!
+    
+    respond_to do |format|
+      format.html { redirect_to dashboard_ads_path, notice: I18n.t('ad.closed_permanently_ok') }
+      format.json { head :ok }
+      format.js
+    end
+  end
+  
 end

@@ -17,6 +17,7 @@ Cfeup::Application.routes.draw do
       get 'unmark_fav'
       post 'rate'
       post 'close'
+      post 'close_permanently'
       put 'rate'
     end    
     collection do

@@ -143,22 +143,21 @@
 		<div class="fe_ad_highlights">
 			<p>
 			    <% if @user %>
-				<% if @user != nil && @ad.user_id == @user.id %>
-				    <%= link_to I18n.t('edit'), edit_ad_path(@ad) %>
-				<% end %>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<!--Close the Ad-->
-				<% if @user.id == @ad.user_id and @ad.open? %> <!--TODO add check for open state--> 
-				  <span class="close_ad" ><%=I18n.t('ad.close')%></span>
-				  <div id="close_ad" title="<%= I18n.t('ad.close') %>" >
-				    <%= form_tag(close_ad_path(@ad)) do %>
-				    <%= label :partner_lbl, I18n.t('ad.partner') %>
-				    <p><%= text_field_tag :partner %></p>
-				    <p><%= submit_tag I18n.t('ad.close') %></p>
+				    <% if @user != nil && @ad.user_id == @user.id %>
+				        <%= link_to I18n.t('edit'), edit_ad_path(@ad) %>
 				    <% end %>
-				  </div>
-				<% end %>
+				    
+				    <!--Close the Ad-->
+				    <% if @user.id == @ad.user_id and @ad.open? %> <!--TODO add check for open state--> 
+				      <span class="close_ad link_js" ><%=I18n.t('ad.close')%></span>
+				    <% end %>
+				    <% if @user.admin? %>
+    				    <%= link_to I18n.t('ad.close_permanently'), close_permanently_ad_path(@ad), {:method => :post} %>
+				    <% end %>
 			    <% end %>
+			    
+			    <%#--------------- PDF Download -------------%>
+                <%= link_to "Download PDF", ad_path(@ad, :format => 'pdf') %>
 			</p>
 			<p>
 				<span class="label"><%= I18n.t('ad.author') %>: </span> <a class="link" href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
@@ -190,12 +189,7 @@
 			  <% if not @ad.open?  %> <!--TODO add check for open state--> 
 			    <%= label_tag I18n.t('ad.partner'), nil, :class => 'label' %> <%= link_to @ad.partner.username, user_path(@ad.partner) %>
 			  <% end %>
-			</div>
-			
-			<%#--------------- PDF Download -------------%>
-
-			<p><%= link_to "Download PDF", ad_path(@ad, :format => 'pdf') %></p>
-			
+			</div>		
 		</div>
 	</div>
 
@@ -244,6 +238,14 @@
     
 
 </div>
+
+  <div id="close_ad" title="<%= I18n.t('ad.close') %>" >
+    <%= form_tag(close_ad_path(@ad)) do %>
+        <%= label :partner_lbl, I18n.t('ad.partner') %>
+        <p><%= text_field_tag :partner %></p>
+        <p><%= submit_tag I18n.t('ad.close') %></p>
+    <% end %>
+  </div>
 
 <div id="report_dialog"> 
     <span class="label"><%=t 'comments.reason_label' %></span>

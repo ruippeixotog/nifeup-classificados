@@ -31,3 +31,9 @@
   margin-top: 70px;
   padding-left: 13px;
 }
+
+.link_js {
+  text-decoration: none;
+  color: #36C;
+  cursor: pointer;
+}
