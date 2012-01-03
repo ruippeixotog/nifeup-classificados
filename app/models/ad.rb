@@ -75,9 +75,10 @@ class Ad < ActiveRecord::Base
   end
 
   def self.order_by_relevance(rel, user_id)
-    rel2 = rel.joins('LEFT OUTER JOIN favorites on ads.id = favorites.ad_id')
-    if user_id then rel2 = rel2.where("favorites.user_id = #{user_id} OR favorites.user_id IS NULL") end
-    rel2.order("favorites.user_id DESC, strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC")
+    if !user_id then return rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC") end
+    
+    rel2 = rel.joins("LEFT OUTER JOIN (SELECT favorites.ad_id FROM favorites WHERE favorites.user_id = #{user_id}) favorites ON ads.id = favorites.ad_id")
+    rel2.order("favorites.ad_id DESC, strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC")
   end
   
   def open?
