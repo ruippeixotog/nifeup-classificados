@@ -187,7 +187,7 @@ class AdTest < ActiveSupport::TestCase
     assert_equal [@a1], arr, "Search in a substring of a tag failed"
     
     arr = Ad.search_text "universitario", 1, nil
-    assert_equal [ads(:a3)], arr, "Case and accent insensivive search in title failed"
+    assert_equal [ads(:a3)], arr, "Case and accent insensivive search (input text only) in title failed"
     
     arr = Ad.search_text "FeUp", 1, nil
     assert_equal [ads(:a3), ads(:a2)], arr, "Search with multiple results, ordered by relevance, failed"
