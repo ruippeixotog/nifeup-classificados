@@ -215,7 +215,7 @@ class Ad < ActiveRecord::Base
     ad_rate ||= 0
     user_rate = self.user.rate
     user_rate ||= 0
-    puts "Relevance params: N(Ar)=#{ad_rate_count}; N(Ur)=#{user_rate_count}; avg(Ar)=#{ad_rate}; avg(Ur)=#{user_rate}"
+    # puts "Relevance params: N(Ar)=#{ad_rate_count}; N(Ur)=#{user_rate_count}; avg(Ar)=#{ad_rate}; avg(Ur)=#{user_rate}"
 
     ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
     user_rate_factor = [user_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (user_rate - 3.0) / 2.0
