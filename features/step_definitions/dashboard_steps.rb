@@ -17,7 +17,7 @@ end
 
 Then /^(?:the ads|they) should all be from the selected section$/i do
   section = Section.find(selected_section_id)
-  Step "they should all be from the section \"#{section.name}\""
+  step "they should all be from the section \"#{section.name}\""
 end
 
 Then /^(?:the ads|they) should all be from the section "([^"]+)"$/i do |section|

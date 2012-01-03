@@ -53,29 +53,31 @@ class Ad < ActiveRecord::Base
 
   self.per_page = 10 
   
-  def self.most_relevant(count)
+  def self.most_relevant(count, user_id)
     return nil if count.nil? || count < 0
     return [] if count == 0
-    order_by_relevance(all_opened).first(count)
+    order_by_relevance(all_opened, user_id).first(count)
   end
   
-  def self.search_text(text, page)
-    query = order_by_relevance(all_opened.distinct)
+  def self.search_text(text, page, user_id)
+    query = order_by_relevance(all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
     query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
     return query.paginate(:page => page)
   end
   
-  def self.search_text_by_section(section_id, text, page)
-    query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
+  def self.search_text_by_section(section_id, text, page, user_id)
+    query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
     
     query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
     return query.paginate(:page => page)
   end
 
-  def self.order_by_relevance(rel)
-    rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC");
+  def self.order_by_relevance(rel, user_id)
+    rel2 = rel.joins('LEFT OUTER JOIN favorites on ads.id = favorites.ad_id')
+    if user_id then rel2 = rel2.where("favorites.user_id = #{user_id} OR favorites.user_id IS NULL") end
+    rel2.order("favorites.user_id DESC, strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC")
   end
   
   def open?

@@ -126,7 +126,7 @@ class AdsController < ApplicationController
     @section_id = params[:section_id].to_i
     @section_id = 1 unless @section_id > 0
     @search_terms = params[:search_terms]
-    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page], session[:user_id])
     @sections = Section.all
     
     @user_id = session[:user_id]
@@ -143,7 +143,7 @@ class AdsController < ApplicationController
     @section_id = params[:section_id].to_i
     @section_id = 1 unless @section_id > 0
     @search_terms = params[:search_terms]
-    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page], session[:user_id])
     @sections = Section.all
     @user_id = session[:user_id]
     section = Section.find(@section_id)
@@ -205,7 +205,7 @@ class AdsController < ApplicationController
     @section_id = params[:section_id]
     section = Section.find(@section_id)
     @search_terms = params[:search_terms]
-    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page])
+    @ads = Ad.search_text_by_section(@section_id, @search_terms, params[:page], session[:user_id])
     @user_id = session[:user_id]
     
     section = Section.find(@section_id)
