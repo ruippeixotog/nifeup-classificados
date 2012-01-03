@@ -78,4 +78,32 @@ class AdminController < ApplicationController
         format.js
     end
   end
+  
+  def block_user
+    @user = User.find(params[:user_id])
+    duration = params[:duration]
+    
+    if User.block!(@user.id, duration)
+      @notice = I18n.t 'admin.success_block_user', :user => @user.username
+    else
+      @notice = I18n.t 'admin.unsuccess_block_user', :user => @user.username
+    end    
+    respond_to do |format|
+        format.js
+    end
+  end
+  
+  def unblock_user
+    @user = User.find(params[:user_id])
+    duration = params[:duration]
+    
+    if User.unblock!(@user.id)
+      @notice = I18n.t 'admin.success_unblock_user', :user => @user.username
+    else
+      @notice = I18n.t 'admin.unsuccess_unblock_user', :user => @user.username
+    end    
+    respond_to do |format|
+        format.js
+    end
+  end
 end

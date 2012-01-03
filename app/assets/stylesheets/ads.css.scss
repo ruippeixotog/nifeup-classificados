@@ -62,7 +62,18 @@ a:hover{
 
 .fe_ad_show_container {
     background-color: white;
+}
 
+.search_results {
+    position: relative;
+    float: left;
+    left: -50%;
+}
+
+.search_results_outer {
+    position: relative;
+    float: left;
+    left: 50%;
 }
 
 .fe_ad_show_title {

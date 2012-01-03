@@ -12,11 +12,17 @@ class UsersController < ApplicationController
         user = User.find_or_create_by_username(params[:person][:username])
         user.save
         
-        session[:user_id] = user.id
-        session[:username] = params[:person][:username]
+        if user.blocked_until == nil || user.blocked_until < Time.now
         
-        format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_success') }
-        format.json { render json: @ad, status: :created, location: @ad }
+            session[:user_id] = user.id
+            session[:username] = params[:person][:username]
+            
+            format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_success') }
+            format.json { render json: @ad, status: :created, location: @ad }
+        else
+            format.html { redirect_to dashboard_ads_path, notice: I18n.t('user.blocked') }
+            format.json { render json: @ad.errors, status: :unprocessable_entity }
+        end
       else
         format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_failure') }
         format.json { render json: @ad.errors, status: :unprocessable_entity }

@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
   
   self.per_page = 20 
   
+  @@BLOCK_DURATION = {:week => 7, :twoweeks => 15, :month => 30}
+  
+  def self.block_durations
+    @@BLOCK_DURATION
+  end
+  
   def self.epinto
     user = User.new :username => 'epinto'
     user.id = 1
@@ -37,5 +43,26 @@ class User < ActiveRecord::Base
   def make_regular!
     self.admin = false
     self.save
+  end
+  
+  def self.block!(user_id, duration_days)
+    until_date = duration_days.to_i.days.from_now
+    user = User.find(user_id)
+    if user
+        user.blocked_until = until_date
+        user.save
+    else
+        false
+    end
+  end
+  
+  def self.unblock!(user_id)
+    user = User.find(user_id)
+    if user
+        user.blocked_until = nil
+        user.save
+    else
+        false
+    end
   end
 end

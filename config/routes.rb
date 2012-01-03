@@ -54,6 +54,8 @@ Cfeup::Application.routes.draw do
   match "admin/update_search" => "admin#update_search"
   match "admin/promote" => "admin#promote_user"
   match "admin/demote" => "admin#demote_user"
+  match "admin/block" => "admin#block_user"
+  match "admin/unblock" => "admin#unblock_user"
   
   root :to => "ads#dashboard"
   

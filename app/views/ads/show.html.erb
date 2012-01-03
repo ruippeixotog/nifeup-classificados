@@ -27,37 +27,39 @@
 	          }
 	        });
 
-	  //Close User's Ad
-	  <% if @user.id == @ad.user_id %>
-		$( '.close_ad' ).click(function() {
-				$( "#close_ad" ).dialog( "open" );
-		});
-		$('#close_ad').dialog({
-			autoOpen: false,
-			height: 160,
-			width: 200,
-			modal: true
-		});
-	  <% end %>
-	  //User's login Autocomplete
-	  $(function() {
-		$( "#partner" ).autocomplete({
-			source: '<%= auto_complete_users_path %>',
-			minLength: 2
-		});
-	});
+	        //Close User's Ad
+	        <% if @user.id == @ad.user_id %>
+	            $( '.close_ad' ).click(function() {
+			            $( "#close_ad" ).dialog( "open" );
+	            });
+	            $('#close_ad').dialog({
+		            autoOpen: false,
+		            height: 160,
+		            width: 200,
+		            modal: true
+	            });
+	        <% end %>
+	        
+	        //User's login Autocomplete
+	        $(function() {
+		        $( "#partner" ).autocomplete({
+			        source: '<%= auto_complete_users_path %>',
+			        minLength: 2
+		        });
+            });
 
 
-	  $('.fe_comment_report_action').click(function() {
-	    var id = $(this).data("id");
-	    $("#comment_id").val(id);
-	    $("#report_dialog").dialog("open");
-	    return false; 
-	  });
+	        $('.fe_comment_report_action').click(function() {
+	          var id = $(this).data("id");
+	          $("#comment_id").val(id);
+	          $("#report_dialog").dialog("open");
+	          return false; 
+	        });
 
         <% end %>
     $("#report_dialog").dialog({ 
         autoOpen: false,
+        modal: true,
         buttons: { "<%=t 'report' %>": function() { 
             $("#new_report").submit();
             $(this).dialog("close"); 
@@ -68,7 +70,6 @@
         });
 
 
-		
 		$('#fe_ad_comment_textarea').autoResize({
 			minHeight: 36,
 			maxHeight: 200,
@@ -147,8 +148,8 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<!--Close the Ad-->
 				<% if @user.id == @ad.user_id and @ad.open? %> <!--TODO add check for open state--> 
-				  <span class="close_ad" ><%=I18n.t('ad.close')%></p>
-				  <div id="close_ad" title=<%= I18n.t('ad.close') %> >
+				  <span class="close_ad" ><%=I18n.t('ad.close')%></span>
+				  <div id="close_ad" title="<%= I18n.t('ad.close') %>" >
 				    <%= form_tag(close_ad_path(@ad)) do %>
 				    <%= label :partner_lbl, I18n.t('ad.partner') %>
 				    <p><%= text_field_tag :partner %></p>

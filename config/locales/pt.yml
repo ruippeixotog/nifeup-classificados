@@ -19,9 +19,11 @@ pt:
   confirm_delete: "Tem a certeza?"
   edit: "Editar"
   save: "Gravar"
+  confirm: "Confirmar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
   cancel: "Cancelar"
   home: "Início"
+  blocked: "bloqueado"
 
   report: "Reportar"
   already_reported: "Reportado!"
@@ -31,10 +33,10 @@ pt:
   add_file: "Adicionar ficheiro"
   remove_file: "Remover"
   date_distance: "Há %{date} atrás."
+  date_distance_future: "Até daqui a %{date}."
   
   choose_file: "Choose a file"
   photo_chosen: "File chosen"
-
   
   will_paginate:
       previous_label: "&#8592; Anterior"
@@ -51,9 +53,9 @@ pt:
     success_rate: "Votação realizada com sucesso."
     failure_rate: "Não foi possível registar o seu voto."
     not_yet_rated: "Sem votação."
-    close: "Fechar Anúncio"
+    close: "Fechar anúncio"
     closed_ok: "Anúncio fechado com sucesso."
-    partner: "Parceiro de Negócio:"
+    partner: "Parceiro de negócio:"
     author: "Autor"
     date: "Data"
     keywords: "Palavras-chave"
@@ -61,6 +63,7 @@ pt:
     description: "Descrição"
     comments: "Comentários"
     search_for: "Pesquisa:"
+    preview: "Pré-visualização"
   admin:
     link: "Admin"
     title: "Administração"
@@ -80,16 +83,25 @@ pt:
     promote_user: "Promover"
     demote_user: "Despromover"
     block_user: "Bloquear"
+    unblock_user: "Desbloquear"
+    block_duration: "Duração da interdição"
     success_promote_user: "O utilizador %{user} é agora administrador!"
     unsuccess_promote_user: "Não foi possível promover o utilizador %{user}!"
     success_demote_user: "O utilizador %{user} deixou de ser administrador!"
     unsuccess_demote_user: "Não foi possível despromover o utilizador %{user}!"
+    success_block_user: "O utilizador %{user} foi bloqueado!"
+    success_unblock_user: "O utilizador %{user} foi desbloqueado!"
+    unsuccess_block_user: "Não foi possível bloquear o utilizador %{user}!"
+    unsuccess_unblock_user: "Não foi possível desbloquear o utilizador %{user}!"
   comments:
     reason_label: "Qual a razão para reportar o comentário?"
-  users:
+    
+  user:
+    blocked: "Utilizador bloqueado!"
     ads: "Seus anúncios"
     favorites: "Favoritos"
-    create_ad: "Criar anúncio"  
+    create_ad: "Criar anúncio"
+  
   date:
     formats:
       default: "%d/%m/%Y"
@@ -109,6 +121,8 @@ pt:
       only_second: "%S"
     am:
     pm:
+    day: "dia"
+    days: "dias"
   datetime:
     distance_in_words:
       half_a_minute: "meio minuto"

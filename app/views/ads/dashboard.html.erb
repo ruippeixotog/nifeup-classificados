@@ -46,8 +46,9 @@ $(document).ready(function() {
   <div class="breadcrumbs">
     <%= render_breadcrumbs %>
   </div>
+  
   <% if @ads.empty? %>
-	<p><%=t 'no_ads_found' %></p>
+    <p><%=t 'no_ads_found' %></p>
   <% end %>
   <%= render :partial => 'ad', :collection => @ads, :locals => { :user_id => @user_id } %>
   <br style="clear:both" />

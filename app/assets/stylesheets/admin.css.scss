@@ -58,3 +58,17 @@ input#search_text_field {
 .user_actions {
   float: right;
 }
+
+
+#block_user {
+  display: block;
+}
+
+.block_user_action {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#block_user {
+  display: none;
+}

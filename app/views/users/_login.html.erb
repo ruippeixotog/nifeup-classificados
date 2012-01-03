@@ -6,9 +6,9 @@
 <% if admin? %>
   <%= link_to image_tag("administration_icon.png"), admin_path, :title => I18n.t('admin.link') %>
 <% end %>
-  <%= link_to image_tag("create_ad_icon.png"), new_ad_path, :title => I18n.t('users.create_ad') %>
-  <%= link_to image_tag("user_ads_icon.png"), ads_users_path, :title => I18n.t('users.ads') %>
-  <%= link_to image_tag("user_favorites_icon.png"), favorites_users_path, :title => I18n.t('users.favorites') %>
+  <%= link_to image_tag("create_ad_icon.png"), new_ad_path, :title => I18n.t('user.create_ad') %>
+  <%= link_to image_tag("user_ads_icon.png"), ads_users_path, :title => I18n.t('user.ads') %>
+  <%= link_to image_tag("user_favorites_icon.png"), favorites_users_path, :title => I18n.t('user.favorites') %>
 </div>
 </div>
 <% else %>
