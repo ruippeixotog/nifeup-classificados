@@ -62,15 +62,44 @@ class Ad < ActiveRecord::Base
   def self.search_text(text, page, user_id)
     query = order_by_relevance(all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
-    query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
+    keywords = text.split
+    queries = []
+    vars = []
+    keywords.each do |keyword|
+      queries << "(ads.title LIKE ? OR
+      ads.title LIKE ? OR
+      ad_tags.tag LIKE ? OR
+      ad_tags.tag LIKE ?)"
+      vars = vars << keyword+'%' << ' '+keyword+'%' << keyword+'%' << ' '+keyword+'%'
+    end
+    
+    conditions = [queries.join(' AND '), vars].flatten
+    
+    query = query.joins("LEFT OUTER JOIN ad_tags ON ad_tags.ad_id = ads.id")
+    query = query.where(conditions)
+    
     return query.paginate(:page => page)
   end
   
   def self.search_text_by_section(section_id, text, page, user_id)
     query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct, user_id)
-    return query.paginate(:page => page) if text.nil? || text.empty?
+    return query.paginate(:page => page) if text.nil? || text.empty?    
+    keywords = text.split
+    queries = []
+    vars = []
+    keywords.each do |keyword|
+      queries << "(ads.title LIKE ? OR
+                           ads.title LIKE ? OR
+                           ad_tags.tag LIKE ? OR
+                           ad_tags.tag LIKE ?)"
+      vars = vars << keyword+'%' << ' '+keyword+'%' << keyword+'%' << ' '+keyword+'%'
+    end
+
+    conditions = [queries.join(' AND '), vars].flatten
     
-    query = query.search(:title_or_ad_tags_tag_starts_with_any => StripAccent.strip_accents(text.split))
+    query = query.joins("LEFT OUTER JOIN ad_tags ON ad_tags.ad_id = ads.id")
+    query = query.where(conditions)
+    
     return query.paginate(:page => page)
   end
 
