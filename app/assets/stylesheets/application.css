@@ -8,7 +8,7 @@
 
 #content {
     position: relative;
-    margin: 2% 10%;
+    margin: 2% auto;
     padding: 10px;
 
 	  -moz-border-radius: 15px;
@@ -17,10 +17,17 @@
 	  -webkit-box-shadow: 8px 8px 3px #888;
 	  box-shadow: 2px 2px 10px #888;
 	  background-color: white;
+	  width: 948px;
 	
 }
 
-.logo {
-    width: 100%;
-    text-align: center;
+#logo {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+}
+
+#single_content {
+  margin-top: 70px;
+  padding-left: 13px;
 }

@@ -99,6 +99,7 @@
 	
 <% end %>
 <% content_for :title, @ad.title %>
+<div id="single_content">
 <div class="breadcrumbs">
   <%= render_breadcrumbs %>
 </div>
@@ -249,4 +250,5 @@
    	    <%= text_area_tag :reason, "", :size => "48x5" %>
    	    <%= hidden_field_tag :comment_id %>
    	<% end %>
+</div>
 </div>

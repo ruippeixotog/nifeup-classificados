@@ -43,9 +43,11 @@ $(document).ready(function() {
 </div><!--end dashboard search div -->
 </div>
 <div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
+  <% if @search_terms and not @search_terms.empty? %>
   <div class="breadcrumbs">
     <%= render_breadcrumbs %>
   </div>
+  <% end %>
   
   <% if @ads.empty? %>
     <p><%=t 'no_ads_found' %></p>

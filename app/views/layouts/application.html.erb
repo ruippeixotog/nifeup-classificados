@@ -20,7 +20,9 @@
 <% end -%>
 
 <div id="content">
-
+  <div id="logo">
+    <%= link_to image_tag("logo3.png"), root_path %>
+  </div>
   <%= render 'users/login' %>
   <%= yield %>
 </div>

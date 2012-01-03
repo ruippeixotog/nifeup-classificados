@@ -1,5 +1,8 @@
 obj = $('#dashboard_fe_ad_container');
+html = '';
+<% if @search_terms and not @search_terms.empty? %>
 html = '<div class="breadcrumbs"> <%= render_breadcrumbs %> </div>';
+<% end %>
 <% if @ads.empty? %>
 	html += '<p><%=t "no_ads_found" %></p>';
 <% else %>  

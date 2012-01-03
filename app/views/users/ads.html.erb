@@ -5,12 +5,12 @@ $(document).ready(function() {
 	});
 });
 <% end %>
-
-<h1><%=t "users.ads" %></h1>
-<div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
+<div id="single_content">
   <div class="breadcrumbs">
     <%= render_breadcrumbs %>
   </div>
+<h1><%=t "users.ads" %></h1>
+<div id="dashboard_fe_ad_container" class="dashboard_fe_ad_container">
   <% if @ads.empty? %>
 	<p><%=t 'no_ads_found' %></p>
   <% end %>
@@ -19,4 +19,5 @@ $(document).ready(function() {
 </div>
 <div class="apple_pagination">
   <%= will_paginate @ads %>
+</div>
 </div>
