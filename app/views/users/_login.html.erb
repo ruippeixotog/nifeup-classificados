@@ -2,11 +2,14 @@
 <div id="userarea">
 <%=t 'greet_username', :user => session[:username] %>
 [<%= link_to I18n.t('logout'), logout_path %>] 
+<div class="usertoolbox">
 <% if admin? %>
-  <%= link_to I18n.t('admin.link'), admin_path, :class => "user_administration" %>
+  <%= link_to image_tag("administration_icon.png"), admin_path, :title => I18n.t('admin.link') %>
 <% end %>
-  <%= link_to I18n.t('users.ads'), ads_users_path, :class => "user_ads" %>
-  <%= link_to I18n.t('users.favorites'), favorites_users_path, :class => "user_favorites" %>
+  <%= link_to image_tag("create_ad_icon.png"), new_ad_path, :title => I18n.t('users.create_ad') %>
+  <%= link_to image_tag("user_ads_icon.png"), ads_users_path, :title => I18n.t('users.ads') %>
+  <%= link_to image_tag("user_favorites_icon.png"), favorites_users_path, :title => I18n.t('users.favorites') %>
+</div>
 </div>
 <% else %>
 <div id="loginbutton">

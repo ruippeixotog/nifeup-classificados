@@ -88,7 +88,8 @@ pt:
     reason_label: "Qual a razão para reportar o comentário?"
   users:
     ads: "Seus anúncios"
-    favorites: "Favoritos"  
+    favorites: "Favoritos"
+    create_ad: "Criar anúncio"  
   date:
     formats:
       default: "%d/%m/%Y"
