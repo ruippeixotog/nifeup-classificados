@@ -192,6 +192,10 @@
 			  <% end %>
 			</div>
 			
+			<%#--------------- PDF Download -------------%>
+
+			<p><%= link_to "Download PDF", ad_path(@ad, :format => 'pdf') %></p>
+			
 		</div>
 	</div>
 
@@ -202,9 +206,6 @@
 	  <p><%= @ad.description %></p>
 	</div>
 	
-	<%#--------------- PDF Download -------------%>
-	
-	<p><%= link_to "PDF", ad_path(@ad, :format => 'pdf') %></p>
 	
 	<%#--------------- Comentários --------------%>
 
