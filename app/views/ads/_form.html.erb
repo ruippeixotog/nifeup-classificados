@@ -40,7 +40,7 @@ $(document).ready(function() {
     <div class="fe_ad_presentation_container">
 		  <div class="fe_ad_title_container">
 			  <div class="field fe_ad_show_title">
-            <%= f.text_field :title %>
+            <%= f.text_field :title, :placeholder => I18n.t("helpers.label.ad.title") %>
 			  </div>
 
         <div class="field">
@@ -75,7 +75,7 @@ $(document).ready(function() {
       <%= f.label :description %><br />
       <%= f.text_area :description %>
     </div>
-    <div class="actions">
+    <div class="actions">      
       <%= f.submit %>
     </div>
   </div>

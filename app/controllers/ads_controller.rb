@@ -45,7 +45,7 @@ class AdsController < ApplicationController
   # GET /ads/new
   # GET /ads/new.json
   def new
-    add_breadcrumb I18n.t('users.create_ad'), :new_ad_path
+    add_breadcrumb I18n.t('user.create_ad'), :new_ad_path
     
     @ad = Ad.new
     1.times { @ad.resources.build }

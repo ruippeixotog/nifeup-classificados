@@ -35,8 +35,8 @@ pt:
   date_distance: "Há %{date} atrás."
   date_distance_future: "Até daqui a %{date}."
   
-  choose_file: "Choose a file"
-  photo_chosen: "File chosen"
+  choose_file: "Escolher ficheiro"
+  photo_chosen: "Ficheiro escolhido"
   
   will_paginate:
       previous_label: "&#8592; Anterior"
@@ -101,6 +101,19 @@ pt:
     ads: "Seus anúncios"
     favorites: "Favoritos"
     create_ad: "Criar anúncio"
+  
+  helpers:
+    submit:
+      ad:
+        create: "Criar anúncio"
+        update: "Editar anúncio"
+    label:
+      ad:
+        title: "Título"
+        section: "Secção"
+        tag_names: "Palavras-chave"
+        link: "Ficheiro"
+        description: "Descrição"        
   
   date:
     formats:
