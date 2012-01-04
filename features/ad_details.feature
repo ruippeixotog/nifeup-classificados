@@ -13,7 +13,6 @@ Feature: Show ad details (US3)
       And it has information in all its fields
     When I open the details page for ad "1"
     Then I should see the ad's title
-      And I should see a related photo
       And I should see its author, creation date and keywords
       And I should see its description
       And I should see its comments

@@ -36,6 +36,7 @@ end
 Given /^(?:the ad|it) has information in all its fields$/ do
   @ad.average_rate = 4
   @ad.relevance_factor = 0.2
+  @ad.description = 'This is an ad'
   assert @ad.save
   
   assert AdTag.new(:ad_id => @ad.id, :tag => "keyword0").save
