@@ -5,9 +5,9 @@ prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
   pdf.text "#{@ad.title}", :size => 30, :style => :bold, :align => :center
   pdf.move_down(10)
 
-  if not @ad.thumbnail.url[-11..-1] == "missing.png"
+  if @ad.thumbnail?
   	open('image.jpeg', 'wb') do |file|
-  		file << open("http://#{request.env["HTTP_HOST"]}/classificados#{@ad.thumbnail.url(:medium)}").read
+  		file << open("http://#{request.env["HTTP_HOST"]}#{@ad.thumbnail.url(:medium)}").read
   	end
 
 	pdf.image 'image.jpeg', :position => :center
