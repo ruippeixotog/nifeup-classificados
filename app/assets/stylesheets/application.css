@@ -10,6 +10,7 @@
     position: relative;
     margin: 2% auto;
     padding: 10px;
+    padding-bottom: 5px;
 
 	  -moz-border-radius: 15px;
 	  border-radius: 5px;
@@ -36,4 +37,12 @@
   text-decoration: none;
   color: #36C;
   cursor: pointer;
+}
+
+#footer {
+  text-align: center;
+  font-size: 0.8em;
+  color: #666;
+  padding-top: 3px;
+  
 }

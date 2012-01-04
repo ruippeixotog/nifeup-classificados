@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 pt:
+  copyright: "FEUP - Todos os direitos reservados."
+  last_build: "Última actualização: 04/01/2012"
   hello: "Olá mundo"
   login: "Entrar"
   logout: "Sair"
