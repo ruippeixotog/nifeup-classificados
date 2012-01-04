@@ -7,7 +7,7 @@ prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
 
   if @ad.thumbnail?
   	open('image.jpeg', 'wb') do |file|
-  		file << open("http://#{request.env["HTTP_HOST"]}#{@ad.thumbnail.url(:medium)}").read
+  		file << open("http://#{request.env["HTTP_HOST"]}/classificados#{@ad.thumbnail.url(:medium)}").read
   	end
 
 	pdf.image 'image.jpeg', :position => :center
