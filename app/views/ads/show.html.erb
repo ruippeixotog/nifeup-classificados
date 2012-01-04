@@ -220,7 +220,7 @@
 	<% if @ad.comments %>		
 	  	<div class="label"><%= I18n.t('ad.comments') %>:</div>
 	  	<% @ad.comments.each do |c| %>
-			<p><span class="label"> <a class="link" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= simple_format(c.content)  %>
+			<p><span class="label"><%= c.user.name %> (<%= c.user.username %>)</span><%= simple_format(c.content)  %>
 			<abbr class="label_date" title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(c.created_at, Time.now) %></abbr> 
 			
 			<span class="fe_ad_comments_actions">
