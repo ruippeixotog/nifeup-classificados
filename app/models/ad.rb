@@ -1,3 +1,4 @@
+require 'strip_accent'
 class Ad < ActiveRecord::Base
   belongs_to :user
   belongs_to :section
@@ -52,30 +53,63 @@ class Ad < ActiveRecord::Base
 
   self.per_page = 10 
   
-  def self.most_relevant(count)
+  def self.most_relevant(count, user_id)
     return nil if count.nil? || count < 0
     return [] if count == 0
-    order_by_relevance(all_opened).first(count)
+    order_by_relevance(all_opened, user_id).first(count)
   end
   
-  def self.search_text(text, page)
-    query = order_by_relevance(all_opened.distinct)
+  def self.search_text(text, page, user_id)
+    query = order_by_relevance(all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
+
+    keywords = text.split
+    queries = []
+    vars = []
+    keywords.each do |keyword|
+      queries << "(ads.title LIKE ? OR
+		   ads.title LIKE ? OR
+		   ad_tags.tag LIKE ? OR
+		   ad_tags.tag LIKE ?)"
+      vars = vars << keyword+'%' << '% '+keyword+'%' << keyword+'%' << '% '+keyword+'%'
+    end
     
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    conditions = [queries.join(' OR '), vars].flatten
+
+    query = query.joins("LEFT OUTER JOIN ad_tags ON ad_tags.ad_id = ads.id")
+    query = query.where(conditions)
+
     return query.paginate(:page => page)
   end
   
-  def self.search_text_by_section(section_id, text, page)
-    query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct)
+  def self.search_text_by_section(section_id, text, page, user_id)
+    query = order_by_relevance(Section.find(section_id).ads.all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
     
-    query = query.search(:title_or_ad_tags_tag_contains_any => text.split)
+    keywords = text.split
+    queries = []
+    vars = []
+    keywords.each do |keyword|
+      queries << "(ads.title LIKE ? OR
+                   ads.title LIKE ? OR
+                   ad_tags.tag LIKE ? OR
+                   ad_tags.tag LIKE ?)"
+      vars = vars << keyword+'%' << '% '+keyword+'%' << keyword+'%' << '% '+keyword+'%'
+    end
+
+    conditions = [queries.join(' OR '), vars].flatten
+
+    query = query.joins("LEFT OUTER JOIN ad_tags ON ad_tags.ad_id = ads.id")
+    query = query.where(conditions)
+
     return query.paginate(:page => page)
   end
 
-  def self.order_by_relevance(rel)
-    rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC");
+  def self.order_by_relevance(rel, user_id)
+    if !user_id then return rel.order("strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC") end
+    
+    rel2 = rel.joins("LEFT OUTER JOIN (SELECT favorites.ad_id FROM favorites WHERE favorites.user_id = #{user_id}) favorites ON ads.id = favorites.ad_id")
+    rel2.order("favorites.ad_id DESC, strftime(\"%s\", ads.created_at) + ads.relevance_factor * #{ @@RELEVANCE_TIME_OFFSET } DESC")
   end
   
   def open?
@@ -174,7 +208,7 @@ class Ad < ActiveRecord::Base
     
     self.final_evaluation.value = value
     self.final_evaluation.save
-
+    
     self.user.calc_average_rating!(value)
 
     self.relevance_factor = self.calc_relevance
@@ -198,12 +232,10 @@ class Ad < ActiveRecord::Base
   end
   
   def gallery
-    #self.resources.where('resources.link_content_type LIKE ?', 'image/%')
-    gallery = []
-    (0..4).each { gallery.concat(self.resources.where('resources.link_content_type LIKE ?', 'image/%')) } 
-    return gallery
+    self.resources.where('resources.link_content_type LIKE ?', 'image/%')
   end
 
+  # calculates and returns a relevance factor in the range [-1.0, 1.0]
   def calc_relevance
     ad_rate_count = self.evaluations.count
     user_rate_count = self.user.rate_count
@@ -214,7 +246,6 @@ class Ad < ActiveRecord::Base
     ad_rate ||= 0
     user_rate = self.user.rate
     user_rate ||= 0
-
     # puts "Relevance params: N(Ar)=#{ad_rate_count}; N(Ur)=#{user_rate_count}; avg(Ar)=#{ad_rate}; avg(Ur)=#{user_rate}"
 
     ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
@@ -224,7 +255,7 @@ class Ad < ActiveRecord::Base
 
   # tagging system
   def tag_names
-    @tag_names || ad_tags.map(&:tag).join(' ')
+    @tag_names || ad_tags.map(&:tag).join(', ')
   end
   
   #business partner
@@ -243,7 +274,7 @@ class Ad < ActiveRecord::Base
 
   def assign_tags
     if @tag_names
-      self.ad_tags = @tag_names.split(/\s+/).map do |name|
+      self.ad_tags = @tag_names.split(/,+\s+|,+/).map do |name|
         AdTag.find_or_create_by_ad_id_and_tag(self.id, name)
       end
     end
@@ -253,4 +284,5 @@ class Ad < ActiveRecord::Base
   def reprocess_avatar
     thumbnail.reprocess!
   end
+    
 end
