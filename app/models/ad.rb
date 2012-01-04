@@ -261,7 +261,9 @@ class Ad < ActiveRecord::Base
   
   #business partner
   def partner
-    User.find(final_eval_user_id)
+    if not final_eval_user_id.nil?
+      User.find(final_eval_user_id)
+    end
   end
   
   def partner=(user_name)

@@ -15,6 +15,7 @@ en:
     close: "Close Ad"
     closed_ok: "Ad was successfully closed."
     partner: "Business Partner:"
+    no_partner: "Not provided"
     cancel: "Close"
     author: "Author"
     date: "Date"

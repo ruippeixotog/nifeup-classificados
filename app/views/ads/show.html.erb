@@ -200,7 +200,7 @@
 			</p>
 			<div id="partner_info">
 			  <% if not @ad.open?  %> <!--TODO add check for open state--> 
-			    <%= label_tag I18n.t('ad.partner'), nil, :class => 'label' %> <%= @ad.partner.name %> (<%=@ad.partner.username %>)
+			    <%= label_tag I18n.t('ad.partner'), nil, :class => 'label' %> <% if not @ad.partner.nil? %><%= @ad.partner.name %> (<%=@ad.partner.username %>)<% else %><%= I18n.t('ad.no_partner') %><% end %>
 			  <% end %>
 			</div>		
 		</div>
