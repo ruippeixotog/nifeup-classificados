@@ -7,17 +7,24 @@ class UsersController < ApplicationController
   end
   
   def authenticate
-    ldap_info = Ldap.auth(params[:person][:username], params[:person][:password])
+    username = params[:person][:username]
+    ldap_info = Ldap.auth(username, params[:person][:password])
     
     respond_to do |format|
       if ldap_info
-        user = User.find_or_create_by_username(params[:person][:username])
-        user.save
+        user = User.find_by_username(username)
+        if not user
+            attrs = Ldap.attributes(username)
+            puts attrs[:cn]
+            user = User.new :username => username
+            user.name = attrs[:cn].to_s.delete("\"").delete("[").delete("]")
+            user.save
+        end
         
         if user.blocked_until == nil || user.blocked_until < Time.now
         
             session[:user_id] = user.id
-            session[:username] = params[:person][:username]
+            session[:username] = username
             
             format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_success') }
             format.json { render json: @ad, status: :created, location: @ad }

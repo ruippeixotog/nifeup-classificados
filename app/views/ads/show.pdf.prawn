@@ -31,7 +31,7 @@ prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
   	pdf.move_down(5)
   end
 
-  pdf.text "#{I18n.t('ad.author')}: #{@ad.user.username}", :size => 12
+  pdf.text "#{I18n.t('ad.author')}: #{@ad.user.name} (#{@ad.user.username}@fe.up.pt)", :size => 12
   pdf.move_down(5)
   if @ad.description != ""
   	pdf.text "#{I18n.t('ad.description')}", :size => 12, :align => :justify

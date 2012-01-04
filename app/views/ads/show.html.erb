@@ -160,7 +160,7 @@
 			    <%= link_to image_tag("pdf_icon.png"), ad_path(@ad, :format => 'pdf'), :title => I18n.t('user.pdf_download') %>	        
 			</p>
 			<p>
-				<span class="label"><%= I18n.t('ad.author') %>: </span> <a class="link" href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
+				<span class="label"><%= I18n.t('ad.author') %>: </span> <%= @ad.user.name %> (<%= @ad.user.username %>)
 			</p>
 			<p>	
 				<span class="label"><%= I18n.t('ad.date') %>: </span> <abbr title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(@ad.created_at, Time.now) %></abbr>
