@@ -44,7 +44,7 @@ group :test do
   # database_cleaner is not required, but highly recommended 
   gem 'database_cleaner'
   gem 'capybara'
-  # gem 'capybara-webkit'
+  gem 'capybara-webkit'
   # gem 'rack-test'
   # gem 'hpricot'
 end
