@@ -144,20 +144,20 @@
 			<p>
 			    <% if @user %>
 				    <% if @user != nil && @ad.user_id == @user.id %>
-				        <%= link_to I18n.t('edit'), edit_ad_path(@ad) %>
+				        <%= link_to image_tag("create_ad_icon.png"), edit_ad_path(@ad), :title => I18n.t('user.edit_ad') %>
 				    <% end %>
 				    
 				    <!--Close the Ad-->
 				    <% if @user.id == @ad.user_id and @ad.open? %> <!--TODO add check for open state--> 
-				      <span class="close_ad link_js" ><%=I18n.t('ad.close')%></span>
+				      <span class="close_ad link_js" ><%= link_to image_tag("lock_icon.png"), "#", :title => I18n.t('ad.close') %></span>
 				    <% end %>
 				    <% if @user.admin? %>
-    				    <%= link_to I18n.t('ad.close_permanently'), close_permanently_ad_path(@ad), {:method => :post} %>
+				      <%= link_to image_tag("close_icon.png"), close_permanently_ad_path(@ad), {:method => :post, :title => I18n.t('ad.close_permanently')} %>
 				    <% end %>
 			    <% end %>
 			    
 			    <%#--------------- PDF Download -------------%>
-                <%= link_to "Download PDF", ad_path(@ad, :format => 'pdf') %>
+			    <%= link_to image_tag("pdf_icon.png"), ad_path(@ad, :format => 'pdf'), :title => I18n.t('user.pdf_download') %>	        
 			</p>
 			<p>
 				<span class="label"><%= I18n.t('ad.author') %>: </span> <a class="link" href="<%= user_path @ad.user %>"><%= @ad.user.username %></a>
@@ -205,7 +205,7 @@
 
 	<div class="fe_ad_comments">
 	<% if @ad.comments %>		
-	  	<div class="label"><%= I18n.t('ad.comments') %>:</ div>
+	  	<div class="label"><%= I18n.t('ad.comments') %>:</div>
 	  	<% @ad.comments.each do |c| %>
 			<p><span class="label"> <a class="link" href="<%= user_path c.user %>"><%= c.user.username %></a> </span><%= simple_format(c.content)  %>
 			<abbr class="label_date" title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(c.created_at, Time.now) %></abbr> 

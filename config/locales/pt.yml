@@ -101,12 +101,13 @@ pt:
     
   user:
     blocked: "Utilizador bloqueado!"
-    ads: "Seus anúncios"
+    ads: "Os seus anúncios"
     favorites: "Favoritos"
     create_ad: "Criar anúncio"
     edit_ad: "Editar anúncio"
     mark_favorite: "Marcar favorito"
     unmark_favorite: "Desmarcar favorito"
+    pdf_download: "Exportar para PDF"
   
   helpers:
     submit:
