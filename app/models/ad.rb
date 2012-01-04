@@ -70,7 +70,7 @@ class Ad < ActiveRecord::Base
       ads.title LIKE ? OR
       ad_tags.tag LIKE ? OR
       ad_tags.tag LIKE ?)"
-      vars = vars << keyword+'%' << ' '+keyword+'%' << keyword+'%' << ' '+keyword+'%'
+      vars = vars << keyword+'%' << '% '+keyword+'%' << keyword+'%' << '% '+keyword+'%'
     end
     
     conditions = [queries.join(' AND '), vars].flatten
