@@ -59,4 +59,25 @@ class User < ActiveRecord::Base
   def rate_count
     self.ads.joins('JOIN final_evaluations ON ads.final_evaluation_id = final_evaluations.id').size
   end
+  
+  def self.block!(user_id, duration_days)
+    until_date = duration_days.to_i.days.from_now
+    user = User.find(user_id)
+    if user
+        user.blocked_until = until_date
+        user.save
+    else
+        false
+    end
+  end
+  
+  def self.unblock!(user_id)
+    user = User.find(user_id)
+    if user
+        user.blocked_until = nil
+        user.save
+    else
+        false
+    end
+  end
 end

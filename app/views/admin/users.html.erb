@@ -66,6 +66,7 @@ $(document).ready(function() {
     
   });
 <% end %>
+<div id="single_content">
 <div class="breadcrumbs">
   <%= render_breadcrumbs %>
 </div>
@@ -85,7 +86,7 @@ $(document).ready(function() {
   <% end %>
   <% @users.each do |user| %>
     <div class="user">
-      <b><%= user.username %></b>
+      <b><%= user.name %> (<%= user.username %>)</b>
       <div class="user_actions">
         <span class="promotion">
           <% if not user.admin? %>
@@ -119,5 +120,5 @@ $(document).ready(function() {
    	    <%= hidden_field_tag :user_id %>
    	<% end %>
 </div>
-
+</div>
 
