@@ -270,6 +270,11 @@ class Ad < ActiveRecord::Base
     end
   end
   
+  def short_title 
+    return title unless title.length > 19
+    return title[0..15] + "..." 
+  end
+  
   private
 
   def assign_tags
