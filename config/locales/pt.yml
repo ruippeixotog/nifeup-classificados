@@ -24,6 +24,7 @@ pt:
   cancel: "Cancelar"
   home: "Início"
   blocked: "bloqueado"
+  generated: "Gerado por"
 
   report: "Reportar"
   already_reported: "Reportado!"
