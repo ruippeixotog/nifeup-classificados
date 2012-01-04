@@ -92,7 +92,7 @@ class Ad < ActiveRecord::Base
                            ads.title LIKE ? OR
                            ad_tags.tag LIKE ? OR
                            ad_tags.tag LIKE ?)"
-      vars = vars << keyword+'%' << ' '+keyword+'%' << keyword+'%' << ' '+keyword+'%'
+      vars = vars << keyword+'%' << '% '+keyword+'%' << keyword+'%' << '% '+keyword+'%'
     end
 
     conditions = [queries.join(' AND '), vars].flatten
@@ -206,11 +206,11 @@ class Ad < ActiveRecord::Base
     
     self.final_evaluation.value = value
     self.final_evaluation.save
-    
-    self.user.calc_average_rating!(value)
 
     self.relevance_factor = self.calc_relevance
     self.save
+    
+    self.user.calc_average_rating!(value)
   end
   
   def relevance
@@ -236,7 +236,7 @@ class Ad < ActiveRecord::Base
   # calculates and returns a relevance factor in the range [-1.0, 1.0]
   def calc_relevance
     ad_rate_count = self.evaluations.count
-    user_rate_count = self.user.rate_count
+    user_rate_count = FinalEvaluation.where(:user_id => self.user_id).count
     total_rates = ad_rate_count + user_rate_count
     return 0.0 if total_rates == 0
 
@@ -244,7 +244,6 @@ class Ad < ActiveRecord::Base
     ad_rate ||= 0
     user_rate = self.user.rate
     user_rate ||= 0
-    # puts "Relevance params: N(Ar)=#{ad_rate_count}; N(Ur)=#{user_rate_count}; avg(Ar)=#{ad_rate}; avg(Ur)=#{user_rate}"
 
     ad_rate_factor = [ad_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (ad_rate - 3.0) / 2.0
     user_rate_factor = [user_rate_count / @@RELEVANCE_USER_SCALE.to_f, 1.0].min * (user_rate - 3.0) / 2.0
