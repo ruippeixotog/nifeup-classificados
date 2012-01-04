@@ -189,14 +189,16 @@ class AdTest < ActiveSupport::TestCase
     arr = Ad.search_text "universitario", 1, nil
     assert_equal [ads(:a3)], arr, "Case and accent insensivive search (input text only) in title failed"
     
-    arr = Ad.search_text "FeUp", 1, nil
+    arr = Ad.search_text "feup", 1, nil
     assert_equal [ads(:a3), ads(:a2)], arr, "Search with multiple results, ordered by relevance, failed"
     
     arr = Ad.search_text "t2 primeiro", 1, nil
     assert_equal [ads(:a3), @a1], arr, "Search with multiple keywords failed"
-    
+
+    Ad.per_page = 1
     arr = Ad.search_text "t2 primeiro", 1, nil
     assert_equal [ads(:a3)], arr, "Search with limit number of results failed"
+    Ad.per_page = 10
     
     arr = Ad.search_text "not_in_tags", 1, nil
     assert arr.empty?, "Search with empty results failed"
@@ -205,7 +207,7 @@ class AdTest < ActiveSupport::TestCase
     assert arr.empty?, "Search with empty results failed"
     
     arr = Ad.search_text nil, 1, nil
-    assert_nil arr, "Search with invalid inputs failed"
+    assert_equal [ads(:a3),ads(:a2),ads(:a1),ads(:a5)], arr, "Search with invalid inputs failed"
     
     arr = Ad.search_text "a", -1, nil
     assert_nil arr, "Search with invalid inputs failed"

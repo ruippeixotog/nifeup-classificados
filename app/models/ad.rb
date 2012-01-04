@@ -62,6 +62,7 @@ class Ad < ActiveRecord::Base
   def self.search_text(text, page, user_id)
     query = order_by_relevance(all_opened.distinct, user_id)
     return query.paginate(:page => page) if text.nil? || text.empty?
+    return nil if page.nil? || page < 1
 
     keywords = text.split
     queries = []
