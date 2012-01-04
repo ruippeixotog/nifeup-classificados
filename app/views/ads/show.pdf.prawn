@@ -33,11 +33,11 @@ prawn_document(:filename=> "#{@ad.title}.pdf",:page_size => "A4") do |pdf|
 
   pdf.text "#{I18n.t('ad.author')}: #{@ad.user.username}", :size => 12
   pdf.move_down(5)
-  if @ad.description != nil
+  if @ad.description != ""
   	pdf.text "#{I18n.t('ad.description')}", :size => 12, :align => :justify
 	pdf.move_down(5)
 	pdf.indent(5) do
-		pdf.text "#{@ad.description.gsub! /([^\n])\n([^\n])/, '\1 \2'}"
+		pdf.text "#{@ad.description}"
 	end
   end
 end
