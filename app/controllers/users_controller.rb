@@ -62,11 +62,11 @@ class UsersController < ApplicationController
   end
 
   def auto_complete
-    @users = User.find(:all, :conditions => ['username LIKE ?', "#{params[:term]}%"])
-    
+    @users = User.find(:all, :conditions => ['name LIKE ?', "#{params[:term]}%"])
+    puts @users.inspect
     @labels = []
     @users.each do |u|
-      @labels << {:label => u.username}
+      @labels << {:value => u.username, :label => u.name}
     end
     
     respond_to do |format|
