@@ -1,7 +1,11 @@
 Cfeup::Application.routes.draw do
   resources :evaluations
 
-  resources :ad_tags
+  resources :ad_tags do
+    collection do
+      get 'all'
+    end
+  end
 
   resources :reports
 

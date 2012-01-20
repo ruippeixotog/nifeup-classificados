@@ -80,4 +80,14 @@ class AdTagsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  # GET /ad_tags/all
+  def all
+    @ad_tags = AdTag.select(:tag).collect{|u|u.tag.to_s}
+
+    respond_to do |format|
+      format.json { render json: @ad_tags }
+    end
+  end
+  
 end
