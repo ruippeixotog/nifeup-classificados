@@ -26,14 +26,14 @@ class UsersController < ApplicationController
             session[:user_id] = user.id
             session[:username] = username
             
-            format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_success') }
+            format.html { redirect_to :back, notice: I18n.t('login_success') }
             format.json { render json: @ad, status: :created, location: @ad }
         else
-            format.html { redirect_to dashboard_ads_path, notice: I18n.t('user.blocked') }
+            format.html { redirect_to :back, notice: I18n.t('user.blocked') }
             format.json { render json: @ad.errors, status: :unprocessable_entity }
         end
       else
-        format.html { redirect_to dashboard_ads_path, notice: I18n.t('login_failure') }
+        format.html { redirect_to :back, notice: I18n.t('login_failure') }
         format.json { render json: @ad.errors, status: :unprocessable_entity }
       end
     end
