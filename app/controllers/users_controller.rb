@@ -53,7 +53,6 @@ class UsersController < ApplicationController
 
   def auto_complete
     @users = User.find(:all, :conditions => ['name LIKE ?', "#{params[:term]}%"])
-    puts @users.inspect
     @labels = []
     @users.each do |u|
       @labels << {:value => u.username, :label => u.name}

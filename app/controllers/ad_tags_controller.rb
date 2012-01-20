@@ -83,10 +83,10 @@ class AdTagsController < ApplicationController
   
   # GET /ad_tags/all
   def all
-    @ad_tags = AdTag.select(:tag).collect{|u|u.tag.to_s}
+    @ad_tags = AdTag.where(['tag LIKE ?', "#{params[:term]}%"]).select(:tag).collect{|u|u.tag.to_s}
 
     respond_to do |format|
-      format.json { render json: @ad_tags }
+      format.json { render json: @ad_tags.uniq }
     end
   end
   

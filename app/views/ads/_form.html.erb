@@ -27,7 +27,9 @@ $(document).ready(function() {
   //tags input
   //$('#ad_tag_names').html(""); //clear text inside
   $('#ad_tag_names').tagsInput({
-    autocomplete_url: "/ad_tags/all.json"
+    autocomplete_url: '<%= all_ad_tags_path %>.json',
+    autocomplete:{selectFirst:true}
+    
   });
   
 });
