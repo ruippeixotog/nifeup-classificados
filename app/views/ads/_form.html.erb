@@ -1,3 +1,6 @@
+<%= javascript_include_tag 'jquery.tagsinput.min' %>
+<%= stylesheet_link_tag 'jquery.tagsinput' %>
+
 <%= javascript_tag do -%>
 var SITE = SITE || {};
 
@@ -20,6 +23,13 @@ SITE.fileInputs = function() {
 
 $(document).ready(function() {
   $('.file-wrapper input[type=file]').bind('change focus click', SITE.fileInputs);
+  
+  //tags input
+  //$('#ad_tag_names').html(""); //clear text inside
+  $('#ad_tag_names').tagsInput({
+    
+  });
+  
 });
 <% end %>
 
