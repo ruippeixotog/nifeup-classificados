@@ -259,4 +259,19 @@ class AdsController < ApplicationController
     end
   end
   
+  #POST ads/1/edit_title
+  def edit_title
+    @ad = Ad.find(params[:id])
+    @ad.title = params[:title]
+    
+    respond_to do |format|
+      if @ad.save
+        format.json { render :json => {:message => I18n.t("ad.title_updated.success") }  }
+      else
+        format.json { render :json => {:message => I18n.t("ad.title_updated.error") } }
+      end
+    end
+    
+  end
+  
 end

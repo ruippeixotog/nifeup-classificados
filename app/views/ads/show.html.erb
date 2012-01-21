@@ -20,6 +20,50 @@
 		    deeplinking: false,
 		    allow_resize: true});
 		    
+		  $(".editable-section").hover(
+		    function() {  //on hover in
+		      $(this).addClass("hover"); 
+		    }, 
+		    function() {  //on hover out
+		      $(this).removeClass("hover"); 
+		      $(this).attr("contentEditable", "false"); 
+		  });
+		  
+		  //editable sections handling
+		  $("#fe_editable_ad_title").click(function() {
+		      $(this).attr("contentEditable", "true");
+		  });
+		  
+		  $("#fe_editable_ad_title").focusout(function() {
+		      var original = $.trim($(this).data("original"))
+		      var updated = $.trim($(this).html());
+		      if (original != updated) {
+		        $.post("<%= edit_title_ad_path(@ad) %>", 
+		          { title: updated },   //data
+		          function(data) { $.jGrowl(data["message"]); }
+		          );
+		        $(this).data("original", updated);
+	        }
+		  });
+		  
+		  $('#fe_editable_ad_title').keydown(function(event){
+      	var keycode = (event.keyCode ? event.keyCode : event.which);
+      	if(keycode == '13'){
+          var original = $.trim($(this).data("original"))
+		      var updated = $.trim($(this).html());
+		      if (original != updated) {
+		        $.post("<%= edit_title_ad_path(@ad) %>", 
+		          { title: updated },   //data
+		          function(data) { $.jGrowl(data["message"]); }
+		          );
+		        $(this).data("original", updated);
+	        }  
+	        event.preventDefault();
+	        return false;    	
+	      }
+
+      });
+		  
 	    $(".scrollable").scrollable();
         <% if @user %>
 	        $('#rating').raty({
@@ -135,7 +179,11 @@
 <div class="fe_ad_show_container">
 	<div class="fe_ad_presentation_container">
 		<div class="fe_ad_title_container">
-			<div class="fe_ad_show_title"><%= @ad.title %></div>
+			<div class="fe_ad_show_title">
+			    <div class="editable-section" id="fe_editable_ad_title" data-original="<%= @ad.title %>">
+			      <%= @ad.title %>
+			    </div>
+			  </div>
 			<%= link_to ".." + @ad.thumbnail.url, { :rel => 'prettyPhoto[pp_gal]', :title => '' } do 
 				image_tag @ad.thumbnail.url(:medium)
 			end %>

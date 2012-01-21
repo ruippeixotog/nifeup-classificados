@@ -526,3 +526,21 @@ span.file-holder {
 #close_ad {
   display: none;
 }
+
+.editable-section {
+    border: solid 1px #CCC;
+    padding: 3px 10px 3px 3px;
+    -webkit-border-radius: 0.1em 0.1em 0.1em 0.1em;
+    -moz-border-radius: 1em 1em 1em 1em;
+    border-radius: 0.3em 0.3em 0.3em 0.3em;
+    
+    background-image:url('editable-icon.png');
+    background-repeat:no-repeat;
+    background-position:right top;
+}
+
+.editable-section.hover {
+    border: solid 1px black;
+    
+    background-image:url('editable-icon-hover.png');
+}

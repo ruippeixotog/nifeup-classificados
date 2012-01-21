@@ -70,6 +70,9 @@ pt:
     comments: "Comentários"
     search_for: "Pesquisa:"
     preview: "Pré-visualização"
+    title_updated:
+      success: "Título do anúncio editado com sucesso."
+      error: "Não foi possível gravar o título do anúncio."
   admin:
     link: "Admin"
     title: "Administração"
