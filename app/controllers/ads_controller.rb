@@ -274,4 +274,32 @@ class AdsController < ApplicationController
     
   end
   
+  #POST ads/1/edit_description
+  def edit_description
+    @ad = Ad.find(params[:id])
+    @ad.description = params[:description]
+    
+    respond_to do |format|
+      if @ad.save
+        format.json { render :json => {:message => I18n.t("ad.description_updated.success") }  }
+      else
+        format.json { render :json => {:message => I18n.t("ad.description_updated.error") } }
+      end
+    end
+  end
+  
+  #POST ads/1/edit_description
+  def edit_tags
+    @ad = Ad.find(params[:id])
+    @ad.tag_names = params[:tag_names]
+    
+    respond_to do |format|
+      if @ad.save
+        format.json { render :json => {:message => I18n.t("ad.tags_updated.success") }  }
+      else
+        format.json { render :json => {:message => I18n.t("ad.tags_updated.error") } }
+      end
+    end
+  end
+  
 end

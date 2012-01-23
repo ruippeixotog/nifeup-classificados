@@ -19,50 +19,19 @@
 		    show_title: false,
 		    deeplinking: false,
 		    allow_resize: true});
-		    
-		  $(".editable-section").hover(
-		    function() {  //on hover in
-		      $(this).addClass("hover"); 
-		    }, 
-		    function() {  //on hover out
-		      $(this).removeClass("hover"); 
-		      $(this).attr("contentEditable", "false"); 
-		  });
 		  
-		  //editable sections handling
-		  $("#fe_editable_ad_title").click(function() {
-		      $(this).attr("contentEditable", "true");
-		  });
+		    <% if @user %>
+			    <% if @ad.user_id == @user.id %>
 		  
-		  $("#fe_editable_ad_title").focusout(function() {
-		      var original = $.trim($(this).data("original"))
-		      var updated = $.trim($(this).html());
-		      if (original != updated) {
-		        $.post("<%= edit_title_ad_path(@ad) %>", 
-		          { title: updated },   //data
-		          function(data) { $.jGrowl(data["message"]); }
-		          );
-		        $(this).data("original", updated);
-	        }
-		  });
+  		      AdShow.editTitlePath = "<%= edit_title_ad_path(@ad) %>";
+  		      AdShow.editDescriptionPath = "<%= edit_description_ad_path(@ad) %>";
+  		      AdShow.tagsAutocompletePath = "<%= all_ad_tags_path %>.json";
+  		      AdShow.editTagsPath = "<%= edit_tags_ad_path(@ad) %>"
+  		      AdShow.addTagText = "<%=t "ad.add_tag" %>";
 		  
-		  $('#fe_editable_ad_title').keydown(function(event){
-      	var keycode = (event.keyCode ? event.keyCode : event.which);
-      	if(keycode == '13'){
-          var original = $.trim($(this).data("original"))
-		      var updated = $.trim($(this).html());
-		      if (original != updated) {
-		        $.post("<%= edit_title_ad_path(@ad) %>", 
-		          { title: updated },   //data
-		          function(data) { $.jGrowl(data["message"]); }
-		          );
-		        $(this).data("original", updated);
-	        }  
-	        event.preventDefault();
-	        return false;    	
-	      }
-
-      });
+		        AdShow.makeEditable();
+		    <% end %>
+		  <% end %>
 		  
 	    $(".scrollable").scrollable();
         <% if @user %>
@@ -123,21 +92,6 @@
 			maxHeight: 200,
 			extraSpace: 18
 		});
-
-		<% if @user %>
-	    <% if @user != nil && @ad.user_id == @user.id %>
-		  /* //tags input
-		  $('#ad_tags').html(""); //clear text inside
-  	  $('#ad_tags').tagsInput({
-  	    
-  	  });
-      */
-      
-  	  <% @ad.ad_tags.each do |t|%>
-		  //  $('#ad_tags').addTag('<%= t.tag %>'); 
-		  <% end %>
-		  <% end %>
-	  <% end %>
 
     });
 
@@ -243,13 +197,20 @@
 				<span class="label"><%= I18n.t('ad.date') %>: </span> <abbr title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(@ad.created_at, Time.now) %></abbr>
 			</p>				
 			<p id = "pdf_link">
-				<span class="label"><%= I18n.t('ad.keywords') %>: </span> 
-				<div id="ad_tags" class="tagsinput">
-				<% @ad.ad_tags.each do |t|%>
-				  <!-- <%= if t != @ad.ad_tags.last then t.tag+", " else t.tag end%> -->
-				  <span class="tag"><%= t.tag %></span>
+				<span class="label"><%= I18n.t('ad.tags') %>: </span> 
+				
+				<% if @user %>
+			    <% if @ad.user_id == @user.id %>
+			      <%= text_field_tag "ad_tag_names", @ad.tag_names %>
+			    <% else %>
+				    <div id="ad_tags" class="tagsinput">
+				      <% @ad.ad_tags.each do |t|%>
+				        <span class="tag"><%= t.tag %></span>
+				      <% end %>
+				    </div>
+				  <% end %>
 				<% end %>
-				</div>
+			
 			</p>
 			<div class="fe_ad_share_fb">
 				<a name="fb_share" type="box_count" share_url= "<%=request.url%>"> Share </a> 
@@ -278,7 +239,9 @@
 
 	<div class="fe_ad_show_description">
 	  <div class="label"><%= I18n.t('ad.description') %>:</div>
-	  <p><%= simple_format(@ad.description) %></p>
+	  <div class="editable-section" id="fe_editable_ad_description" data-original="<%= simple_format(@ad.description) %>">
+      <%= simple_format(@ad.description) %>
+    </div>
 	</div>
 	
 	

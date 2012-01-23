@@ -24,6 +24,8 @@ Cfeup::Application.routes.draw do
       post 'close_permanently'
       put 'rate'
       post 'edit_title'
+      post 'edit_description'
+      post 'edit_tags'
     end    
     collection do
       get 'dashboard'

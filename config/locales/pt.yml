@@ -70,9 +70,17 @@ pt:
     comments: "Comentários"
     search_for: "Pesquisa:"
     preview: "Pré-visualização"
+    tags: "Tags"
+    add_tag: "nova tag"
     title_updated:
       success: "Título do anúncio editado com sucesso."
       error: "Não foi possível gravar o título do anúncio."
+    description_updated:
+      success: "Descrição do anúncio editada com sucesso."
+      error: "Não foi possível gravar a descrição do anúncio."
+    tags_updated:
+      success: "Tags atualizadas com sucesso."
+      error: "Não foi possível atualizar as tags do anúncio."
   admin:
     link: "Admin"
     title: "Administração"

@@ -527,7 +527,7 @@ span.file-holder {
   display: none;
 }
 
-.editable-section {
+.editable-section.active {
     border: solid 1px #CCC;
     padding: 3px 10px 3px 3px;
     -webkit-border-radius: 0.1em 0.1em 0.1em 0.1em;
