@@ -205,7 +205,7 @@
 			    <% else %>
 				    <div id="ad_tags" class="tagsinput">
 				      <% @ad.ad_tags.each do |t|%>
-				        <span class="tag"><%= t.tag %></span>
+				        <span class="tag"><%= link_to t.tag, { :action => 'dashboard', :search_terms => t.tag, :section_id => @ad.section_id } %></span>
 				      <% end %>
 				    </div>
 				  <% end %>
