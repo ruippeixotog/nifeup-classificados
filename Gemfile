@@ -20,7 +20,7 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '>= 1.0.3'
 gem 'therubyracer'
 
 #gem 'meta_where'

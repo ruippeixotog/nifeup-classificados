@@ -93,37 +93,18 @@
 			extraSpace: 18
 		});
 
-    });
-
 	
-	function submitenter(myfield,e)
-	{
-	var keycode;
-	if (window.event){
-		keycode = window.event.keyCode;
-		if (keycode == 13 && !event.shiftKey)
-		{
-		   myfield.form.submit();
-		   return false;
+	    $('#fe_ad_comment_textarea').keydown(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+                $('#new_comment').submit();
+                event.preventDefault();
+                return false;    	
+            }
+        });
 
-		}
-		else
- 			return true;
-	}
-	else 
-		if (e) 
-			keycode = e.which;
-			if (keycode == 13 && !e.shiftKey)
-			{
-			   myfield.form.submit();
-			   return false;
 
-			}
-		else 
-			return true;
-
-	}
-	
+    });	
 <% end %>
 <% content_for :title, @ad.title %>
 <div id="single_content">
@@ -251,32 +232,18 @@
 	<% if @ad.comments %>		
 	  	<div class="label"><%= I18n.t('ad.comments') %>:</div>
 	  	<% @ad.comments.each do |c| %>
-			<p><span class="label"><%= c.user.name %> (<%= c.user.username %>)</span><%= simple_format(c.content)  %>
-			<abbr class="label_date" title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(c.created_at, Time.now) %></abbr> 
-			
-			<span class="fe_ad_comments_actions">
-			<% if @user && (@user.id == c.user.id || @user.admin) %>
-				<%= link_to  I18n.t('delete'), c, confirm: I18n.t('confirm_delete'), method: :delete, :class => 'delete_comment_button' %>
-			<% end %>
-			<% if @user %>
-		    		<% if c.user_reported?(@user.id) %>
-		        		<span class="fe_ad_comments_action"> <%=t "already_reported" %> </span>
-		    		<% else %>
-		        		<%= link_to I18n.t('report'), { :controller => 'reports', :action => "new"}, { :id => "fe_comment_report_#{c.id}", :class => "fe_ad_comments_action fe_comment_report_action", "data-id" => c.id} %>
-		    		<% end %>
-			<% end %>
-			</span>
-			</p>
+			<%= render 'comment', :c => c, :logged_user => @user %>
 	  	<% end %>
 	<% end %>
 	
+	<%# Div que é substituida pelo comentário adicionado %>
+	<div id="new_comment_added"></div>
+	
 	<% if @user %>
-		    <%= form_for(Comment.new) do %>
-	           	<%= text_area :comment, :content, :class => 'fe_ad_comment_textarea', :id => 'fe_ad_comment_textarea',  :placeholder => I18n.t('comment_placeholder'), :onKeyPress => 'return submitenter(this,event)' %>
-	            <%= hidden_field :comment, :ad_id, {:value => @ad.id} %>
-
-	        
-			<% end %>
+	    <%= form_for(@comment, :remote => true, :url => comments_path(:format => :js)) do |f| %>
+           	<%= f.text_area :content, :class => 'fe_ad_comment_textarea', :id => 'fe_ad_comment_textarea',  :placeholder => I18n.t('comment_placeholder') %>
+            <%= f.hidden_field :ad_id, {:value => @ad.id} %>
+		<% end %>
 	<% end %>
 	</div>	
     

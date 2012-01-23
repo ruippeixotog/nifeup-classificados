@@ -44,16 +44,17 @@ class CommentsController < ApplicationController
     @comment = Comment.new(params[:comment])
     @comment.user_id = session[:user_id]
   
-    puts "\n\n\n\n####"
-    puts @comment.inspect
-  
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment.ad, notice:  I18n.t('created_comment') }
+        #format.html { redirect_to @comment.ad, notice:  I18n.t('created_comment') }
         format.json { render json: @comment, status: :created, location: @comment }
+        puts @comment.inspect
+        puts "#\n#\n#\n#\n#\n#\n#\n"
+        format.js
       else
-        format.html { render action: "new" }
+        #format.html { render action: "new" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -34,6 +34,7 @@ class AdsController < ApplicationController
           @rating = Evaluation.new
       end
     end
+    @comment = Comment.new
     
     respond_to do |format|
       format.html
