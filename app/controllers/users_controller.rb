@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     session[:username] = nil
     
     respond_to do |format|
-      format.html { redirect_to dashboard_ads_path, notice: I18n.t('logout_success') }
+      format.html { redirect_to :back, notice: I18n.t('logout_success') }
       format.json { render json: @ad, status: :logged_out }
     end
   end
