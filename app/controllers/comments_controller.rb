@@ -46,13 +46,11 @@ class CommentsController < ApplicationController
   
     respond_to do |format|
       if @comment.save
-        #format.html { redirect_to @comment.ad, notice:  I18n.t('created_comment') }
+        format.html { redirect_to @comment.ad, notice:  I18n.t('created_comment') }
         format.json { render json: @comment, status: :created, location: @comment }
-        puts @comment.inspect
-        puts "#\n#\n#\n#\n#\n#\n#\n"
         format.js
       else
-        #format.html { render action: "new" }
+        format.html { render action: "new" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
         format.js
       end
@@ -84,6 +82,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @comment.ad, notice: I18n.t('deleted_comment')}
       format.json { head :ok }
+      format.js
     end
   end
   

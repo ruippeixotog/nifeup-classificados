@@ -97,8 +97,11 @@
 	    $('#fe_ad_comment_textarea').keydown(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
-                $('#new_comment').submit();
-                event.preventDefault();
+                if ($('#fe_ad_comment_textarea').val() != '')
+                {
+                    $('#new_comment').submit();
+                    event.preventDefault();
+                }
                 return false;    	
             }
         });
@@ -240,7 +243,7 @@
 	<div id="new_comment_added"></div>
 	
 	<% if @user %>
-	    <%= form_for(@comment, :remote => true, :url => comments_path(:format => :js)) do |f| %>
+	    <%= form_for(@comment, :remote => true, :url => comments_path) do |f| %>
            	<%= f.text_area :content, :class => 'fe_ad_comment_textarea', :id => 'fe_ad_comment_textarea',  :placeholder => I18n.t('comment_placeholder') %>
             <%= f.hidden_field :ad_id, {:value => @ad.id} %>
 		<% end %>
