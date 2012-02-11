@@ -23,3 +23,5 @@ en:
     average: "Average rating"
     description: "Description"
     comments: "Comments"
+    
+  max_file_size: "Maximum size: %{size}"

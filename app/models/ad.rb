@@ -21,6 +21,7 @@ class Ad < ActiveRecord::Base
   
   # thumbnail choose and cropping process 
   has_attached_file :thumbnail, :styles => { :thumb => "140x180", :medium => "200x200" }, :processors => [:cropper]
+  validates_attachment_size :thumbnail, :less_than => 512.kilobytes
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_avatar, :if => :cropping?
   
