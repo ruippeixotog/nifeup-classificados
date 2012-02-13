@@ -73,6 +73,7 @@ pt:
     preview: "Pré-visualização"
     tags: "Tags"
     add_tag: "nova tag"
+    gallery_manager: "Gerir galeria"
     title_updated:
       success: "Título do anúncio editado com sucesso."
       error: "Não foi possível gravar o título do anúncio."
@@ -82,6 +83,15 @@ pt:
     tags_updated:
       success: "Tags atualizadas com sucesso."
       error: "Não foi possível atualizar as tags do anúncio."
+    resource_add:
+      success: "Recurso adicionado com sucesso."
+      error: "Erro ao adicionar recurso."
+    resource_remove:
+      title: "Remover recurso"
+      message: "Tem a certeza que quer remover este recurso?"
+      success: "Recurso removido com sucesso."
+      error: "Erro ao remover recurso."
+      
   admin:
     link: "Admin"
     title: "Administração"

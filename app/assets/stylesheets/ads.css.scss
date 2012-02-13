@@ -111,7 +111,7 @@ a:hover{
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 10px;
-    margin-top: 20px;
+    margin-top: 90px;
     padding: 10px;
 	background:  url(images/background-3.png) repeat;
 
@@ -543,4 +543,22 @@ span.file-holder {
     border: solid 1px black;
     
     background-image:url('editable-icon-hover.png');
+}
+
+.upload_button {
+    color: #C3CAFE;
+    cursor: pointer;
+}
+
+.upload_button.hover {
+    color: #3F53AC;
+    cursor: pointer;
+}
+
+.remove_button {
+    float: right;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-image: url('close_icon.png');
 }

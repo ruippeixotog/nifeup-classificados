@@ -22,4 +22,12 @@ function add_fields(link, association, content) {
 
 $(document).ready(function() {
   $('a[title]').qtip();
+  
+  $('#loading').ajaxStart(function() {
+          $(this).show();
+      })
+      .ajaxStop(function() {
+          $(this).hide();
+      })
+  ;
 });

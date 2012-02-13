@@ -303,4 +303,57 @@ class AdsController < ApplicationController
     end
   end
   
+  def gallery_manager
+    @ad = Ad.find(params[:id])
+    @resources = @ad.gallery
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  # POST /ads/1/add_resource
+  def add_resource
+    @ad = Ad.find(params[:id])
+    
+    @res = Resource.new
+    
+    @res.ad_id = @ad.id
+    @res.link = params[:item]
+    
+    respond_to do |format|
+      if @res.save
+        format.html { redirect_to ad_path(@ad) + "#gallery", notice: I18n.t("ad.resource_add.success") }
+        format.json { render :json => {:message => I18n.t("ad.resource_add.success"), :thumbnail => @res.thumbnail }  }
+      else
+        format.html { redirect_to ad_path(@ad) + "#gallery", notice: I18n.t("ad.resource_add.error") }
+        format.json { render :json => {:message => I18n.t("ad.resource_add.error"), :thumbnail => @res.thumbnail } }
+      end
+    end
+  end
+
+  # POST /ads/1/remove_resource 
+  def remove_resource
+    @ad = Ad.find(params[:id])
+    @res_id = params[:resource_id]
+    @res = Resource.find(@res_id)
+    @successful = false
+    if @res.ad_id.to_s == params[:id]
+      @res.link = nil
+      @successful = @res.destroy
+    end
+    
+     respond_to do |format|
+       if @successful
+         #format.json { render :json => {:message => I18n.t("ad.resource_remove.success") }  }
+         format.js
+       else
+         format.js
+         #format.json { render :json => {:message => I18n.t("ad.resource_remove.error") }  }
+       end
+     end
+    
+    
+  end
+  
 end

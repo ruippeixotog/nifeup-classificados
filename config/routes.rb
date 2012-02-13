@@ -26,6 +26,9 @@ Cfeup::Application.routes.draw do
       post 'edit_title'
       post 'edit_description'
       post 'edit_tags'
+      get 'gallery_manager'
+      post 'add_resource'
+      post 'remove_resource'
     end    
     collection do
       get 'dashboard'
