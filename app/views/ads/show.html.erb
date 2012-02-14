@@ -45,15 +45,28 @@
 		  <% end %>
 		  
 	    $(".scrollable").scrollable();
-        <% if @user %>
-	        $('#rating').raty({
-	          start: <%= @ad.user_rating(@user.id) ? @ad.user_rating(@user.id) : 0 %>,
-	          path: "../assets/raty/",
-	          click: function(score, evt) {
-		        $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
-		        });
-	          }
+	    
+	    $('#user_rating').raty({
+        start: <%= @ad.user.rate ? @ad.user.rate : 0 %>,  
+        readOnly: true,
+        path: "../assets/raty/"
+      });
+	    
+	    $('#ad_rating').raty({
+	          <% if @user %>
+	            start: <%= @ad.user_rating(@user.id) ? @ad.user_rating(@user.id) : 0 %>,
+	            click: function(score, evt) {
+		              $.post('<%= rate_ad_path(@ad.id) %>', { id: <%= @ad.id %>, rating: score  }, function(data) {
+		            });
+	            },
+	          <% else %>
+	            readOnly: true,
+	            start: <%= @ad.average_rate %>,
+	          <% end %>
+		        path: "../assets/raty/"
 	        });
+	        
+      <% if @user %>
 
 	        //Close User's Ad
 	        <% if @user.id == @ad.user_id %>
@@ -161,7 +174,10 @@
 			    <%= link_to image_tag("pdf_icon.png"), ad_path(@ad, :format => 'pdf'), :title => I18n.t('user.pdf_download') %>	        
 			</p>
 			<p>
-				<span class="label"><%= I18n.t('ad.author') %>: </span> <%= @ad.user.name %> (<%= @ad.user.username %>)
+				<span class="label"><%= I18n.t('ad.author') %>: </span> 
+				<span class="author_name"><%= @ad.user.name %> (<%= @ad.user.username %>)</span>
+				<span id="user_rating"></span> ( <%= @ad.user.rate_count %> )
+				
 			</p>
 			<p>	
 				<span class="label"><%= I18n.t('ad.date') %>: </span> <abbr title="<%=l @ad.created_at %>"><%=t 'date_distance', :date => distance_of_time_in_words(@ad.created_at, Time.now) %></abbr>
@@ -191,12 +207,10 @@
 				<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 			</div>
 			
-			<div id="rating"></div>
+			<span id="ad_rating"></span>
 			
-			<p>
-				<span class="label"> <%= I18n.t('ad.average') %>: </span>
-				<span id="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %> </span>
-			</p>
+			<span class="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %>/5  (<%= @ad.evaluations.count %> <%=t "ad.rater" %>) </span>
+			
 			<div id="partner_info">
 			  <% if not @ad.open?  %> <!--TODO add check for open state--> 
 			    <%= label_tag I18n.t('ad.partner'), nil, :class => 'label' %> <% if not @ad.partner.nil? %><%= @ad.partner.name %> (<%=@ad.partner.username %>)<% else %><%= I18n.t('ad.no_partner') %><% end %>

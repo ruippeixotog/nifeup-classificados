@@ -92,6 +92,8 @@ pt:
       success: "Recurso removido com sucesso."
       error: "Erro ao remover recurso."
       
+    rater: "voto"
+      
   admin:
     link: "Admin"
     title: "Administração"
