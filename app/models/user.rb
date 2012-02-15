@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     user
   end
   
+  def email
+    self.username + "@fe.up.pt"
+  end
+  
   def self.search_for_uname uname
     if key
       find(:all, :conditions => ['login LIKE ?', "%#{uname}%"])

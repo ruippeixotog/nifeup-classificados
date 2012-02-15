@@ -241,6 +241,8 @@ class AdsController < ApplicationController
     @ad.close!
     @ad.partner = params[:partner]
     
+    Mailer.evaluate_ad(@ad).deliver
+    
     respond_to do |format|
       format.html { redirect_to @ad, notice: I18n.t('ad.closed_ok') }
       format.json { head :ok }
