@@ -40,13 +40,34 @@
             	width: "90%"
             });
             
-		    <% elsif @ad.partner and @ad.partner.id == @user.id %>
-		      AdShow.prepareRateOwner();
-		      
+		    <% elsif @ad.partner and @ad.partner.id == @user.id and not @ad.final_eval %>		      
 		      $('#rate_owner_dialog').dialog({
           	autoOpen: false,
-          	modal: true
+          	modal: true,
+          	title: "<%=escape_javascript I18n.t('ad.rate_owner') %>",
+          	
+          	buttons: [
+                {
+                    text: "Ok",
+                    click: function() { 
+                      var r = $("#owner_rating").raty('score');
+                      $.post("<%= rate_owner_ad_path(@ad) %>.json", {rate: r}, function(data) {
+                        $.jGrowl(data["notice"]);
+                        $(this).dialog("close");
+                        return false;
+                      } );
+                    }
+                }
+            ]
+          	
           });
+          
+          $('#owner_rating').raty({
+            start: 0,  
+            path: "../assets/raty/"
+          });
+          
+          AdShow.prepareRateOwner();
           
 		    <% end %>
 		  <% end %>
@@ -277,8 +298,9 @@
 </div>
 
 <% if @user and @ad.partner and @ad.partner.id == @user.id %>
-  <div id="rate_owner_dialog" title="<%=t 'ad.rate_owner' %>">
-      <%= render :partial => "rate_owner" %>
+  <div id="rate_owner_dialog">
+    <%=t "ad.rate_owner_message" %>
+    <div id="owner_rating"> </div>
   </div>
 <% end %>  
 </div>

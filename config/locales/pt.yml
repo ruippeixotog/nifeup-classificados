@@ -101,6 +101,11 @@ pt:
       error: "Erro ao remover recurso."
       
     rater: "voto"
+    rate_owner: "Avaliar vendedor"
+    rate_owner_message: "Avalie o vendedor com quem fez o negócio:"
+    rated_owner:
+      success: "Vendedor do anúncio avaliado com sucesso."
+      error: "Erro ao avaliar o vendedor do anúncio."
       
   admin:
     link: "Admin"

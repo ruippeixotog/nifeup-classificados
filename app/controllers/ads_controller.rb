@@ -375,4 +375,27 @@ class AdsController < ApplicationController
     end
   end
   
+  # POST /ads/1/rate_owner
+  def rate_owner
+    @user = nil
+    @ad = Ad.find(params[:id])
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+    end
+    
+    respond_to do |format|
+      if not @user
+        format.json { render :json => { :notice => I18n.t("need_login") }}
+      elsif @user != @ad.partner
+        format.json { render :json => { :notice => I18n.t("access_denied")} }
+      else
+        if @ad.do_final_eval!(@user.id, params[:rate].to_i)
+          format.json { render :json => {:notice => I18n.t("ad.rated_owner.success") }  }
+        else
+          format.json { render :json => {:notice => I18n.t("ad.rated_owner.error") } }
+        end
+      end
+    end
+  end
+  
 end
