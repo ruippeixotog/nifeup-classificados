@@ -237,7 +237,7 @@ class AdsController < ApplicationController
   #POST ads/1/close
   def close
     @ad = Ad.find(params[:id])
-    
+        
     @ad.close!
     @ad.partner = params[:partner]
     
@@ -354,8 +354,25 @@ class AdsController < ApplicationController
          #format.json { render :json => {:message => I18n.t("ad.resource_remove.error") }  }
        end
      end
+  end
+  
+  # GET /ads/1/show_rate_owner
+  def show_rate_owner
+    @user = nil
+    @ad = Ad.find(params[:id])
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+    end
     
-    
+    respond_to do |format|
+      if not @user
+        format.html { redirect_to root_url, notice: I18n.t("need_login") }  
+      elsif @user != @ad.partner
+        format.html { redirect_to root_url, notice: I18n.t("access_denied")}
+      else
+        format.html { redirect_to ad_url(@ad) + "#rate_owner" }
+      end
+    end
   end
   
 end

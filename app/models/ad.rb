@@ -279,6 +279,10 @@ class Ad < ActiveRecord::Base
     return title[0..15] + "..." 
   end
   
+  def owner_rated?
+    
+  end
+  
   private
 
   def assign_tags

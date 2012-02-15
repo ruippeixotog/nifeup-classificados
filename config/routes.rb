@@ -29,6 +29,7 @@ Cfeup::Application.routes.draw do
       get 'gallery_manager'
       post 'add_resource'
       post 'remove_resource'
+      get 'show_rate_owner'
     end    
     collection do
       get 'dashboard'

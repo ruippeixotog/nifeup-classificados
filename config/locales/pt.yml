@@ -23,6 +23,7 @@ pt:
   save: "Gravar"
   confirm: "Confirmar"
   access_denied: "O acesso foi negado por não possuir permissões suficientes!"
+  need_login: "Precisa de estar autenticado no sistema."
   cancel: "Cancelar"
   home: "Início"
   blocked: "bloqueado"

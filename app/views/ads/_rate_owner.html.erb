@@ -1,0 +1,12 @@
+<%= javascript_tag do -%>
+  
+  $(document).ready(function() {
+    $('#owner_rating').raty({
+      start: 0,  
+      path: "../assets/raty/"
+    });
+  }
+  
+<% end %>
+
+<div id="owner_rating"> </div>

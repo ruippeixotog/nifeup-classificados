@@ -109,6 +109,11 @@ var AdShow = AdShow ? AdShow : {
                 element.click();
         },
         
+        prepareRateOwner : function(element) {
+            if(AdShow.getAnchor() == "rate_owner")
+                $("#rate_owner_dialog").dialog('open');
+        },
+        
         getAnchor : function() {
         	var location = document.location.toString();
         	if (location.match('#')) {

@@ -40,7 +40,14 @@
             	width: "90%"
             });
             
-		        
+		    <% elsif @ad.partner and @ad.partner.id == @user.id %>
+		      AdShow.prepareRateOwner();
+		      
+		      $('#rate_owner_dialog').dialog({
+          	autoOpen: false,
+          	modal: true
+          });
+          
 		    <% end %>
 		  <% end %>
 		  
@@ -61,7 +68,7 @@
 	            },
 	          <% else %>
 	            readOnly: true,
-	            start: <%= @ad.average_rate %>,
+	            start: <%= @ad.average_rate.to_f %>,
 	          <% end %>
 		        path: "../assets/raty/"
 	        });
@@ -209,7 +216,7 @@
 			
 			<span id="ad_rating"></span>
 			
-			<span class="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1) : I18n.t('ad.not_yet_rated') %>/5  (<%= @ad.evaluations.count %> <%=t "ad.rater" %>) </span>
+			<span class="average_rating"> <%= @ad.average_rate != nil ? @ad.average_rate.round(1).to_s + "/5" : I18n.t('ad.not_yet_rated') %>  (<%= @ad.evaluations.count %> <%=t "ad.rater" %>) </span>
 			
 			<div id="partner_info">
 			  <% if not @ad.open?  %> <!--TODO add check for open state--> 
@@ -268,4 +275,12 @@
    	    <%= hidden_field_tag :comment_id %>
    	<% end %>
 </div>
+
+<% if @user and @ad.partner and @ad.partner.id == @user.id %>
+  <div id="rate_owner_dialog" title="<%=t 'ad.rate_owner' %>">
+      <%= render :partial => "rate_owner" %>
+  </div>
+<% end %>  
+</div>
+
 </div>
