@@ -69,7 +69,7 @@ pt:
     closed_permanently_ok: "Anúncio fechado permanentemente com sucesso."
     partner: "Parceiro de negócio:"
     no_partner: "Não definido"
-    subject_mail_evaluate_ad: "avaliação do parceiro de negócio"
+    subject_email_evaluate_ad: "avaliação do parceiro de negócio"
     author: "Autor"
     date: "Data"
     keywords: "Palavras-chave"
