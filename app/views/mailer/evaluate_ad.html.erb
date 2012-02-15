@@ -4,14 +4,15 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>Welcome to example.com, <%= @user.name %></h1>
+    <h1><%=t 'hi' %> <%= @user.username %>,</h1>
     <p>
-      You have successfully signed up to example.com,
-      your username is: <%= @user.username %>.<br/>
+      <%=t 'business_partner_msg' %>
+      <%=t 'ad.title' %>: <%= @ad.title %>
+      <%=t 'ad.author' %>: <%= @ad.user.name %>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      <%=t 'please_evaluate_url', :url => @url %>.
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p><%=t 'greetings' %></p>
   </body>
 </html>

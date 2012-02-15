@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 pt:
+  hi: "Olá"
+  site_name: "Classificados FEUP"
   copyright: "FEUP - Todos os direitos reservados."
   last_build: "Última actualização: 04/01/2012"
   hello: "Olá mundo"
@@ -49,6 +51,9 @@ pt:
       page_gap: "&hellip;"
       
   username: "Nome de utilizador"
+  greetings: "Obrigado pela sua colaboração!"
+  please_evaluate_url: "Por favor, avalie o autor do anúncio aqui %{url}"
+  business_partner_msg: "Foi indicado como parceiro de negócio do seguinte anúncio"
   
   ad:
     success_mark_fav: "Anúncio marcado como favorito."
@@ -64,6 +69,7 @@ pt:
     closed_permanently_ok: "Anúncio fechado permanentemente com sucesso."
     partner: "Parceiro de negócio:"
     no_partner: "Não definido"
+    subject_mail_evaluate_ad: "avaliação do parceiro de negócio"
     author: "Autor"
     date: "Data"
     keywords: "Palavras-chave"
@@ -75,6 +81,7 @@ pt:
     tags: "Tags"
     add_tag: "nova tag"
     gallery_manager: "Gerir galeria"
+    title: "Título"
     title_updated:
       success: "Título do anúncio editado com sucesso."
       error: "Não foi possível gravar o título do anúncio."

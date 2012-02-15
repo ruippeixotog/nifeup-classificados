@@ -3,7 +3,8 @@ class Mailer < ActionMailer::Base
 
   def evaluate_ad(ad)
     @user = ad.partner
-    @url  = "http://example.com/login"
-    mail(:to => @user.email, :subject => "Welcome to My Awesome Site")
+    @ad = ad
+    @url  = show_rate_owner_ad_path(@ad.id)
+    mail(:to => @user.email, :subject => I18n.t('site_name') + ": " + I18n.t('subject_email_evaluate_ad'))
   end
 end
